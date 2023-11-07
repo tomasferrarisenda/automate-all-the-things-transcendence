@@ -25,16 +25,11 @@ This Braindamage Edition builds upon the [Insane Edition](https://github.com/tfe
 
 ### New features:
 
-- ArgoCD Sync Waves
-- Sealed Secrets
-- Backend code instrumented with OpenTelemetry
-- Traces collection and visualization Jaeger
-- Removed the use of Canary deployments in Dev environment
-- TRANSCENDANCE Move the Databases inside Kubernetes
-- TRANSCENDANCE Horizontal Pod Autoscaler
-- TRANSCENDANCE X.509 certificate management with Cert Manager
-- TRANSCENDANCE External DNS
-- TRANSCENDANCE Self-hosted container image registry with Harbor (we're ditching DockerHub)
+- Move the Databases inside Kubernetes
+- Horizontal Pod Autoscaler
+- External DNS
+- X.509 certificate management with Cert Manager
+- Self-hosted container image registry with Harbor (we're ditching DockerHub)
 
 ### Versions in order of complexity:
 
@@ -155,9 +150,9 @@ Our app is a very simple static website, but I'm not spoiling it for you. You'll
 - Kubernetes Secrets Encryption -> Bitnami Sealed Secrets
 - Code Instrumentation -> OpenTelemetry
 - Tracing -> Jaeger
-- TRANSCENDANCE Container Image Registry -> Harbor
-- TRANSCENDANCE X.509 Certificate Management -> Cert Manager
-- TRANSCENDANCE External DNS Automatic Configuration -> External DNS
+- Container Image Registry -> Harbor
+- X.509 Certificate Management -> Cert Manager
+- External DNS Automatic Configuration -> External DNS
 <br/>
 
 <p title="Logos Banner" align="center"> <img  src="https://i.imgur.com/PLLfOmY.png"> </p>
@@ -437,12 +432,11 @@ Here are the specific numbers:
 ## App of Apps
 - -5 Prometheus
 - -4 Istio Base / Jaegger / Loki / Sealed-Secrets
-<!-- TRANSENDANCE -->
-<!-- - -40 Istio Base / Jaegger / Loki / Metrics-Server / Harbor / Sealed-Secrets / Cert-Manager / External DNS -->
+- -40 Istio Base / Jaegger / Loki / Metrics-Server / Harbor / Sealed-Secrets / Cert-Manager / External DNS
 - -3 Istiod / Grafana 
 - -2 Istio Gateway / Flagger
 - -1 Kiali / Flagger Load-Tester
-<!-- TRANSENDANCE - 00 Databases -->
+- 00 Databases
 - 0 Backends
 - 1 Frontends
 
@@ -450,12 +444,12 @@ Here are the specific numbers:
 - -1 Sealed-Secret
 - 0 Deployment
 - 1 Canary
-<!-- TRANSCENDANCE - 20 Horizontal Pod Autoscaler -->
+- 20 Horizontal Pod Autoscaler
 
 ## Frontend Applications
 - 0 Deployment
 - 1 Canary
-<!-- TRANSCENDANCE - 20 Horizontal Pod Autoscaler -->
+- 20 Horizontal Pod Autoscaler
 
 <br/>
 <br/>
