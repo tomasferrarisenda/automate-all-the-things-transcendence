@@ -19,7 +19,7 @@
 
 <p title="All The Things" align="center"> <img src="https://i.imgur.com/j4oqXCh.jpg"></p>
 
-# **BRAINDAMAGE EDITION**
+# **TRANSCENDENCE EDITION**
 
 This Braindamage Edition builds upon the [Insane Edition](https://github.com/tferrari92/automate-all-the-things-insane).
 
