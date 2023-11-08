@@ -1,0 +1,11 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: redis-cli-pod
+  labels:
+    purpose: redis-cli
+spec:
+  containers:
+  - name: redis-cli
+    image: redis
+    command: ["redis-cli"]
