@@ -34,16 +34,16 @@ cassandra:
     size: 5Gi
   config:
     cluster_size: 1
-  livenessProbe:
-    initialDelaySeconds: 180
-    periodSeconds: 60
-    timeoutSeconds: 10
-    # successThreshold: 1
-    # failureThreshold: 3
-  readinessProbe:
-    initialDelaySeconds: 180
-    periodSeconds: 60
-    timeoutSeconds: 10
-    # successThreshold: 1
-    # failureThreshold: 3
-    # address: "${POD_IP}"
+  # livenessProbe:
+  #   initialDelaySeconds: 180
+  #   periodSeconds: 60
+  #   timeoutSeconds: 10
+  #   successThreshold: 1
+  #   failureThreshold: 3
+  # readinessProbe:
+  #   initialDelaySeconds: 180
+  #   periodSeconds: 60
+  #   timeoutSeconds: 10
+  #   successThreshold: 1
+  #   failureThreshold: 3
+  #   address: "${POD_IP}"

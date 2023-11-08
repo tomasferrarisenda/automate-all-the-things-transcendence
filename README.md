@@ -436,7 +436,7 @@ Here are the specific numbers:
 - -3 Istiod / Grafana 
 - -2 Istio Gateway / Flagger
 - -1 Kiali / Flagger Load-Tester
-- 00 Databases
+- 0 Databases
 - 0 Backends
 - 1 Frontends
 
