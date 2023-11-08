@@ -7,5 +7,4 @@ metadata:
 spec:
   containers:
   - name: redis-cli
-    image: redis
-    command: ["redis-cli"]
+    image: goodsmileduck/redis-cli
