@@ -83,6 +83,11 @@ resource "aws_iam_role_policy_attachment" "amazon-ec2-container-registry-read-on
   role       = aws_iam_role.nodes.name
 }
 
+resource "aws_iam_role_policy_attachment" "external-dns" {
+  policy_arn = "arn:aws:iam::aws:policy/AllowExternalDNSUpdates"
+  role       = aws_iam_role.nodes.name
+}
+
 resource "aws_eks_node_group" "private-nodes" {
   cluster_name    = aws_eks_cluster.cluster.name
   version         = aws_eks_cluster.cluster.version
