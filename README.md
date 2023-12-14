@@ -431,8 +431,7 @@ Here are the specific numbers:
 
 ## App of Apps
 - -5 Prometheus
-- -4 Istio Base / Jaegger / Loki / Sealed-Secrets
-- -40 Istio Base / Jaegger / Loki / Metrics-Server / Harbor / Sealed-Secrets / Cert-Manager / External DNS
+- -4 Istio Base / Jaegger / Loki / Metrics-Server / Harbor / Sealed-Secrets / Cert-Manager / External DNS
 - -3 Istiod / Grafana 
 - -2 Istio Gateway / Flagger
 - -1 Kiali / Flagger Load-Tester
@@ -444,12 +443,12 @@ Here are the specific numbers:
 - -1 Sealed-Secret
 - 0 Deployment
 - 1 Canary
-- 20 Horizontal Pod Autoscaler
+- 2 Horizontal Pod Autoscaler
 
 ## Frontend Applications
 - 0 Deployment
 - 1 Canary
-- 20 Horizontal Pod Autoscaler
+- 2 Horizontal Pod Autoscaler
 
 <br/>
 <br/>
