@@ -23,10 +23,10 @@
 # }
 
 
-resource "aws_iam_policy" "external_dns_controller" {
-  policy = file("./templates/ExternalDNSController.json")
-  name   = "AllowExternalDNSUpdates"
-}
+# resource "aws_iam_policy" "external_dns_controller" {
+#   policy = file("./templates/ExternalDNSController.json")
+#   name   = "AllowExternalDNSUpdates"
+# }
 
 # resource "aws_iam_role_policy_attachment" "external_dns_controller_attach" {
 #   role       = aws_iam_role.external_dns_controller.name
