@@ -84,7 +84,7 @@ resource "aws_iam_role_policy_attachment" "amazon-ec2-container-registry-read-on
 }
 
 resource "aws_iam_role_policy_attachment" "external-dns" {
-  policy_arn = "arn:aws:iam::aws:policy/AllowExternalDNSUpdates"
+  policy_arn = aws_iam_policy.external_dns_controller.arn
   role       = aws_iam_role.nodes.name
   # depends_on = [
   #   aws_iam_policy.external_dns_controller
