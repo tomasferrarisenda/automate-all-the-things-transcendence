@@ -1,0 +1,39 @@
+# serviceAccount:
+#   name: "external-dns"
+
+# rbac:
+#   pspEnabled: false
+
+# name: "external-dns"
+
+
+  # set_string {
+  #   name  = "policy"
+  #   value = "sync"
+  # }
+
+  # set_string {
+  #   name  = "logLevel"
+  #   value = var.external_dns_chart_log_level
+  # }
+
+#   set {
+#     name  = "sources"
+#     value = "{ingress,service}"
+#   }
+
+#   set {
+#     name  = "domainFilters"
+#     value = ""
+#   }
+
+#   set_string {
+#     name  = "aws.zoneType"
+#     value = "public"
+#   }
+
+#   set_string {
+#     name  = "aws.region"
+#     value = var.aws_region
+#   }
+# }
