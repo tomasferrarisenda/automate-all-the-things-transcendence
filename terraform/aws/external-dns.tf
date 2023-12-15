@@ -41,13 +41,6 @@ resource "aws_iam_policy" "external_dns_controller" {
 #   value = aws_iam_policy.external_dns_controller.arn
 # }
 
-# resource "aws_route53_zone" "main" {
-#   name = "tferrari92.com"
-# }
-
-# output "aws_route53_zone_id" {
-#   value = aws_route53_zone.main.zone_id
-# }
 
 
 

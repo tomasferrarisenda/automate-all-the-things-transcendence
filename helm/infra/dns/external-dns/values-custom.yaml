@@ -6,6 +6,9 @@
 
 # name: "external-dns"
 
+domainFilters:
+  - tferrari.com
+
 
   # set_string {
   #   name  = "policy"
@@ -20,11 +23,6 @@
 #   set {
 #     name  = "sources"
 #     value = "{ingress,service}"
-#   }
-
-#   set {
-#     name  = "domainFilters"
-#     value = ""
 #   }
 
 #   set_string {
