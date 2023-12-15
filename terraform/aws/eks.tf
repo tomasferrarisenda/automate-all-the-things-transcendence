@@ -119,7 +119,7 @@ resource "aws_eks_node_group" "private-nodes" {
   depends_on = [
     aws_iam_role_policy_attachment.amazon-eks-worker-node-policy,
     aws_iam_role_policy_attachment.amazon-eks-cni-policy,
-    aws_iam_role_policy_attachment.amazon-ec2-container-registry-read-only
+    aws_iam_role_policy_attachment.amazon-ec2-container-registry-read-only,
     aws_iam_role_policy_attachment.external-dns
   ]
 
