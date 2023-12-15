@@ -24,7 +24,7 @@ kind: Service
 metadata:
   name: nginx
   annotations:
-    external-dns.alpha.kubernetes.io/hostname: nginx.tferrari.com
+    external-dns.alpha.kubernetes.io/hostname: nginx1.tferrari.com
 spec:
   # type: ClusterIP
   type: LoadBalancer
