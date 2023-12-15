@@ -9,6 +9,8 @@
 domainFilters:
   - tferrari.com
 
+policy: sync
+
 
   # set_string {
   #   name  = "policy"
