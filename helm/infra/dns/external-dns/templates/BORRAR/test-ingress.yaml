@@ -53,8 +53,7 @@ metadata:
     alb.ingress.kubernetes.io/unhealthy-threshold-count: '2'
 spec:
   rules:
-    - host: nginx.tferrari.com
-      http:
+    - http:
         paths:
           - backend:
               service:
@@ -63,4 +62,5 @@ spec:
                   number: 80
             path: /
             pathType: Prefix
+      # host: nginx.tferrari.com
 
