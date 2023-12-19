@@ -1,66 +1,66 @@
-# ---
-# apiVersion: apps/v1
-# kind: Deployment
-# metadata:
-#   name: nginx
-# spec:
-#   selector:
-#     matchLabels:
-#       app: nginx
-#   template:
-#     metadata:
-#       labels:
-#         app: nginx
-#     spec:
-#       containers:
-#       - image: nginx
-#         name: nginx
-#         ports:
-#         - containerPort: 80
-#           name: http
-# ---
-# apiVersion: v1
-# kind: Service
-# metadata:
-#   name: nginx
-#   # annotations:
-#   #   external-dns.alpha.kubernetes.io/hostname: nginx.tferrari.com
-# spec:
-#   type: ClusterIP
-#   # type: LoadBalancer
-#   ports:
-#   - port: 80
-#     name: http
-#     targetPort: 80
-#   selector:
-#     app: nginx
-# ---
-# apiVersion: networking.k8s.io/v1
-# kind: Ingress
-# metadata:
-#   name: nginx
-#   annotations:
-#     # external-dns.alpha.kubernetes.io/hostname: nginx.tferrari.com
-#     kubernetes.io/ingress.class: "alb"
-#     alb.ingress.kubernetes.io/scheme: "internet-facing"
-#     alb.ingress.kubernetes.io/target-type: "ip"
-#     alb.ingress.kubernetes.io/healthcheck-protocol: "HTTP"
-#     alb.ingress.kubernetes.io/healthcheck-port: "traffic-port"
-#     alb.ingress.kubernetes.io/healthcheck-interval-seconds: '15'
-#     alb.ingress.kubernetes.io/healthcheck-timeout-seconds: '5'
-#     alb.ingress.kubernetes.io/success-codes: '200'
-#     alb.ingress.kubernetes.io/healthy-threshold-count: '2'
-#     alb.ingress.kubernetes.io/unhealthy-threshold-count: '2'
-# spec:
-#   rules:
-#     - http:
-#         paths:
-#           - backend:
-#               service:
-#                 name: nginx
-#                 port:
-#                   number: 80
-#             path: /
-#             pathType: Prefix
-#       host: nginx.tferrari.com
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nginx
+spec:
+  selector:
+    matchLabels:
+      app: nginx
+  template:
+    metadata:
+      labels:
+        app: nginx
+    spec:
+      containers:
+      - image: nginx
+        name: nginx
+        ports:
+        - containerPort: 80
+          name: http
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: nginx
+  # annotations:
+  #   external-dns.alpha.kubernetes.io/hostname: nginx.tferrari.com
+spec:
+  type: ClusterIP
+  # type: LoadBalancer
+  ports:
+  - port: 80
+    name: http
+    targetPort: 80
+  selector:
+    app: nginx
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: nginx
+  annotations:
+    # external-dns.alpha.kubernetes.io/hostname: nginx.tferrari.com
+    kubernetes.io/ingress.class: "alb"
+    alb.ingress.kubernetes.io/scheme: "internet-facing"
+    alb.ingress.kubernetes.io/target-type: "ip"
+    alb.ingress.kubernetes.io/healthcheck-protocol: "HTTP"
+    alb.ingress.kubernetes.io/healthcheck-port: "traffic-port"
+    alb.ingress.kubernetes.io/healthcheck-interval-seconds: '15'
+    alb.ingress.kubernetes.io/healthcheck-timeout-seconds: '5'
+    alb.ingress.kubernetes.io/success-codes: '200'
+    alb.ingress.kubernetes.io/healthy-threshold-count: '2'
+    alb.ingress.kubernetes.io/unhealthy-threshold-count: '2'
+spec:
+  rules:
+    - http:
+        paths:
+          - backend:
+              service:
+                name: nginx
+                port:
+                  number: 80
+            path: /
+            pathType: Prefix
+      host: nginx.tferrari.com
 

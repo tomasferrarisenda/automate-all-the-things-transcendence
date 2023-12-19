@@ -1,0 +1,62 @@
+{
+    "ResourceRecordSets": [
+        {
+            "Name": "tferrari.com.",
+            "Type": "NS",
+            "TTL": 172800,
+            "ResourceRecords": [
+                {
+                    "Value": "ns-1709.awsdns-21.co.uk."
+                },
+                {
+                    "Value": "ns-1095.awsdns-08.org."
+                },
+                {
+                    "Value": "ns-447.awsdns-55.com."
+                },
+                {
+                    "Value": "ns-722.awsdns-26.net."
+                }
+            ]
+        },
+        {
+            "Name": "tferrari.com.",
+            "Type": "SOA",
+            "TTL": 900,
+            "ResourceRecords": [
+                {
+                    "Value": "ns-1709.awsdns-21.co.uk. awsdns-hostmaster.amazon.com. 1 7200 900 1209600 86400"
+                }
+            ]
+        },
+        {
+            "Name": "cname-nginx1.tferrari.com.",
+            "Type": "TXT",
+            "TTL": 300,
+            "ResourceRecords": [
+                {
+                    "Value": "\"heritage=external-dns,external-dns/owner=default,external-dns/resource=service/dns/nginx\""
+                }
+            ]
+        },
+        {
+            "Name": "nginx1.tferrari.com.",
+            "Type": "A",
+            "AliasTarget": {
+                "HostedZoneId": "Z3AADJGX6KTTL2",
+                "DNSName": "a7d6d7b801e9647369fad0568dbf1018-241926315.us-east-2.elb.amazonaws.com.",
+                "EvaluateTargetHealth": true
+            }
+        },
+        {
+            "Name": "nginx1.tferrari.com.",
+            "Type": "TXT",
+            "TTL": 300,
+            "ResourceRecords": [
+                {
+                    "Value": "\"heritage=external-dns,external-dns/owner=default,external-dns/resource=service/dns/nginx\""
+                }
+            ]
+        }
+    ]
+}
