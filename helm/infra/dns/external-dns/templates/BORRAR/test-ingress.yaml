@@ -40,7 +40,6 @@ kind: Ingress
 metadata:
   name: nginx
   annotations:
-    # external-dns.alpha.kubernetes.io/hostname: nginx.tferrari.com.
     # external-dns.alpha.kubernetes.io/ttl: "60"
     kubernetes.io/ingress.class: "alb"
     alb.ingress.kubernetes.io/scheme: "internet-facing"
@@ -63,5 +62,5 @@ spec:
                   number: 80
             path: /
             pathType: Prefix
-      host: nginx.tferrari.com
+      host: nginx.tferrari.com # For ingress objects ExternalDNS will create a DNS record based on the host specified for the ingress object. Annotation is not required. See https://github.com/kubernetes-sigs/external-dns/blob/master/docs/tutorials/aws.md#verify-externaldns-works-ingress-example
 
