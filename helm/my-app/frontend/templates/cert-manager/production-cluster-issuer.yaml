@@ -11,7 +11,7 @@ spec:
     # Production Let’s Encrypt server
     server: https://acme-v02.api.letsencrypt.org/directory # Uncomment when switching to Production
     privateKeySecretRef:
-      # Reference to Production issuer
+      # Reference to Production secret
       name: production-cluster-issuer
     solvers:
       - selector: {}

@@ -11,7 +11,7 @@ spec:
     # Staging Let’s Encrypt server
     server: https://acme-staging-v02.api.letsencrypt.org/directory
     privateKeySecretRef:
-      # Reference to Staging issuer
+      # Reference to Staging secret
       name: staging-cluster-issuer
     solvers:
       - selector: {}
