@@ -1,4 +1,4 @@
-{{- if .Values.environment "prod" }} # Only deploy in prod
+{{- if eq .Values.environment "prod" }} # Only deploy in prod
 apiVersion: cert-manager.io/v1
 kind: ClusterIssuer
 metadata:
