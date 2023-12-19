@@ -431,10 +431,10 @@ Here are the specific numbers:
 
 ## App of Apps
 - -5 Prometheus
-- -4 Istio Base / Jaegger / Loki / Metrics-Server / Harbor / Sealed-Secrets / Cert-Manager / External DNS
+- -4 Istio Base / Jaegger / Loki / Metrics-Server / Harbor / Sealed-Secrets / External DNS
 - -3 Istiod / Grafana 
 - -2 Istio Gateway / Flagger
-- -1 Kiali / Flagger Load-Tester
+- -1 Kiali / Flagger Load-Tester / Cert-Manager
 - 0 Databases
 - 0 Backends
 - 1 Frontends
