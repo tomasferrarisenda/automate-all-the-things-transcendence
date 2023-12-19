@@ -1,6 +1,11 @@
 global:
   istioNamespace: service-mesh
 
+service:
+  annotations: {    
+    external-dns.alpha.kubernetes.io/hostname: tferrari.com 
+  }
+
 # This creates issues with terraform destroy
 # service:
 #   annotations: {    
