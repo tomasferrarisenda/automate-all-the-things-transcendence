@@ -3,9 +3,9 @@ domainFilters:
 
 policy: sync
 
-aws:
-#   minTTL: 10
-    zonesCacheDuration: 60	
+# aws:
+# #   minTTL: 10
+#     zonesCacheDuration: 60	
 
   # set_string {
   #   name  = "logLevel"
