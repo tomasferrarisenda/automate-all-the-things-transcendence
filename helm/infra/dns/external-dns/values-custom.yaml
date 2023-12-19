@@ -5,19 +5,7 @@ policy: sync
 
 aws:
   zoneType: "public" # only look at public hosted zones (valid values are public, private or no value for both)
-  # minTTL: 60
-  # zonesCacheDuration: 60
+  # minTTL: 60 # VERIFICAR
+  # zonesCacheDuration: 60  # VERIFICAR
 
-txtOwnerId: tferrari-hz
-
-  # set_string {
-  #   name  = "logLevel"
-  #   value = var.external_dns_chart_log_level
-  # }
-
-
-#   set_string {
-#     name  = "aws.region"
-#     value = var.aws_region
-#   }
-# }
+txtOwnerId: tferrari-hz  # VERIFICAR
