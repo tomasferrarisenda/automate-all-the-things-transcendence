@@ -4,7 +4,7 @@ domainFilters:
 policy: sync
 
 aws:
-  zoneType: public # only look at public hosted zones (valid values are public, private or no value for both)
+  zoneType: "public" # only look at public hosted zones (valid values are public, private or no value for both)
   # minTTL: 60
   # zonesCacheDuration: 60
 
