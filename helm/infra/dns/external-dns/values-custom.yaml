@@ -1,21 +1,11 @@
-# serviceAccount:
-#   name: "external-dns"
-
-# rbac:
-#   pspEnabled: false
-
-# name: "external-dns"
-
 domainFilters:
   - tferrari.com
 
 policy: sync
 
+aws:
+  minTTL: 10
 
-  # set_string {
-  #   name  = "policy"
-  #   value = "sync"
-  # }
 
   # set_string {
   #   name  = "logLevel"
