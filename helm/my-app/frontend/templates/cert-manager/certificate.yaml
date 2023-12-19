@@ -10,9 +10,9 @@ metadata:
 spec:
   secretName: wildcard-tferrari-com-crt
   # secretName: {{ .Values.appName }}-{{ .Values.environment }}-tferrari-com-crt
-  commonName: "*.{{ .Values.host }}"
+  # commonName: "*.{{ .Values.host }}"
   dnsNames: 
-    - "*.{{ .Values.host }}"
+    - {{ .Values.host }}
     # - {{ .Values.appName }}-{{ .Values.service }}-{{ .Values.environment }}.tferrari.com
   issuerRef:
     # Let’s Encrypt has a strict rate limit on certificates issued, so we use the Staging Let’s Encrypt server for testing, and then we switch to the Production Let’s Encrypt server.
