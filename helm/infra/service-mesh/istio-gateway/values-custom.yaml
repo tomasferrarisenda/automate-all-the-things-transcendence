@@ -3,7 +3,7 @@ global:
 
 service:
   annotations: {    
-    external-dns.alpha.kubernetes.io/hostname: app.tferrari.com 
+    external-dns.alpha.kubernetes.io/hostname: tferrari.com 
   }
 
 # This creates issues with terraform destroy
