@@ -3,24 +3,18 @@ domainFilters:
 
 policy: sync
 
-# aws:
-#   minTTL: 60
-#   zonesCacheDuration: 60	
+aws:
+  zoneType: public # only look at public hosted zones (valid values are public, private or no value for both)
+  # minTTL: 60
+  # zonesCacheDuration: 60
+
+txtOwnerId:
 
   # set_string {
   #   name  = "logLevel"
   #   value = var.external_dns_chart_log_level
   # }
 
-#   set {
-#     name  = "sources"
-#     value = "{ingress,service}"
-#   }
-
-#   set_string {
-#     name  = "aws.zoneType"
-#     value = "public"
-#   }
 
 #   set_string {
 #     name  = "aws.region"
