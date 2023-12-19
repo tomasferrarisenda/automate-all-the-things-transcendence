@@ -11,14 +11,14 @@ output "aws_route53_zone_name_servers" {
 }
 
 
-resource "aws_route53_zone" "sub" {
-  name = "nginx.tferrari.com"
-}
+# resource "aws_route53_zone" "sub" {
+#   name = "nginx.tferrari.com"
+# }
 
-output "aws_route53_zone_id_sub" {
-  value = aws_route53_zone.sub.zone_id
-}
+# output "aws_route53_zone_id_sub" {
+#   value = aws_route53_zone.sub.zone_id
+# }
 
-output "aws_route53_zone_name_servers_sub" {
-  value = aws_route53_zone.sub.name_servers
-}
+# output "aws_route53_zone_name_servers_sub" {
+#   value = aws_route53_zone.sub.name_servers
+# }
