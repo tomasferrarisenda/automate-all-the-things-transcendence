@@ -3,8 +3,8 @@ domainFilters:
 
 policy: sync
 
-aws:
-  minTTL: 10
+# aws:
+#   minTTL: 10
 
 
   # set_string {
