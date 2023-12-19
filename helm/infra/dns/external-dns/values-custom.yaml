@@ -8,7 +8,7 @@ aws:
   # minTTL: 60
   # zonesCacheDuration: 60
 
-txtOwnerId:
+txtOwnerId: tferrari-hz
 
   # set_string {
   #   name  = "logLevel"
