@@ -45,6 +45,9 @@
 #   })
 # }
 
+data "aws_caller_identity" "current" {}
+
+
 resource "aws_kms_key" "domaindnssec" {
   customer_master_key_spec = "ECC_NIST_P256"
   deletion_window_in_days  = 7
