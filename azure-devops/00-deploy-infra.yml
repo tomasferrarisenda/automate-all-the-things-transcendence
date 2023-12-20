@@ -128,6 +128,14 @@ steps:
     echo $SINGLE_LINE_NS_VALUES
     aws route53domains update-domain-nameservers --region us-east-1 --domain-name $(DOMAIN) --nameservers $(echo $SINGLE_LINE_NS_VALUES)
     aws route53 enable-hosted-zone-dnssec --region us-east-1 --hosted-zone-id $ZONE_ID
+    aws --region us-east-1 route53 get-dnssec --hosted-zone-id $ZONE_ID | jq -r '.KeySigningKeys[0].PublicKey' > public-signing-key.txt
   displayName: 'Configure domain registrar name servers and enable DNSSEC signing'
   condition: always()
 
+- task: PublishBuildArtifacts@1
+  displayName: 'Export SSH command'
+  condition: always()
+  inputs:
+    PathtoPublish: 'public-signing-key.txt'
+    ArtifactName: 'Public singning key'
+    publishLocation: 'Container'

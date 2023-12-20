@@ -749,4 +749,12 @@ Special thanks to all these wonderful YouTube people. This wouldn't have been po
 
 # ESTABLISH CHAIN OF TRUST
 https://youtu.be/13ZpNsr4NBk?t=102&si=KrC2PGI0io6QPInb
-https://docs.aws.amazon.com/Route53/latest/DeveloperGuide/dns-configuring-dnssec-enable-signing.html#dns-configuring-dnssec-chain-of-trust
+https://docs.aws.amazon.com/Route53/latest/DeveloperGuide/domain-configure-dnssec.html#domain-configure-dnssec-adding-keys
+
+# This resource MUST be created in us-east-1 region for it to work!!! 
+resource "aws_kms_key" "domaindnssec" {
+
+
+
+qh63MqSqy80doVbTiTPjyWVlR0QSGACXmuaukQClcSGclcipy9eBFqSBY0YqKIfJSyA+CVsenZB+i6Hh1cpLhw==
+qh63MqSqy80doVbTiTPjyWVlR0QSGACXmuaukQClcSGclcipy9eBFqSBY0YqKIfJSyA+CVsenZB+i6Hh1cpLhw==

@@ -14,7 +14,6 @@ resource "aws_kms_key" "domaindnssec" {
         Action = "kms:*"
         Principal = {
           AWS = "arn:aws:iam::${data.aws_caller_identity.current.account_id}:root"
-          # AWS = "*"
         }
         Resource = "*"
       },
@@ -28,7 +27,6 @@ resource "aws_kms_key" "domaindnssec" {
           "kms:DescribeKey",
           "kms:GetPublicKey",
           "kms:Sign",
-          # "kms:Verify",
         ],
         Resource = "*"
         Condition = {
