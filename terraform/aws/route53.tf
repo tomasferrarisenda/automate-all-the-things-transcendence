@@ -49,7 +49,7 @@ data "aws_caller_identity" "current" {}
 
 
 resource "aws_kms_key" "domaindnssec" {
-  descriptio               = "Key for DNSSEC"
+  description              = "Key for DNSSEC"
   customer_master_key_spec = "ECC_NIST_P256"
   deletion_window_in_days  = 7
   key_usage                = "SIGN_VERIFY"
@@ -82,6 +82,11 @@ resource "aws_kms_key" "domaindnssec" {
     Version = "2012-10-17"
   })
 }
+
+# resource "aws_kms_alias" "a" {
+#   name          = "alias/my-key-alias"
+#   target_key_id = aws_kms_key.domaindnssec.key_id
+# }
 
 
 resource "aws_route53_zone" "main" {
