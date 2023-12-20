@@ -108,3 +108,11 @@ steps:
     PathtoPublish: 'ssh-to-bastion.txt'
     ArtifactName: 'SSH to bastion'
     publishLocation: 'Container'
+
+- script: |
+    ZONE_ID=$(aws route53 list-hosted-zones-by-name --output json --dns-name "$(DOMAIN)" |  jq -r '.HostedZones[0].Id' | cut -d'/' -f3)
+    NS_VALUES=$(aws route53 list-resource-record-sets --hosted-zone-id $ZONE_ID | jq -r '.ResourceRecordSets[] | select(.Type=="NS") .ResourceRecords[].Value')
+    FORMATTED_NS_VALUES=$(echo "$NS_VALUES" | sed 's/\.$//;s/^/Name=/')
+    SINGLE_LINE_NS_VALUES=$(echo "${FORMATTED_NS_VALUES}" | tr '\n' ' ')
+    aws route53domains update-domain-nameservers --region us-east-1 --domain-name $(DOMAIN) --nameservers $(echo $SINGLE_LINE_NS_VALUES)
+  displayName: 'Configure domain registrar name servers'
