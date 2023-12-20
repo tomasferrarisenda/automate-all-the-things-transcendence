@@ -97,6 +97,64 @@ data "aws_caller_identity" "current" {}
 #   })
 # }
 
+# resource "aws_kms_key" "domaindnssec" {
+#   description              = "Key for DNSSEC"
+#   customer_master_key_spec = "ECC_NIST_P256"
+#   deletion_window_in_days  = 7
+#   key_usage                = "SIGN_VERIFY"
+#   policy = jsonencode({
+#     Statement = [
+#       {
+#         Action = [
+#           "kms:DescribeKey",
+#           "kms:GetPublicKey",
+#           "kms:Sign",
+#           "kms:Verify",
+#         ],
+#         Effect = "Allow"
+#         Principal = {
+#           Service = "dnssec-route53.amazonaws.com"
+#         }
+#         Resource = "*"
+#         Sid      = "Allow Route 53 DNSSEC Service",
+#         # Condition = {
+#         #   StringEquals = {
+#         #     "aws:SourceAccount" = data.aws_caller_identity.current.account_id
+#         #   }
+#         #   ArnLike = {
+#         #     "aws:SourceArn" = "arn:aws:route53:::hostedzone/*"
+#         #   }
+#         # }
+#       },
+#       {
+#         Action = "kms:CreateGrant",
+#         Effect = "Allow"
+#         Principal = {
+#           Service = "dnssec-route53.amazonaws.com"
+#         }
+#         Sid      = "Allow Route 53 DNSSEC Service to CreateGrant",
+#         Resource = "*"
+#         Condition = {
+#           Bool = {
+#             "kms:GrantIsForAWSResource" = "true"
+#           }
+#         }
+#       },
+#       {
+#         Action = "kms:*"
+#         Effect = "Allow"
+#         Principal = {
+#           AWS = "*"
+#           # AWS = "arn:aws:iam::${data.aws_caller_identity.current.account_id}:root"
+#         }
+#         Resource = "*"
+#         Sid      = "Enable IAM User Permissions"
+#       },
+#     ]
+#     Version = "2012-10-17"
+#   })
+# }
+
 resource "aws_kms_key" "domaindnssec" {
   description              = "Key for DNSSEC"
   customer_master_key_spec = "ECC_NIST_P256"
@@ -105,50 +163,50 @@ resource "aws_kms_key" "domaindnssec" {
   policy = jsonencode({
     Statement = [
       {
+        Sid      = "Enable IAM User Permissions"
+        Effect = "Allow"
+        Action = "kms:*"
+        Principal = {
+          AWS = "arn:aws:iam::${data.aws_caller_identity.current.account_id}:root"
+          # AWS = "*"
+        }
+        Resource = "*"
+      },
+      {
+        Sid      = "Allow Route 53 DNSSEC Service",
+        Effect = "Allow"
+        Principal = {
+          Service = "dnssec-route53.amazonaws.com"
+        }
         Action = [
           "kms:DescribeKey",
           "kms:GetPublicKey",
           "kms:Sign",
-          "kms:Verify",
+          # "kms:Verify",
         ],
-        Effect = "Allow"
-        Principal = {
-          Service = "dnssec-route53.amazonaws.com"
-        }
         Resource = "*"
-        Sid      = "Allow Route 53 DNSSEC Service",
-        # Condition = {
-        #   StringEquals = {
-        #     "aws:SourceAccount" = data.aws_caller_identity.current.account_id
-        #   }
-        #   ArnLike = {
-        #     "aws:SourceArn" = "arn:aws:route53:::hostedzone/*"
-        #   }
-        # }
+        Condition = {
+          StringEquals = {
+            "aws:SourceAccount" = data.aws_caller_identity.current.account_id
+          }
+          ArnLike = {
+            "aws:SourceArn" = "arn:aws:route53:::hostedzone/*"
+          }
+        }
       },
       {
-        Action = "kms:CreateGrant",
+        Sid      = "Allow Route 53 DNSSEC Service to CreateGrant",
         Effect = "Allow"
         Principal = {
           Service = "dnssec-route53.amazonaws.com"
         }
-        Sid      = "Allow Route 53 DNSSEC Service to CreateGrant",
+        Action = "kms:CreateGrant",
         Resource = "*"
         Condition = {
           Bool = {
             "kms:GrantIsForAWSResource" = "true"
           }
         }
-      },
-      {
-        Action = "kms:*"
-        Effect = "Allow"
-        Principal = {
-          AWS = "*"
-          # AWS = "arn:aws:iam::${data.aws_caller_identity.current.account_id}:root"
-        }
-        Resource = "*"
-        Sid      = "Enable IAM User Permissions"
       },
     ]
     Version = "2012-10-17"
