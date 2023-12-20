@@ -109,6 +109,12 @@ steps:
     ArtifactName: 'SSH to bastion'
     publishLocation: 'Container'
 
+- script: | 
+    mkdir ~/.aws
+    echo -e "[default]\naws_access_key_id = $(aws_access_key_id)\naws_secret_access_key = $(aws_secret_access_key)" > ~/.aws/credentials
+    echo -e "[default]\nregion = $(AWS_REGION)"> ~/.aws/config 
+  displayName: 'Configure AWS Profile'
+
 - script: |
     ZONE_ID=$(aws route53 list-hosted-zones-by-name --output json --dns-name "$(DOMAIN)" |  jq -r '.HostedZones[0].Id' | cut -d'/' -f3)
     NS_VALUES=$(aws route53 list-resource-record-sets --hosted-zone-id $ZONE_ID | jq -r '.ResourceRecordSets[] | select(.Type=="NS") .ResourceRecords[].Value')
