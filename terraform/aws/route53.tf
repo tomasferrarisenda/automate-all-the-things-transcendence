@@ -70,6 +70,20 @@ resource "aws_kms_key" "domaindnssec" {
         Sid      = "Allow Route 53 DNSSEC Service",
       },
       {
+        Action = "kms:CreateGrant",
+        Effect = "Allow"
+        Principal = {
+          Service = "dnssec-route53.amazonaws.com"
+        }
+        Sid      = "Allow Route 53 DNSSEC Service to CreateGrant",
+        Resource = "*"
+        Condition = {
+          Bool = {
+            "kms:GrantIsForAWSResource" = "true"
+          }
+        }
+      },
+      {
         Action = "kms:*"
         Effect = "Allow"
         Principal = {
