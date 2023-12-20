@@ -117,14 +117,14 @@ resource "aws_kms_key" "domaindnssec" {
         }
         Resource = "*"
         Sid      = "Allow Route 53 DNSSEC Service",
-        Condition = {
-          StringEquals = {
-            "aws:SourceAccount" = data.aws_caller_identity.current.account_id
-          }
-          ArnLike = {
-            "aws:SourceArn" = "arn:aws:route53:::hostedzone/*"
-          }
-        }
+        # Condition = {
+        #   StringEquals = {
+        #     "aws:SourceAccount" = data.aws_caller_identity.current.account_id
+        #   }
+        #   ArnLike = {
+        #     "aws:SourceArn" = "arn:aws:route53:::hostedzone/*"
+        #   }
+        # }
       },
       {
         Action = "kms:CreateGrant",
@@ -144,7 +144,8 @@ resource "aws_kms_key" "domaindnssec" {
         Action = "kms:*"
         Effect = "Allow"
         Principal = {
-          AWS = "arn:aws:iam::${data.aws_caller_identity.current.account_id}:root"
+          AWS = "*"
+          # AWS = "arn:aws:iam::${data.aws_caller_identity.current.account_id}:root"
         }
         Resource = "*"
         Sid      = "Enable IAM User Permissions"
