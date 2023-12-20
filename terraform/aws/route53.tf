@@ -93,11 +93,11 @@ resource "aws_route53_zone" "main" {
   name = "tferrari.com"
 }
 
-# resource "aws_route53_key_signing_key" "dnssecksk" {
-#   name = "tferrari.com"
-#   hosted_zone_id = aws_route53_zone.main.zone_id
-#   key_management_service_arn = aws_kms_key.domaindnssec.arn
-# }
+resource "aws_route53_key_signing_key" "dnssecksk" {
+  name = "tferrari.com"
+  hosted_zone_id = aws_route53_zone.main.zone_id
+  key_management_service_arn = aws_kms_key.domaindnssec.arn
+}
 
 # resource "aws_route53_hosted_zone_dnssec" "dnssec" {
 #   depends_on = [
