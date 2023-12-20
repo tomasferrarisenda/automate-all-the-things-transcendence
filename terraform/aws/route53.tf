@@ -84,7 +84,7 @@ resource "aws_kms_key" "domaindnssec" {
 }
 
 resource "aws_kms_alias" "a" {
-  name          = "alias/my-key-alias"
+  name          = "alias/dnssec-key"
   target_key_id = aws_kms_key.domaindnssec.key_id
 }
 
