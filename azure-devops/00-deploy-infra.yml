@@ -13,6 +13,8 @@ variables:
   - group: aws-keys
   - name: AWS_REGION
     value: us-east-1  # This value was modified by the initial-setup python script
+  - name: DOMAIN
+    value: tferrari.com # This value was modified by the initial-setup python script
 
 steps:
 # In this case it's necessary to specify the checkout with the persistCredential options set to true. This will enable us to push the changes to the repo.

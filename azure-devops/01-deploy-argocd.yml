@@ -8,8 +8,6 @@ variables:
     value: us-east-1  # This value was modified by the initial-setup python script
   - name: APP_NAME
     value: gonchi # This value was modified by the initial-setup python script
-  - name: DOMAIN
-    value: tferrari.com # This value was modified by the initial-setup python script
     
 
 pool:
