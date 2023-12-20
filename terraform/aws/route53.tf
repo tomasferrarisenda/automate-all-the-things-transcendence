@@ -195,7 +195,7 @@ resource "aws_kms_key" "domaindnssec" {
         }
       },
       {
-        Sid      = "Allow Route 53 DNSSEC Service to CreateGrant",
+        Sid      = "Allow Route 53 DNSSEC to CreateGrant",
         Effect = "Allow"
         Principal = {
           Service = "dnssec-route53.amazonaws.com"
@@ -209,7 +209,8 @@ resource "aws_kms_key" "domaindnssec" {
         }
       },
     ]
-    Version = "2012-10-17"
+    Version = "2012-10-17",
+    Id = "dnssec-policy1"
   })
 }
 
