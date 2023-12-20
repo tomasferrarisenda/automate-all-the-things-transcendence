@@ -155,6 +155,7 @@ data "aws_caller_identity" "current" {}
 #   })
 # }
 
+# This resource MUST be created in us-east-1 region for it to work!!! 
 resource "aws_kms_key" "domaindnssec" {
   description              = "Key for DNSSEC"
   customer_master_key_spec = "ECC_NIST_P256"

@@ -5,7 +5,7 @@ trigger: none
 variables:
   - group: aws-keys
   - name: AWS_REGION
-    value: us-east-2  # This value was modified by the initial-setup python script
+    value: us-east-1  # This value was modified by the initial-setup python script
   - name: APP_NAME
     value: gonchi # This value was modified by the initial-setup python script
   - name: DOMAIN

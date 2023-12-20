@@ -15,7 +15,7 @@ terraform {
     bucket         = "gonchi-tf-state-bucket"          # This value was modified by the initial-setup python script
     dynamodb_table = "gonchi-tf-state-dynamo-db-table" # This value was modified by the initial-setup python script
     key            = "terraform.tfstate"
-    region         = "us-east-2" # This value was modified by the initial-setup python script
+    region         = "us-east-1" # This value was modified by the initial-setup python script
     encrypt        = true
   }
 }
