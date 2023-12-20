@@ -127,5 +127,7 @@ steps:
     SINGLE_LINE_NS_VALUES=$(echo "${FORMATTED_NS_VALUES}" | tr '\n' ' ')
     echo $SINGLE_LINE_NS_VALUES
     aws route53domains update-domain-nameservers --region us-east-1 --domain-name $(DOMAIN) --nameservers $(echo $SINGLE_LINE_NS_VALUES)
-  displayName: 'Configure domain registrar name servers'
+    aws route53 enable-hosted-zone-dnssec --region us-east-1 --hosted-zone-id $ZONE_ID
+  displayName: 'Configure domain registrar name servers and enable DNSSEC signing'
   condition: always()
+

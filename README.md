@@ -744,3 +744,9 @@ Special thanks to all these wonderful YouTube people. This wouldn't have been po
 - We'll automate TLS certificates management with Kubernetes Cert Manager.
 - We'll automate DNS records management with Kubernetes External DNS.
 - We'll ditch DockerHub and start using our self-hosted image registry with Harbor.
+
+
+
+# ESTABLISH CHAIN OF TRUST
+https://youtu.be/13ZpNsr4NBk?t=102&si=KrC2PGI0io6QPInb
+https://docs.aws.amazon.com/Route53/latest/DeveloperGuide/dns-configuring-dnssec-enable-signing.html#dns-configuring-dnssec-chain-of-trust
