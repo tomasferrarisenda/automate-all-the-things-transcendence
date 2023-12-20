@@ -114,5 +114,7 @@ steps:
     NS_VALUES=$(aws route53 list-resource-record-sets --hosted-zone-id $ZONE_ID | jq -r '.ResourceRecordSets[] | select(.Type=="NS") .ResourceRecords[].Value')
     FORMATTED_NS_VALUES=$(echo "$NS_VALUES" | sed 's/\.$//;s/^/Name=/')
     SINGLE_LINE_NS_VALUES=$(echo "${FORMATTED_NS_VALUES}" | tr '\n' ' ')
+    echo $SINGLE_LINE_NS_VALUES
     aws route53domains update-domain-nameservers --region us-east-1 --domain-name $(DOMAIN) --nameservers $(echo $SINGLE_LINE_NS_VALUES)
   displayName: 'Configure domain registrar name servers'
+  condition: always()
