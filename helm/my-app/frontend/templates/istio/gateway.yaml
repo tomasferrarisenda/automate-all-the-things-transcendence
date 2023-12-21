@@ -16,4 +16,4 @@ spec:
         - {{ .Values.host }}
       tls:
         mode: SIMPLE
-        credentialName: wildcard-tferrari-com-crt # This should match the Certificate secretName
+        credentialName: {{ .Values.appName }}-com-crt # This should match the Certificate secretName

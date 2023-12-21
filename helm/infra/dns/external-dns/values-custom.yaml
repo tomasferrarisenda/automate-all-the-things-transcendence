@@ -3,9 +3,11 @@ domainFilters:
 
 policy: sync
 
+interval: 30s
+
 aws:
   zoneType: "public" # only look at public hosted zones (valid values are public, private or no value for both)
   # minTTL: 60 # VERIFICAR
   # zonesCacheDuration: 60  # VERIFICAR
 
-txtOwnerId: tferrari-hz  # VERIFICAR
+# txtOwnerId: tferrari-hz  # VERIFICAR
