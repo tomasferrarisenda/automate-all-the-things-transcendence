@@ -82,6 +82,11 @@ jobs:
   condition: eq('${{ parameters.DELETED_KEY_FROM_DOMAIN }}', 'Yes')
   # dependsOn: DeleteK8SResources
   steps:
+  # This step it only to display the pipeline as "Failed" if parameter DELETED_KEY_FROM_DOMAIN is "No". Without this, the pipeline will result as successful which may lead to confusion.
+  - ${{ if eq(parameters.DELETED_KEY_FROM_DOMAIN, 'No') }}:
+    - script: echo "DELETED_KEY_FROM_DOMAIN is set to No, failing the pipeline." && exit 1
+      displayName: Fail the pipeline if DELETED_KEY_FROM_DOMAIN is No
+
   - script: | 
       mkdir ~/.aws
       echo -e "[default]\naws_access_key_id = $(aws_access_key_id)\naws_secret_access_key = $(aws_secret_access_key)" > ~/.aws/credentials
