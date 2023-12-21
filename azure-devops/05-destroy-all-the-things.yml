@@ -2,6 +2,15 @@ name: destroy-all-the-things
 
 trigger: none
 
+parameters:
+  - name: DELETED_KEY_FROM_DOMAIN
+    displayName: 'Have you deleted the DNSSEC key from the domain? If you haven't deleted it, the pipeline won't run.'
+    type: string
+    default: 'No'
+    values:
+    - 'Yes'
+    - 'No'
+
 variables:
   - group: aws-keys
   - name: AWS_REGION
@@ -18,6 +27,7 @@ pool:
 
 jobs:
 - job: DeleteK8SResources
+  condition: eq('${{ parameters.DELETED_KEY_FROM_DOMAIN }}', 'Yes')
   displayName: 'Delete Kubernetes Resources'
   steps:
 
@@ -67,8 +77,19 @@ jobs:
 
 - job: DeleteAWSInfrastructure
   displayName: 'Delete AWS Infrastructure'
-  dependsOn: DeleteK8SResources
+  # dependsOn: DeleteK8SResources
   steps:
+  - script: | 
+      mkdir ~/.aws
+      echo -e "[default]\naws_access_key_id = $(aws_access_key_id)\naws_secret_access_key = $(aws_secret_access_key)" > ~/.aws/credentials
+      echo -e "[default]\nregion = $(AWS_REGION)"> ~/.aws/config 
+    displayName: 'Configure AWS Profile'
+
+    - script: | 
+      ZONE_ID=$(aws route53 list-hosted-zones-by-name --output json --dns-name "$(DOMAIN)" |  jq -r '.HostedZones[0].Id' | cut -d'/' -f3)
+      aws route53 disable-hosted-zone-dnssec --region us-east-1 --hosted-zone-id $ZONE_ID
+    displayName: 'Disable DNSSEC signing on hosted zone'
+
   - task: TerraformInstaller@1
     displayName: Install terraform
     inputs:
