@@ -77,6 +77,7 @@ jobs:
 
 - job: DeleteAWSInfrastructure
   displayName: 'Delete AWS Infrastructure'
+  condition: eq('${{ parameters.DELETED_KEY_FROM_DOMAIN }}', 'Yes')
   # dependsOn: DeleteK8SResources
   steps:
   - script: | 
