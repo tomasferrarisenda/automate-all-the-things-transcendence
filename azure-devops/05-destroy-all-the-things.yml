@@ -4,7 +4,7 @@ trigger: none
 
 parameters:
   - name: DELETED_KEY_FROM_DOMAIN
-    displayName: 'Have you deleted the DNSSEC key from the domain? If you haven't deleted it, the pipeline won't run.'
+    displayName: "Have you deleted the DNSSEC key from the domain? If you haven't deleted it, the pipeline won't run."
     type: string
     default: 'No'
     values:
