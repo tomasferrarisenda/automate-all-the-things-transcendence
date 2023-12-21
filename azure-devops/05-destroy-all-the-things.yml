@@ -93,6 +93,16 @@ jobs:
       echo -e "[default]\nregion = $(AWS_REGION)"> ~/.aws/config 
     displayName: 'Configure AWS Profile'
 
+  - script: |
+      echo "Waiting for 15 minutes..."
+      echo "Why?"
+      echo "Well, after deleting the DNSSEC key from the domain registrar we need to wait the TTL of the DS record before disabling DNSSEC signing."
+      echo "The default TTL of the DS record is 900 seconds (15 minutes)."
+      echo "Assuming you've just deleted the DNSSEC key from the domain registrar, we'll wait the default TTL before running the 'aws route53 disable-hosted-zone-dnssec' command."
+      echo "Go grab yourself a cup of coffee..."
+      sleep 900
+    displayName: 'Wait 15 Minutes'
+
   - script: | 
       ZONE_ID=$(aws route53 list-hosted-zones-by-name --output json --dns-name "$(DOMAIN)" |  jq -r '.HostedZones[0].Id' | cut -d'/' -f3)
       aws route53 disable-hosted-zone-dnssec --region us-east-1 --hosted-zone-id $ZONE_ID
