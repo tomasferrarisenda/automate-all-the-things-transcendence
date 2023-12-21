@@ -86,7 +86,7 @@ jobs:
       echo -e "[default]\nregion = $(AWS_REGION)"> ~/.aws/config 
     displayName: 'Configure AWS Profile'
 
-    - script: | 
+  - script: | 
       ZONE_ID=$(aws route53 list-hosted-zones-by-name --output json --dns-name "$(DOMAIN)" |  jq -r '.HostedZones[0].Id' | cut -d'/' -f3)
       aws route53 disable-hosted-zone-dnssec --region us-east-1 --hosted-zone-id $ZONE_ID
     displayName: 'Disable DNSSEC signing on hosted zone'
