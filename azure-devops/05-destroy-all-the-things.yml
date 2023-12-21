@@ -29,7 +29,7 @@ pool:
 
 jobs:
 - job: DeleteK8SResources
-  condition: eq('${{ parameters.DELETED_KEY_FROM_DOMAIN }}', 'Yes')
+  # condition: eq('${{ parameters.DELETED_KEY_FROM_DOMAIN }}', 'Yes')
   displayName: 'Delete Kubernetes Resources'
   steps:
 
@@ -79,7 +79,7 @@ jobs:
 
 - job: DeleteAWSInfrastructure
   displayName: 'Delete AWS Infrastructure'
-  condition: eq('${{ parameters.DELETED_KEY_FROM_DOMAIN }}', 'Yes')
+  # condition: eq('${{ parameters.DELETED_KEY_FROM_DOMAIN }}', 'Yes')
   # dependsOn: DeleteK8SResources
   steps:
   # This step it only to display the pipeline as "Failed" if parameter DELETED_KEY_FROM_DOMAIN is "No". Without this, the pipeline will result as successful which may lead to confusion.
