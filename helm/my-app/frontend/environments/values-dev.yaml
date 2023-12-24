@@ -5,6 +5,8 @@ deployment:
     tag: 1199
   replicas: 1
 
+port: 443
+
 configmap: 
   nginxConf: |-
     server {
