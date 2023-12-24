@@ -8,11 +8,14 @@ spec:
     istio: gateway
   servers:
     - port:
-        number: {{ .Values.port }}
+        number: 80
         name: http
         protocol: HTTP
       hosts:
         - {{ .Values.host }} # Istio Gateway service external IP
+      # tls:
+      #   httpsRedirect: true
+
     - port:
         number: {{ .Values.port }}
         name: https
@@ -25,12 +28,6 @@ spec:
         mode: SIMPLE
         credentialName: {{ .Values.appName }}-com-crt # This should match the Certificate secretName
 {{- end }}
-
-
-
-
-
-
 
 
 
