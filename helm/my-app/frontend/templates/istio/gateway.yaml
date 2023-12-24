@@ -13,8 +13,8 @@ spec:
         protocol: HTTP
       hosts:
         - {{ .Values.host }} # Istio Gateway service external IP
-      # tls:
-      #   httpsRedirect: true
+      tls:
+        httpsRedirect: true
 
     - port:
         number: {{ .Values.port }}
