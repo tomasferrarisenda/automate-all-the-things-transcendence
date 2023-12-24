@@ -1,4 +1,4 @@
-{{- if eq .Values.environment "dev" }} # Deploy only in dev environment
+# {{- if eq .Values.environment "dev" }} # Deploy only in dev environment
 apiVersion: networking.istio.io/v1beta1
 kind: Gateway
 metadata:
@@ -15,7 +15,6 @@ spec:
         - {{ .Values.host }} # Istio Gateway service external IP
       tls:
         httpsRedirect: true
-
     - port:
         number: 443
         name: https
@@ -25,7 +24,7 @@ spec:
       tls:
         mode: SIMPLE
         credentialName: {{ .Values.appName }}-com-crt # This should match the Certificate secretName
-{{- end }}
+# {{- end }}
 
 
 
@@ -36,22 +35,22 @@ spec:
 
 
 
----
+# ---
 
-{{- if ne .Values.environment "dev" }} # Deploy only in dev environment
-apiVersion: networking.istio.io/v1beta1
-kind: Gateway
-metadata:
-  name: {{ .Values.appName }}-{{ .Values.service }}-{{ .Values.environment }}-gateway
-spec:
-  selector:
-    istio: gateway
-  servers:
-    - port:
-        number: {{ .Values.port }}
-        name: http
-        protocol: HTTP
-      hosts:
-        - {{ .Values.host }} # Istio Gateway service external IP
-{{- end }}
+# {{- if ne .Values.environment "dev" }} # Deploy only in dev environment
+# apiVersion: networking.istio.io/v1beta1
+# kind: Gateway
+# metadata:
+#   name: {{ .Values.appName }}-{{ .Values.service }}-{{ .Values.environment }}-gateway
+# spec:
+#   selector:
+#     istio: gateway
+#   servers:
+#     - port:
+#         number: {{ .Values.port }}
+#         name: http
+#         protocol: HTTP
+#       hosts:
+#         - {{ .Values.host }} # Istio Gateway service external IP
+# {{- end }}
 
