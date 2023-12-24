@@ -1,1 +1,6 @@
+appName: gonchi # This value was modified by the initial-setup python script
+host: tferrari.com # This value was modified by the deploy-argocd pipeline
+certificateNamespace: service-mesh
+
 installCRDs: true
+
