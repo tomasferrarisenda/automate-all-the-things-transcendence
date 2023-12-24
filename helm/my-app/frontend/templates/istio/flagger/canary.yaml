@@ -15,7 +15,7 @@ spec:
   progressDeadlineSeconds: 60
   service:
     # Service port number
-    port: {{ .Values.port }}
+    port: {{ .Values.containerPort }}
     # Container port number or name (optional)
     # targetPort: 
     # Istio gateways (optional)
