@@ -17,7 +17,7 @@ spec:
         httpsRedirect: true
 
     - port:
-        number: {{ .Values.port }}
+        number: 443
         name: https
         protocol: HTTPS
       hosts:
