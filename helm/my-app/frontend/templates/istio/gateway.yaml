@@ -9,6 +9,12 @@ spec:
   servers:
     - port:
         number: {{ .Values.port }}
+        name: http
+        protocol: HTTP
+      hosts:
+        - {{ .Values.host }} # Istio Gateway service external IP
+    - port:
+        number: {{ .Values.port }}
         name: https
         protocol: HTTPS
         # name: http
@@ -19,6 +25,22 @@ spec:
         mode: SIMPLE
         credentialName: {{ .Values.appName }}-com-crt # This should match the Certificate secretName
 {{- end }}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 ---
 
 {{- if ne .Values.environment "dev" }} # Deploy only in dev environment
