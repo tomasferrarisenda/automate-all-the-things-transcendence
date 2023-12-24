@@ -20,8 +20,6 @@ spec:
         number: {{ .Values.port }}
         name: https
         protocol: HTTPS
-        # name: http
-        # protocol: HTTP
       hosts:
         - {{ .Values.host }}
       tls:
