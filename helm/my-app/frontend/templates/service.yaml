@@ -8,9 +8,7 @@ spec:
     app: {{ .Values.appName }}-{{ .Values.service }}-{{ .Values.environment }}
   ports:
     - protocol: TCP
-      # port: {{ .Values.port }}
-      port: 80
-      # targetPort: {{ .Values.port }}
-      targetPort: 80
+      port: {{ .Values.containerPort }}
+      targetPort: {{ .Values.containerPort }}
   type: ClusterIP
 {{- end }}
