@@ -4,11 +4,9 @@ metadata:
   name: {{ .Values.appName }}-com
   annotations:
     argocd.argoproj.io/sync-wave: "2"
-  # name: {{ .Values.appName }}-{{ .Values.environment }}-tferrari-com
   namespace: {{ .Values.certificateNamespace }}
 spec:
   secretName: {{ .Values.appName }}-com-crt
-  # secretName: {{ .Values.appName }}-{{ .Values.environment }}-tferrari-com-crt
   # commonName: "*.{{ .Values.host }}"
   dnsNames: 
     - {{ .Values.host }}
