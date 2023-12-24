@@ -24,8 +24,7 @@ spec:
         - name: {{ .Values.appName }}-{{ .Values.service }}-{{ .Values.environment }}
           image: {{ .Values.deployment.image.repository }}:{{ .Values.deployment.image.tag }}
           ports:
-            # - containerPort: {{ .Values.port }}
-            - containerPort: 80
+            - containerPort: {{ .Values.containerPort }}
           # We specify resources now because we are using Horizontal Pod Autoscalers
           resources:
             requests:
