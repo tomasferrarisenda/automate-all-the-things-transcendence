@@ -1,4 +1,3 @@
-# {{- if eq .Values.environment "dev" }} # Deploy only in dev environment
 apiVersion: networking.istio.io/v1beta1
 kind: Gateway
 metadata:
@@ -24,7 +23,6 @@ spec:
       tls:
         mode: SIMPLE
         credentialName: {{ .Values.appName }}-com-crt # This should match the Certificate secretName
-# {{- end }}
 
 
 
