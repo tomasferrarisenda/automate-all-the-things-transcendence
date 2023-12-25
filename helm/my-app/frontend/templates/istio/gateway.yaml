@@ -1,3 +1,29 @@
+# apiVersion: networking.istio.io/v1beta1
+# kind: Gateway
+# metadata:
+#   name: {{ .Values.appName }}-{{ .Values.service }}-{{ .Values.environment }}-gateway
+# spec:
+#   selector:
+#     istio: gateway
+#   servers:
+#     - port:
+#         number: 80
+#         name: http
+#         protocol: HTTP
+#       hosts:
+#         - {{ .Values.host }} # Istio Gateway service external IP
+#       tls:
+#         httpsRedirect: true
+#     - port:
+#         number: 443
+#         name: https
+#         protocol: HTTPS
+#       hosts:
+#         - {{ .Values.host }}
+#       tls:
+#         mode: SIMPLE
+#         credentialName: {{ .Values.appName }}-com-crt # This should match the Certificate secretName
+
 apiVersion: networking.istio.io/v1beta1
 kind: Gateway
 metadata:
@@ -11,7 +37,7 @@ spec:
         name: http
         protocol: HTTP
       hosts:
-        - {{ .Values.host }} # Istio Gateway service external IP
+        - {{ if eq .Values.environment "prod" }}{{ .Values.host }}{{ else }}{{ .Values.environment }}.{{ .Values.host }}{{ end }}
       tls:
         httpsRedirect: true
     - port:
@@ -19,10 +45,11 @@ spec:
         name: https
         protocol: HTTPS
       hosts:
-        - {{ .Values.host }}
+        - {{ if eq .Values.environment "prod" }}{{ .Values.host }}{{ else }}{{ .Values.environment }}.{{ .Values.host }}{{ end }}
       tls:
         mode: SIMPLE
         credentialName: {{ .Values.appName }}-com-crt # This should match the Certificate secretName
+
 
 
 # {{- $hostValue := .Values.host -}}
