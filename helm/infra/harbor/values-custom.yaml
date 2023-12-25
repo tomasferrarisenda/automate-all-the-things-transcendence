@@ -11,7 +11,6 @@ expose:
   #   enabled: false
 
   tls:
-    enabled: true
     secret:
       secretName: harbor-tls-production
     # notaryExistingSecret: notary-tls-staging
