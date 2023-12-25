@@ -128,12 +128,9 @@ spec:
     #     # Use ISTIO_MUTUAL when mTLS is enabled
     #     mode: DISABLE
     # HTTP match conditions (optional)
-    match:
-      - uri:
-          prefix: /
-          # prefix: /{{ .Values.environment }}/
-      # - uri:
-      #     exact: /{{ .Values.environment }}
+    # match:
+    #   - uri:
+    #       prefix: /
     # HTTP rewrite (optional)
     # rewrite:
     #   uri: "/" # Here we tell it to redirect the "/dev" to just "/", if we don't the request will reach nginx with "/dev" and it will give us a 404 becuase there is nothing in "/dev"
