@@ -48,12 +48,12 @@ expose:
 
 externalURL: https://harbor.tferrari.com # This value was modified by the harbor-setup pipeline
 
-internalTLS:
-  enabled: true
-  registry:
-    # secret name for registry's tls certs
-    secretName: harbor-ingress
+# internalTLS:
+#   enabled: true
+#   registry:
+#     # secret name for registry's tls certs
+#     secretName: harbor-ingress
 
-  portal:
-    # secret name for portal's tls certs
-    secretName: harbor-ingress
+#   portal:
+#     # secret name for portal's tls certs
+#     secretName: harbor-ingress
