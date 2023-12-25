@@ -28,6 +28,7 @@ expose:
     controller: alb
 
     annotations: {
+      external-dns.alpha.kubernetes.io/hostname: harbor.tferrari.com,
       kubernetes.io/ingress.class: alb,
       alb.ingress.kubernetes.io/scheme: internet-facing,
       alb.ingress.kubernetes.io/target-type: ip,
@@ -43,4 +44,4 @@ expose:
       ingress.kubernetes.io/ssl-redirect: "false"
     } 
 
-externalURL: http://k8s-registry-harborin-3fc40329a9-2086369037.us-east-2.elb.amazonaws.com # This value was modified by the harbor-setup pipeline
+# externalURL: http://k8s-registry-harborin-3fc40329a9-2086369037.us-east-2.elb.amazonaws.com # This value was modified by the harbor-setup pipeline
