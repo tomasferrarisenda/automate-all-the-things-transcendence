@@ -119,7 +119,6 @@ spec:
     - {{ .Values.appName }}-{{ .Values.service }}-{{ .Values.environment }}-gateway # Name of the gateway. Also .<namespace> if gateway is in a separate namespace
     # Istio virtual service host names (optional)
     hosts:
-    # - {{ .Values.host }}
     # If environment is prod, then the value will be just <.Values.host> and not <.Values.environment>.<.Values.host>
     - {{ if eq .Values.environment "prod" }}{{ .Values.host }}{{ else }}{{ .Values.environment }}.{{ .Values.host }}{{ end }}
     # # Istio traffic policy (optional)
