@@ -6,13 +6,13 @@ expose:
   # and fill the information in the corresponding section
   type: ingress
 
-  tls:
-    # Enable TLS or not.
-    # Delete the "ssl-redirect" annotations in "expose.ingress.annotations" when TLS is disabled and "expose.type" is "ingress"
-    # Note: if the "expose.type" is "ingress" and TLS is disabled,
-    # the port must be included in the command when pulling/pushing images.
-    # Refer to https://github.com/goharbor/harbor/issues/5291 for details.
-    enabled: false
+  # tls:
+  #   # Enable TLS or not.
+  #   # Delete the "ssl-redirect" annotations in "expose.ingress.annotations" when TLS is disabled and "expose.type" is "ingress"
+  #   # Note: if the "expose.type" is "ingress" and TLS is disabled,
+  #   # the port must be included in the command when pulling/pushing images.
+  #   # Refer to https://github.com/goharbor/harbor/issues/5291 for details.
+  #   enabled: false
 
   ingress:
 
@@ -41,7 +41,7 @@ expose:
       alb.ingress.kubernetes.io/unhealthy-threshold-count: '2',
       
       # Delete the "ssl-redirect" annotations in "expose.ingress.annotations" when TLS is disabled and "expose.type" is "ingress"
-      ingress.kubernetes.io/ssl-redirect: "false"
+      # ingress.kubernetes.io/ssl-redirect: "false"
     } 
 
 # externalURL: http://k8s-registry-harborin-3fc40329a9-2086369037.us-east-2.elb.amazonaws.com # This value was modified by the harbor-setup pipeline
