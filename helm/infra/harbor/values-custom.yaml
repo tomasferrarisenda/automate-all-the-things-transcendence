@@ -2,10 +2,6 @@
 harborAdminPassword: automate-all-the-things
 
 expose:
-  # Set how to expose the service. Set the type as "ingress", "clusterIP", "nodePort" or "loadBalancer"
-  # and fill the information in the corresponding section
-  type: ingress
-
   # tls:
   #   # Enable TLS or not.
   #   # Delete the "ssl-redirect" annotations in "expose.ingress.annotations" when TLS is disabled and "expose.type" is "ingress"
@@ -13,6 +9,13 @@ expose:
   #   # the port must be included in the command when pulling/pushing images.
   #   # Refer to https://github.com/goharbor/harbor/issues/5291 for details.
   #   enabled: false
+
+  tls:
+    enabled: true
+    secret:
+      secretName: harbor-tls-production
+    # notaryExistingSecret: notary-tls-staging
+
 
   ingress:
 
@@ -30,6 +33,9 @@ expose:
 
     annotations: {
       external-dns.alpha.kubernetes.io/hostname: harbor.tferrari.com,
+      cert-manager.io/cluster-issuer: production-cluster-issuer, 
+      ingress.kubernetes.io/force-ssl-redirect: "true",    
+      kubernetes.io/tls-acme: "true",                       
       kubernetes.io/ingress.class: alb,
       alb.ingress.kubernetes.io/scheme: internet-facing,
       alb.ingress.kubernetes.io/target-type: ip,
@@ -44,5 +50,8 @@ expose:
       # Delete the "ssl-redirect" annotations in "expose.ingress.annotations" when TLS is disabled and "expose.type" is "ingress"
       # ingress.kubernetes.io/ssl-redirect: "false"
     } 
+
+  annotations:
+    kubernetes.io/ingress.class: contour                 # using Contour for ingress
 
 externalURL: https://harbor.tferrari.com # This value was modified by the harbor-setup pipeline
