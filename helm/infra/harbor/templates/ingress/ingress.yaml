@@ -93,8 +93,7 @@ spec:
       - path: {{ .portal_path }}
         backend:
           serviceName: {{ template "harbor.portal" . }}
-          servicePort: 443
-          # servicePort: {{ template "harbor.portal.servicePort" . }}
+          servicePort: {{ template "harbor.portal.servicePort" . }}
 {{- else }}
       - path: {{ .api_path }}
         pathType: Prefix
@@ -137,7 +136,8 @@ spec:
           service:
             name: {{ template "harbor.portal" . }}
             port:
-              number: {{ template "harbor.portal.servicePort" . }}
+              number: 443
+              # number: {{ template "harbor.portal.servicePort" . }}
 {{- end }}
     {{- if $ingress.hosts.core }}
     host: {{ $ingress.hosts.core }}
