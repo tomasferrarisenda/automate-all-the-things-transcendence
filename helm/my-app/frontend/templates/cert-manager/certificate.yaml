@@ -4,8 +4,6 @@ apiVersion: cert-manager.io/v1
 kind: Certificate
 metadata:
   name: {{ .Values.appName }}-com
-  annotations:
-    argocd.argoproj.io/sync-wave: "2"
   namespace: {{ .Values.certificateNamespace }}
 spec:
   secretName: {{ .Values.appName }}-com-crt
@@ -13,7 +11,6 @@ spec:
   # commonName: "*.{{ .Values.host }}"
   dnsNames: 
     - {{ .Values.host }}
-    # - {{ .Values.appName }}-{{ .Values.service }}-{{ .Values.environment }}.tferrari.com
   issuerRef:
     # Let’s Encrypt has a strict rate limit on certificates issued, so we use the Staging Let’s Encrypt server for testing, and then we switch to the Production Let’s Encrypt server.
     # name: staging-cluster-issuer # Comment when switching to Production
