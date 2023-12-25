@@ -25,12 +25,6 @@
 #         credentialName: {{ .Values.appName }}-com-crt # This should match the Certificate secretName
 
 
-# If env is prod, then the value will be just <.Values.host> and not <.Values.env>.<.Values.host>
-{{- $hostValue := .Values.host }}
-{{- if ne .Values.env "prod" }}
-{{- $hostValue = printf "%s.%s" .Values.env .Values.host }}
-{{- end }}
-
 apiVersion: networking.istio.io/v1beta1
 kind: Gateway
 metadata:
@@ -44,7 +38,7 @@ spec:
         name: http
         protocol: HTTP
       hosts:
-        - {{ $hostValue }} # Istio Gateway service external IP
+        - {{ template "host.value" . }}
       tls:
         httpsRedirect: true
     - port:
@@ -52,10 +46,20 @@ spec:
         name: https
         protocol: HTTPS
       hosts:
-        - {{ $hostValue }}
+        - {{ template "host.value" . }}
       tls:
         mode: SIMPLE
         credentialName: {{ .Values.appName }}-com-crt # This should match the Certificate secretName
+
+# If env is prod, then the value will be just <.Values.host> and not <.Values.env>.<.Values.host>
+{{- define "host.value" -}}
+{{- if eq .Values.env "prod" -}}
+{{- .Values.host -}}
+{{- else -}}
+{{- .Values.env }}.{{ .Values.host -}}
+{{- end -}}
+{{- end -}}
+
 
 
 # apiVersion: networking.istio.io/v1beta1
