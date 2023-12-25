@@ -6,7 +6,7 @@ metadata:
     argocd.argoproj.io/sync-wave: "2"
   namespace: {{ .Values.certificateNamespace }}
 spec:
-  secretName: {{ .Values.appName }}-com-crt2
+  secretName: {{ .Values.appName }}-com-crt
   # commonName: "*.{{ .Values.host }}"
   dnsNames: 
     - {{ .Values.host }}

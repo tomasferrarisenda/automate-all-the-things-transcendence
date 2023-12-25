@@ -17,7 +17,8 @@ expose:
   ingress:
 
     hosts:
-      core: ""
+      # core: ""
+      core: harbor.tferrari.com
     
     # set to the type of ingress controller if it has specific requirements.
     # leave as `default` for most ingress controllers.
