@@ -776,3 +776,9 @@ qh63MqSqy80doVbTiTPjyWVlR0QSGACXmuaukQClcSGclcipy9eBFqSBY0YqKIfJSyA+CVsenZB+i6Hh
 
 - explicar que etsamos creando la hosted zone con tf, al crear la hz se asignan NS random, estos tienen q ser iguales a los del domain, pero no los Podemos elegir ni modificar, po lo q hay q modificar los del domain, para eso agregamos los siguiente pasos: (es posible q esto haga q los registros no funcionen por hasta 48hs)
 - added external dns policty (externa;-dns.tf )and attached it to eks-group-node-group (eks.tf)
+
+
+http://argocd.tferrari.com/
+http://grafana.tferrari.com/
+http://kiali.tferrari.com/kiali
+http://jaeger.tferrari.com/search
