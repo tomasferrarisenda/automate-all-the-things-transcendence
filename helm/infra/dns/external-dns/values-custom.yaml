@@ -1,7 +1,7 @@
 domainFilters:
   - tferrari.com
-  - dev.tferrari.com
-  - stage.tferrari.com
+  # - dev.tferrari.com
+  # - stage.tferrari.com
 
 policy: sync
 
