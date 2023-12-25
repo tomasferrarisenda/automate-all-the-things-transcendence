@@ -8,9 +8,9 @@ expose:
   #   # Note: if the "expose.type" is "ingress" and TLS is disabled,
   #   # the port must be included in the command when pulling/pushing images.
   #   # Refer to https://github.com/goharbor/harbor/issues/5291 for details.
-    enabled: false
-    # secret:
-    #   secretName: harbor-tls-production
+    # enabled: false
+    secret:
+      secretName: harbor-tls-production
 
   ingress:
     hosts:
@@ -27,7 +27,8 @@ expose:
 
     annotations: {
       external-dns.alpha.kubernetes.io/hostname: harbor.tferrari.com, # This value was modified by the harbor-setup pipeline
-      cert-manager.io/cluster-issuer: harbor-cluster-issuer, 
+      cert-manager.io/cluster-issuer: harbor-production-cluster-issuer, 
+      # cert-manager.io/cluster-issuer: harbor-staging-cluster-issuer, 
       ingress.kubernetes.io/force-ssl-redirect: "true",    
       kubernetes.io/tls-acme: "true",                       
       kubernetes.io/ingress.class: alb,
