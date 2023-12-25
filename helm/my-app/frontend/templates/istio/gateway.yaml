@@ -2,7 +2,6 @@ apiVersion: networking.istio.io/v1beta1
 kind: Gateway
 metadata:
   name: {{ .Values.appName }}-{{ .Values.service }}-{{ .Values.environment }}-gateway
-  name: {{ .Values.appName }}-{{ .Values.service }}-prod-gateway
 spec:
   selector:
     istio: gateway
