@@ -8,7 +8,7 @@ expose:
   #   # Note: if the "expose.type" is "ingress" and TLS is disabled,
   #   # the port must be included in the command when pulling/pushing images.
   #   # Refer to https://github.com/goharbor/harbor/issues/5291 for details.
-    # enabled: false
+    enabled: false
     secret:
       # secretName: harbor-tls-production
       secretName: harbor-ingress
