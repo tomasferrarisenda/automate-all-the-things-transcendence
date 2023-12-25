@@ -13,7 +13,8 @@ spec:
       # Reference to Production secret
       name: harbor-staging-cluster-issuer
     solvers:
-      - http01:
+      - selector: {}
+        http01:
           ingress:
             class: alb
 
