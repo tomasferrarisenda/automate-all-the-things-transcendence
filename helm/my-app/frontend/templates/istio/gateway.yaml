@@ -25,9 +25,9 @@
 #         credentialName: {{ .Values.appName }}-com-crt # This should match the Certificate secretName
 
 
-{{- $hostValue := .Values.host }}
-{{- if ne .Values.environment "prod" }}
-{{- $hostValue = printf "%s.%s" .Values.env .Values.host }}
+{{- $hostValue := .Values.host -}}
+{{- if ne .Values.env "prod" -}}
+{{- $hostValue = printf "%s.%s" .Values.env .Values.host -}}
 {{- end }}
 
 apiVersion: networking.istio.io/v1beta1
@@ -43,7 +43,7 @@ spec:
         name: http
         protocol: HTTP
       hosts:
-        - {{ $hostValue }} # Istio Gateway service external IP
+        - {{ $hostValue }}
       tls:
         httpsRedirect: true
     - port:
@@ -54,7 +54,8 @@ spec:
         - {{ $hostValue }}
       tls:
         mode: SIMPLE
-        credentialName: {{ .Values.appName }}-com-crt # This should match the Certificate secretName
+        credentialName: {{ .Values.appName }}-com-crt
+
 
 
 
