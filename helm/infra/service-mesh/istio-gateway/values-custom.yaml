@@ -3,7 +3,8 @@ global:
 
 service:
   annotations: {    
-    external-dns.alpha.kubernetes.io/hostname: tferrari.com,
+    # external-dns.alpha.kubernetes.io/hostname: tferrari.com,
+    external-dns.alpha.kubernetes.io/hostname: tferrari.com,dev.tferrari.com,stage.tferrari.com
     # external-dns.alpha.kubernetes.io/hostname: dev.tferrari.com, 
     # external-dns.alpha.kubernetes.io/hostname: stage.tferrari.com 
   }
