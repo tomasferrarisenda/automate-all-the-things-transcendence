@@ -2,6 +2,9 @@ apiVersion: cert-manager.io/v1alpha2
 kind: Certificate
 metadata:
   name: wildcard-{{ .Values.appName }}-com
+  annotations:
+    argocd.argoproj.io/sync-wave: "2"
+  namespace: {{ .Values.certificateNamespace }}
 spec:
   secretName: {{ .Values.appName }}-com-crt
   issuerRef:
