@@ -2,7 +2,8 @@ query:
   ingress:
     enabled: true
 
-    annotations: {    
+    annotations: {  
+      external-dns.alpha.kubernetes.io/hostname: jaeger.tferrari.com,  
       kubernetes.io/ingress.class: alb,
       alb.ingress.kubernetes.io/scheme: internet-facing,
       alb.ingress.kubernetes.io/target-type: ip,
