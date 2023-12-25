@@ -25,6 +25,11 @@
 #         credentialName: {{ .Values.appName }}-com-crt # This should match the Certificate secretName
 
 
+# If env is prod, then the value will be just <.Values.host> and not <.Values.env>.<.Values.host>
+{{- $hostValue := .Values.host }}
+{{- if ne .Values.env "prod" }}
+{{- $hostValue = printf "%s.%s" .Values.env .Values.host }}
+{{- end }}
 
 apiVersion: networking.istio.io/v1beta1
 kind: Gateway
@@ -39,8 +44,7 @@ spec:
         name: http
         protocol: HTTP
       hosts:
-      # If env is prod, then the value will be just <.Values.host> and not <.Values.env>.<.Values.host>
-        - {{ if eq .Values.env "prod" }}{{ .Values.host }}{{ else }}{{ .Values.env }}.{{ .Values.host }}{{ end }} # Istio Gateway service external IP
+        - {{ $hostValue }} # Istio Gateway service external IP
       tls:
         httpsRedirect: true
     - port:
@@ -48,10 +52,38 @@ spec:
         name: https
         protocol: HTTPS
       hosts:
-        - {{ if eq .Values.env "prod" }}{{ .Values.host }}{{ else }}{{ .Values.env }}.{{ .Values.host }}{{ end }}
+        - {{ $hostValue }}
       tls:
         mode: SIMPLE
         credentialName: {{ .Values.appName }}-com-crt # This should match the Certificate secretName
+
+
+# apiVersion: networking.istio.io/v1beta1
+# kind: Gateway
+# metadata:
+#   name: {{ .Values.appName }}-{{ .Values.service }}-{{ .Values.environment }}-gateway
+# spec:
+#   selector:
+#     istio: gateway
+#   servers:
+#     - port:
+#         number: 80
+#         name: http
+#         protocol: HTTP
+#       hosts:
+#       # If env is prod, then the value will be just <.Values.host> and not <.Values.env>.<.Values.host>
+#         - {{ if eq .Values.env "prod" }}{{ .Values.host }}{{ else }}{{ .Values.env }}.{{ .Values.host }}{{ end }} # Istio Gateway service external IP
+#       tls:
+#         httpsRedirect: true
+#     - port:
+#         number: 443
+#         name: https
+#         protocol: HTTPS
+#       hosts:
+#         - {{ if eq .Values.env "prod" }}{{ .Values.host }}{{ else }}{{ .Values.env }}.{{ .Values.host }}{{ end }}
+#       tls:
+#         mode: SIMPLE
+#         credentialName: {{ .Values.appName }}-com-crt # This should match the Certificate secretName
 
 
 
