@@ -9,6 +9,8 @@ spec:
   secretName: {{ .Values.appName }}-com-crt
   # commonName: "*.{{ .Values.host }}"
   dnsNames: 
+    - dev.{{ .Values.host }}
+    - stage.{{ .Values.host }}
     - {{ .Values.host }}
     # - {{ .Values.appName }}-{{ .Values.service }}-{{ .Values.environment }}.tferrari.com
   issuerRef:
