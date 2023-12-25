@@ -49,6 +49,9 @@ externalURL: https://harbor.tferrari.com # This value was modified by the harbor
 
 internalTLS:
   enabled: true
+  registry:
+    # secret name for registry's tls certs
+    secretName: harbor-tls-production
 
   portal:
     # secret name for portal's tls certs
