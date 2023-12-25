@@ -2,25 +2,20 @@
 harborAdminPassword: automate-all-the-things
 
 expose:
-  # tls:
+  tls:
   #   # Enable TLS or not.
   #   # Delete the "ssl-redirect" annotations in "expose.ingress.annotations" when TLS is disabled and "expose.type" is "ingress"
   #   # Note: if the "expose.type" is "ingress" and TLS is disabled,
   #   # the port must be included in the command when pulling/pushing images.
   #   # Refer to https://github.com/goharbor/harbor/issues/5291 for details.
   #   enabled: false
-
-  tls:
     secret:
       secretName: harbor-tls-production
-    # notaryExistingSecret: notary-tls-staging
-
 
   ingress:
-
     hosts:
       # core: ""
-      core: harbor.tferrari.com
+      core: harbor.tferrari.com # This value was modified by the harbor-setup pipeline
     
     # set to the type of ingress controller if it has specific requirements.
     # leave as `default` for most ingress controllers.
@@ -31,7 +26,7 @@ expose:
     controller: alb
 
     annotations: {
-      external-dns.alpha.kubernetes.io/hostname: harbor.tferrari.com,
+      external-dns.alpha.kubernetes.io/hostname: harbor.tferrari.com, # This value was modified by the harbor-setup pipeline
       cert-manager.io/cluster-issuer: production-cluster-issuer, 
       ingress.kubernetes.io/force-ssl-redirect: "true",    
       kubernetes.io/tls-acme: "true",                       
