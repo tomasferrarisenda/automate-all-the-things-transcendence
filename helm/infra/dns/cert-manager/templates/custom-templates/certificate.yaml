@@ -10,6 +10,7 @@ spec:
   # commonName: "*.{{ .Values.host }}"
   dnsNames: 
     - {{ .Values.host }}
+    - harbor.{{ .Values.host }}
     # - dev.{{ .Values.host }}
     # - stage.{{ .Values.host }}
     # - {{ .Values.appName }}-{{ .Values.service }}-{{ .Values.environment }}.tferrari.com
