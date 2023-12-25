@@ -51,7 +51,4 @@ expose:
       # ingress.kubernetes.io/ssl-redirect: "false"
     } 
 
-  annotations:
-    kubernetes.io/ingress.class: contour                 # using Contour for ingress
-
 externalURL: https://harbor.tferrari.com # This value was modified by the harbor-setup pipeline

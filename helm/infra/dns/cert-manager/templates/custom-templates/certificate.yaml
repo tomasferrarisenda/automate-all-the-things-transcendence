@@ -10,7 +10,6 @@ spec:
   # commonName: "*.{{ .Values.host }}"
   dnsNames: 
     - {{ .Values.host }}
-    # - harbor.{{ .Values.host }}
   issuerRef:
     # Let’s Encrypt has a strict rate limit on certificates issued, so we use the Staging Let’s Encrypt server for testing, and then we switch to the Production Let’s Encrypt server.
     # name: staging-cluster-issuer # Comment when switching to Production
