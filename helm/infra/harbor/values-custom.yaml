@@ -10,7 +10,8 @@ expose:
   #   # Refer to https://github.com/goharbor/harbor/issues/5291 for details.
     # enabled: false
     secret:
-      secretName: harbor-tls-production
+      # secretName: harbor-tls-production
+      secretName: harbor-ingress
 
   ingress:
     hosts:
@@ -51,8 +52,8 @@ internalTLS:
   enabled: true
   registry:
     # secret name for registry's tls certs
-    secretName: harbor-tls-production
+    secretName: harbor-ingress
 
   portal:
     # secret name for portal's tls certs
-    secretName: harbor-tls-production
+    secretName: harbor-ingress
