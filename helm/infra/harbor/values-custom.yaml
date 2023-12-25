@@ -46,3 +46,6 @@ expose:
     } 
 
 externalURL: https://harbor.tferrari.com # This value was modified by the harbor-setup pipeline
+
+internalTLS:
+  enabled: true
