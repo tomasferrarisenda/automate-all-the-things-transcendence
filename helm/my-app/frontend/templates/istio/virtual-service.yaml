@@ -11,12 +11,12 @@ spec:
     # - {{ .Values.appName }}-{{ .Values.service }}-{{ .Values.environment }}-service
     - {{ .Values.appName }}-{{ .Values.service }}-{{ .Values.environment }}-service.{{ .Values.appName }}-{{ .Values.environment }}.svc.cluster.local
   http:
-    - match:
-        - uri:
-            prefix: "/"
-      route:
+    - route:
         - destination:
             host: {{ .Values.appName }}-{{ .Values.service }}-{{ .Values.environment }}-service.{{ .Values.appName }}-{{ .Values.environment }}.svc.cluster.local
+      match:
+        - uri:
+            prefix: "/"
 {{- end }}
 
 # {{- if eq .Values.environment "dev" }} # Deploy only in dev environment
