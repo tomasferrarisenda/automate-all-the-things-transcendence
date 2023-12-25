@@ -15,7 +15,6 @@ expose:
   ingress:
     hosts:
       core: harbor.tferrari.com # This value was modified by the harbor-setup pipeline
-      # core: ""
     
     # set to the type of ingress controller if it has specific requirements.
     # leave as `default` for most ingress controllers.
