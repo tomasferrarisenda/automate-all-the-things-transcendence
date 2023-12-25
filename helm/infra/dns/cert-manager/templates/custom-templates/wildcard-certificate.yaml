@@ -6,13 +6,13 @@ metadata:
     argocd.argoproj.io/sync-wave: "2"
   namespace: {{ .Values.certificateNamespace }}
 spec:
-  secretName: {{ .Values.appName }}-com-crt
+  secretName: wildcard-{{ .Values.appName }}-com-crt
   commonName: "*.{{ .Values.host }}"
   dnsNames:
     - "*.{{ .Values.host }}"
   issuerRef:
     # Let’s Encrypt has a strict rate limit on certificates issued, so we use the Staging Let’s Encrypt server for testing, and then we switch to the Production Let’s Encrypt server.
-    name: staging-cluster-issuer # Comment when switching to Production
-    # name: production-cluster-issuer # Uncomment when switching to Production
+    # name: staging-cluster-issuer # Comment when switching to Production
+    name: production-cluster-issuer # Uncomment when switching to Production
     kind: ClusterIssuer
     group: cert-manager.io
