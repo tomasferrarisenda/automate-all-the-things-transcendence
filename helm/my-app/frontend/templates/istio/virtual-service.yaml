@@ -13,8 +13,8 @@ spec:
   http:
     - match:
         - uri:
-            # prefix: /{{ .Values.environment }}/
-            prefix: /{{ .Values.environment }}
+            prefix: /{{ .Values.environment }}/
+            # prefix: /{{ .Values.environment }}
       rewrite:
         uri: /
       route:
