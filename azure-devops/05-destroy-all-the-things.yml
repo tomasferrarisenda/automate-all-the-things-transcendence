@@ -59,6 +59,7 @@ jobs:
       kubectl delete -n argocd applications.argoproj.io argocd-apps
       # We need to delete all applications which create Route53 DNS records before External DNS application is deleted. If not, the records will remain and Terraform won't be able to destroy the Hosted Zone.
       kubectl delete -n argocd applications.argoproj.io istio-gateway
+      kubectl delete -n argocd applications.argoproj.io harbor
       # We also need to remove the finalizers from the Kiali CR for deletion to be successful, it's a known issue (https://kiali.io/docs/installation/installation-guide/install-with-helm/#known-problem-uninstall-hangs-unable-to-delete-the-kiali-cr)
       kubectl patch kiali kiali -n service-mesh -p '{"metadata":{"finalizers": []}}' --type=merge
       kubectl delete -n argocd applications.argoproj.io --all
