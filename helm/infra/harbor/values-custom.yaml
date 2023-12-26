@@ -2,6 +2,9 @@
 harborAdminPassword: automate-all-the-things
 
 expose:
+  # Set how to expose the service. Set the type as "ingress", "clusterIP", "nodePort" or "loadBalancer"
+  # and fill the information in the corresponding section
+  type: loadBalancer
   tls:
   #   # Enable TLS or not.
   #   # Delete the "ssl-redirect" annotations in "expose.ingress.annotations" when TLS is disabled and "expose.type" is "ingress"
@@ -31,7 +34,7 @@ expose:
       # cert-manager.io/cluster-issuer: harbor-staging-cluster-issuer, 
       ingress.kubernetes.io/force-ssl-redirect: "true",    
       kubernetes.io/tls-acme: "true",         
-      # alb.ingress.kubernetes.io/listen-ports: '[{"HTTPS":443}, {"HTTP":80}]',
+      alb.ingress.kubernetes.io/listen-ports: '[{"HTTPS":443}, {"HTTP":80}]',
       # alb.ingress.kubernetes.io/ssl-redirect: '443',
       # alb.ingress.kubernetes.io/certificate-arn: arn:aws:acm:us-east-1:180789647333:certificate/9f042b5d-86fd-4fad-96d0-c81c5abc71e1,         
       kubernetes.io/ingress.class: alb,
