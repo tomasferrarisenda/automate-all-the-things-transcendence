@@ -13,7 +13,7 @@ spec:
     solvers:
       - selector: {}
         http01:
-          ingress: {} 
+          # ingress: {} 
           ingress:
             class: alb
 
