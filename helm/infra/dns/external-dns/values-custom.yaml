@@ -5,7 +5,7 @@ domainFilters:
 
 policy: sync
 
-interval: 30s
+interval: 10s
 
 aws:
   zoneType: "public" # only look at public hosted zones (valid values are public, private or no value for both)
