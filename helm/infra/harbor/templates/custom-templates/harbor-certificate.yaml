@@ -1,0 +1,13 @@
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: harbor-certificate
+  namespace: registry
+spec:
+  secretName: harbor-crt
+  dnsNames:
+    - harbor.tferrari.com
+  issuerRef:
+    name: harbor-production-cluster-issuer
+    kind: ClusterIssuer
+    group: cert-manager.io
