@@ -48,6 +48,24 @@ stages:
     #     command: 'buildAndPush'
     #     Dockerfile: 'my-app/frontend/Dockerfile'
 
+    - script: | 
+        curl -X 'POST' -u admin:automate-all-the-things \
+          "http://$(HARBOR_REGISTRY)/api/v2.0/projects" \
+          -H 'accept: application/json' \
+          -H 'X-Resource-Name-In-Location: false' \
+          -H 'Content-Type: application/json' \
+          -d '{
+          "project_name": "$(APP_NAME)",
+          "metadata": {
+            "public": "true",
+            "enable_content_trust": "false",
+            "enable_content_trust_cosign": "false",
+            "prevent_vul": "false",
+            "auto_scan": "false"
+          }
+        }'
+      displayName: 'Create Harbor project for $(APP_NAME)'
+
     # # We use podman because it allows us to push to insecure (http) registries with the flag "--tls-verify=false"
     - script: | 
         sudo apt-get -y install podman
