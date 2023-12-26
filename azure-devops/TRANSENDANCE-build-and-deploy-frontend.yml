@@ -54,7 +54,7 @@ stages:
       displayName: 'Install podman'
 
     - script: | 
-        podman login --username admin --password automate-all-the-things $(HARBOR_REGISTRY):80 --tls-verify=false
+        podman login --username admin --password automate-all-the-things $(HARBOR_REGISTRY) --tls-verify=false
       displayName: 'Login to registry'
 
     - script: | 
