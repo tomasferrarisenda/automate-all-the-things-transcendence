@@ -8,6 +8,7 @@ spec:
   dnsNames:
     - harbor.tferrari.com
   issuerRef:
-    name: harbor-production-cluster-issuer
+    name: harbor-staging-cluster-issuer
+    # name: harbor-production-cluster-issuer
     kind: ClusterIssuer
     group: cert-manager.io
