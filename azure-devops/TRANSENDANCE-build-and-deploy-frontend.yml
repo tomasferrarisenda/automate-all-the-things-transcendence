@@ -44,9 +44,9 @@ stages:
       displayName: Build And Push Image
       inputs:
         containerRegistry: 'harbor'
-        repository: '(HARBOR_REGISTRY)/$(APP_NAME)/$(APP_NAME)-frontend'
+        repository: '$(APP_NAME)/$(APP_NAME)-frontend'
         command: 'buildAndPush'
-        Dockerfile: 'my-app/backend/Dockerfile'
+        Dockerfile: 'my-app/frontend/Dockerfile'
 
     # # We use podman because it allows us to push to insecure (http) registries with the flag "--tls-verify=false"
     # - script: | 
