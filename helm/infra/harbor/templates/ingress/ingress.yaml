@@ -136,8 +136,7 @@ spec:
           service:
             name: {{ template "harbor.portal" . }}
             port:
-              number: 443
-              # number: {{ template "harbor.portal.servicePort" . }}
+              number: {{ template "harbor.portal.servicePort" . }}
 {{- end }}
     {{- if $ingress.hosts.core }}
     host: {{ $ingress.hosts.core }}
