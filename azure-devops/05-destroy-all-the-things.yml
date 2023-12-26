@@ -79,7 +79,7 @@ jobs:
 
 - job: DeleteAWSInfrastructure
   displayName: 'Delete AWS Infrastructure'
-  # dependsOn: DeleteK8SResources
+  dependsOn: DeleteK8SResources
   steps:
   # This step it only to display the pipeline as "Failed" if parameter DELETED_KEY_FROM_DOMAIN is "No". Without this, the pipeline will result as successful which may lead to confusion.
   - ${{ if eq(parameters.DELETED_KEY_FROM_DOMAIN, 'No') }}:
