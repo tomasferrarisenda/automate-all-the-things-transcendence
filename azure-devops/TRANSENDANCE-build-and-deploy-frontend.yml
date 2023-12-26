@@ -43,7 +43,7 @@ stages:
     - task: Docker@2
       displayName: Build And Push Image
       inputs:
-        containerRegistry: 'dockerhub'
+        containerRegistry: 'harbor'
         repository: '(HARBOR_REGISTRY)/$(APP_NAME)/$(APP_NAME)-frontend'
         command: 'buildAndPush'
         Dockerfile: 'my-app/backend/Dockerfile'
