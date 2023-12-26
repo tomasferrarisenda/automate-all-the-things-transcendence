@@ -5,6 +5,10 @@ deployment:
     tag: 1199
   replicas: 1
 
+# BORRARRRRR
+  # image:
+  #   repository: harbor.tferrari.com/gonchi/gonchi-frontend # This value was modified by the harbor-setup pipeline
+
 configmap: 
   nginxConf: |-
     server {
