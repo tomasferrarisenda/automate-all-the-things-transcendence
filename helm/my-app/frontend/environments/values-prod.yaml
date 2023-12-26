@@ -8,6 +8,7 @@ deployment:
     tag: 1199
   replicas: 1
 
+
 # configmap: 
 #   nginxConf: |-
 #     server {
