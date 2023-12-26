@@ -6,7 +6,7 @@ parameters:
   - name: DELETED_KEY_FROM_DOMAIN
     displayName: "IMPORTANT!!! Have you deleted the DNSSEC key from the domain? If you haven't 'terraform destroy' won't run and AWS resources will remain active."
     type: string
-    # default: 'No'
+    default: 'No'
     values:
     - 'Yes'
     - 'No'
