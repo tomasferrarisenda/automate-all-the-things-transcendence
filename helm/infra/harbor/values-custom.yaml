@@ -12,6 +12,12 @@ expose:
   #   # the port must be included in the command when pulling/pushing images.
   #   # Refer to https://github.com/goharbor/harbor/issues/5291 for details.
     # enabled: false
+
+    auto:
+      # The common name used to generate the certificate, it's necessary
+      # when the type isn't "ingress"
+      commonName: harbor.tferrari.com
+
     secret:
       # secretName: harbor-tls-production
       secretName: harbor-ingress
