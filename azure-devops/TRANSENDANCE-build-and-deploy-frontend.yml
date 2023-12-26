@@ -44,7 +44,7 @@ stages:
       displayName: Build And Push Image
       inputs:
         containerRegistry: 'dockerhub'
-        repository: '(HARBOR_REGISTRY):80/$(APP_NAME)/$(APP_NAME)-frontend'
+        repository: '(HARBOR_REGISTRY)/$(APP_NAME)/$(APP_NAME)-frontend'
         command: 'buildAndPush'
         Dockerfile: 'my-app/backend/Dockerfile'
 
