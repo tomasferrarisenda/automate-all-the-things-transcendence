@@ -1,9 +1,10 @@
 {{- if eq .Values.environment "prod" }} # Only deploy in prod
 apiVersion: cert-manager.io/v1
-kind: ClusterIssuer
+# kind: ClusterIssuer
+kind: Issuer
 metadata:
   name: istio-staging-cluster-issuer
-  # namespace: {{ .Values.certificateNamespace }}
+  namespace: {{ .Values.certificateNamespace }}
   annotations:
     argocd.argoproj.io/sync-wave: "1"
 spec:

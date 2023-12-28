@@ -1,6 +1,7 @@
 {{- if eq .Values.environment "prod" }} # Only deploy in prod
 apiVersion: cert-manager.io/v1
-kind: ClusterIssuer
+# kind: ClusterIssuer
+kind: Issuer
 metadata:
   name: istio-production-cluster-issuer
   namespace: {{ .Values.certificateNamespace }}

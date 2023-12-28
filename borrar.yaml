@@ -1,0 +1,46 @@
+apiVersion: networking.istio.io/v1beta1
+kind: Gateway
+metadata:
+  annotations:
+    cert-manager.io/cluster-issuer: staging-cluster-issuer
+  labels:
+    argocd.argoproj.io/instance: gonchi-front-prod
+  name: gonchi-frontend-prod-gateway
+  namespace: gonchi-prod
+spec:
+  listeners:
+    - hostname: tferrari.com
+      port: 443
+      protocol: HTTPS
+      routes:
+        kind: HTTPRoute
+        selector:
+          matchLabels:
+            istio: gateway
+      tls:
+        certificateRef:
+          group: core
+          kind: Secret
+          name: gonchi-com-crt
+        mode: Terminate
+  selector:
+    istio: gateway
+  servers:
+    - hosts:
+        - tferrari.com
+      port:
+        name: http
+        number: 80
+        protocol: HTTP
+      tls:
+        httpsRedirect: true
+    - hosts:
+        - tferrari.com
+      port:
+        name: https
+        number: 443
+        protocol: HTTPS
+      tls:
+        credentialName: gonchi-com-crt
+        mode: SIMPLE
+
