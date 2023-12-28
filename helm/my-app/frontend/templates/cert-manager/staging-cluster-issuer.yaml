@@ -3,7 +3,7 @@ apiVersion: cert-manager.io/v1
 kind: ClusterIssuer
 metadata:
   name: staging-cluster-issuer
-  namespace: {{ .Values.certificateNamespace }}
+  # namespace: {{ .Values.certificateNamespace }}
   annotations:
     argocd.argoproj.io/sync-wave: "1"
 spec:
@@ -16,8 +16,8 @@ spec:
       # Reference to Staging secret
       name: staging-cluster-issuer
     solvers:
-      - selector: {}
-        http01:
+      # - selector: {}
+      -  http01:
           ingress:
             class: istio
 {{- end }}
