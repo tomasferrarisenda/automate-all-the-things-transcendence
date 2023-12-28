@@ -33,15 +33,16 @@ server:
     hosts: 
       - argocd.tferrari.com
     tls: 
-      - secretName: your-certificate-name
+      - secretName: argocd-certificate
         hosts: 
           - argocd.tferrari.com
 
 
     # -- Additional ingress annotations
     annotations: {    
-      # Uncomment to generate TLS certificate for ArgoCD
+      # Uncomment one to generate TLS certificate for ArgoCD
       cert-manager.io/cluster-issuer: harbor-staging-cluster-issuer,
+      # cert-manager.io/cluster-issuer: harbor-production-cluster-issuer,
       external-dns.alpha.kubernetes.io/hostname: argocd.tferrari.com,
       kubernetes.io/ingress.class: alb,
       alb.ingress.kubernetes.io/scheme: internet-facing,
