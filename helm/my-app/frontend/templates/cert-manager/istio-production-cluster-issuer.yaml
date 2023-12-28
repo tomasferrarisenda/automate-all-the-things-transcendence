@@ -15,7 +15,7 @@ spec:
     email: {{ .Values.email }}
     privateKeySecretRef:
       # Reference to Production secret
-      name: production-cluster-issuer
+      name: istio-production-cluster-issuer
     solvers:
       - selector: {}
         http01:

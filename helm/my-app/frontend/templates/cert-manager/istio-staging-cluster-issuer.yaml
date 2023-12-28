@@ -15,7 +15,7 @@ spec:
     email: {{ .Values.email }}
     privateKeySecretRef:
       # Reference to Staging secret
-      name: staging-cluster-issuer
+      name: istio-staging-cluster-issuer
     solvers:
       # -  http01:
       - selector: {}
