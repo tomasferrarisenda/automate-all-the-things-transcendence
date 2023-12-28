@@ -33,7 +33,7 @@ server:
     hosts: 
       - argocd.tferrari.com
 
-    tls: []
+    tls: 
       - secretName: your-certificate-name
         hosts: 
           - argocd.tferrari.com
