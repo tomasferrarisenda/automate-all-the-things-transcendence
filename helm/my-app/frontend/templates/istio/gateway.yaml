@@ -53,6 +53,26 @@ spec:
         - {{ .Values.environment }}.{{ .Values.host }}
   {{- end }}
   {{- if eq .Values.environment "prod" }} 
+  selector:
+    istio: gateway
+  servers:
+    - port:
+        number: 80
+        name: http
+        protocol: HTTP
+      hosts:
+        - {{ .Values.host }}
+      tls:
+        httpsRedirect: true
+    - port:
+        number: 443
+        name: https
+        protocol: HTTPS
+      hosts:
+        - {{ .Values.host }}
+      tls:
+        mode: SIMPLE
+        credentialName: {{ .Values.appName }}-com-crt # This should match the Certificate secretName
   # gatewayClassName: foo
   listeners:
     - hostname: {{ .Values.host }}
@@ -67,7 +87,7 @@ spec:
       tls:
         mode: Terminate
         certificateRef:
-          name: example-com-tls
+          name: {{ .Values.appName }}-com-crt
           kind: Secret
           group: core
   {{- end }}
