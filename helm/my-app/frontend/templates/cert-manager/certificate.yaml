@@ -1,26 +1,26 @@
-# Deploy only in prod
-{{- if eq .Values.environment "prod" }} # Only deploy in prod
-apiVersion: cert-manager.io/v1
-kind: Certificate
-metadata:
-  name: {{ .Values.appName }}-com
-  # The Certificate should be created in the same namespace as the istio-ingressgateway deployment.
-  namespace: {{ .Values.certificateNamespace }}
-  annotations:
-    argocd.argoproj.io/sync-wave: "2"
-spec:
-  secretName: {{ .Values.appName }}-com-crt
-  # secretName: {{ .Values.appName }}-{{ .Values.environment }}-tferrari-com-crt
-  commonName: {{ .Values.host }} # CAMBIA ALGO ESO??
-  dnsNames: 
-    - {{ .Values.host }}
-  issuerRef:
-    # Let’s Encrypt has a strict rate limit on certificates issued, so we use the Staging Let’s Encrypt server for testing, and then we switch to the Production Let’s Encrypt server.
-    name: staging-cluster-issuer # Comment when switching to Production
-    # name: production-cluster-issuer # Uncomment when switching to Production
-    kind: ClusterIssuer
-    group: cert-manager.io
-{{- end }}
+# # Deploy only in prod
+# {{- if eq .Values.environment "prod" }} # Only deploy in prod
+# apiVersion: cert-manager.io/v1
+# kind: Certificate
+# metadata:
+#   name: {{ .Values.appName }}-com
+#   # The Certificate should be created in the same namespace as the istio-ingressgateway deployment.
+#   namespace: {{ .Values.certificateNamespace }}
+#   annotations:
+#     argocd.argoproj.io/sync-wave: "2"
+# spec:
+#   secretName: {{ .Values.appName }}-com-crt
+#   # secretName: {{ .Values.appName }}-{{ .Values.environment }}-tferrari-com-crt
+#   commonName: {{ .Values.host }} # CAMBIA ALGO ESO??
+#   dnsNames: 
+#     - {{ .Values.host }}
+#   issuerRef:
+#     # Let’s Encrypt has a strict rate limit on certificates issued, so we use the Staging Let’s Encrypt server for testing, and then we switch to the Production Let’s Encrypt server.
+#     name: staging-cluster-issuer # Comment when switching to Production
+#     # name: production-cluster-issuer # Uncomment when switching to Production
+#     kind: ClusterIssuer
+#     group: cert-manager.io
+# {{- end }}
 
 
 # STAGING

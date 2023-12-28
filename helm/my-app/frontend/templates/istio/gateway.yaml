@@ -2,6 +2,10 @@ apiVersion: networking.istio.io/v1beta1
 kind: Gateway
 metadata:
   name: {{ .Values.appName }}-{{ .Values.service }}-{{ .Values.environment }}-gateway
+  {{- if eq .Values.environment "prod" }} # HTTPS only in prod
+  annotations:
+    cert-manager.io/cluster-issuer: foo
+  {{- end }}
 spec:
   selector:
     istio: gateway
