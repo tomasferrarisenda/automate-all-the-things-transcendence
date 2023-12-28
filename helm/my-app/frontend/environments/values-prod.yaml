@@ -1,6 +1,6 @@
 environment: prod
 
-certificateNamespace: service-mesh
+istioGatewayNamespace: service-mesh
 email: tomas.ferrari@sendati.com
 
 deployment:

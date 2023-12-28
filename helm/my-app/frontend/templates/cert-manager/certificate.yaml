@@ -5,7 +5,7 @@ kind: Certificate
 metadata:
   name: {{ .Values.appName }}-com
   # The Certificate should be created in the same namespace as the istio-ingressgateway deployment.
-  namespace: {{ .Values.certificateNamespace }}
+  namespace: {{ .Values.istioGatewayNamespace }}
   annotations:
     argocd.argoproj.io/sync-wave: "2"
 spec:
@@ -17,7 +17,7 @@ spec:
   issuerRef:
     # Let’s Encrypt has a strict rate limit on certificates issued, so we use the Staging Let’s Encrypt server for testing, and then we switch to the Production Let’s Encrypt server.
     name: istio-staging-cluster-issuer # Comment when switching to Production
-    # name: production-cluster-issuer # Uncomment when switching to Production
+    # name: istio-production-cluster-issuer # Uncomment when switching to Production
     # kind: ClusterIssuer
     kind: Issuer
     group: cert-manager.io
@@ -30,7 +30,7 @@ spec:
 # kind: Certificate
 # metadata:
 #   name: {{ .Values.appName }}-com
-#   namespace: {{ .Values.certificateNamespace }}
+#   namespace: {{ .Values.istioGatewayNamespace }}
 #   annotations:
 #     argocd.argoproj.io/sync-wave: "2"
 # spec:
@@ -59,7 +59,7 @@ spec:
 # kind: Certificate
 # metadata:
 #   name: {{ .Values.appName }}-com
-#   namespace: {{ .Values.certificateNamespace }}
+#   namespace: {{ .Values.istioGatewayNamespace }}
 # spec:
 #   secretName: {{ .Values.appName }}-com-crt
 #   duration: 2160h # 90d
