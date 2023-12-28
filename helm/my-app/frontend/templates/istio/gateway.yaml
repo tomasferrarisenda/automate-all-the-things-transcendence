@@ -24,7 +24,7 @@ spec:
         - {{ .Values.host }}
       tls:
         mode: SIMPLE
-        credentialName: {{ .Values.appName }}-com-crt # This should match the Certificate secretName
+        credentialName: istio-gateway-certificate # This should match the Certificate secretName
     {{- end }}
 
 
