@@ -26,22 +26,21 @@ configs:
 ## Server
 server:
   ingress:
-    # -- Enable an ingress resource for the Argo CD server
+    # -- Enable an ingress resource for the ArgoCD server
     enabled: true
 
-
+# Uncomment to generate TLS certificate for ArgoCD
     hosts: 
       - argocd.tferrari.com
-
     tls: 
       - secretName: your-certificate-name
         hosts: 
           - argocd.tferrari.com
 
 
-
     # -- Additional ingress annotations
     annotations: {    
+      # Uncomment to generate TLS certificate for ArgoCD
       cert-manager.io/cluster-issuer: harbor-staging-cluster-issuer,
       external-dns.alpha.kubernetes.io/hostname: argocd.tferrari.com,
       kubernetes.io/ingress.class: alb,
