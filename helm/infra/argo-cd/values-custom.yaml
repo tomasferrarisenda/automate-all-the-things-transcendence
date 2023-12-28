@@ -28,6 +28,8 @@ server:
   ingress:
     # -- Enable an ingress resource for the Argo CD server
     enabled: true
+    hosts: 
+      - argocd.tferrari.com
     # -- Additional ingress annotations
     annotations: {    
       cert-manager.io/cluster-issuer: harbor-staging-cluster-issuer,
