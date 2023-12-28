@@ -4,7 +4,7 @@ metadata:
   name: {{ .Values.appName }}-{{ .Values.service }}-{{ .Values.environment }}-gateway
   {{- if eq .Values.environment "prod" }} # HTTPS only in prod
   annotations:
-    cert-manager.io/cluster-issuer: foo
+    cert-manager.io/cluster-issuer: staging-cluster-issuer
   {{- end }}
 spec:
   selector:
