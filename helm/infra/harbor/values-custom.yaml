@@ -26,8 +26,7 @@ expose:
 
   loadBalancer:
     annotations: {
-      external-dns.alpha.kubernetes.io/hostname: harbor.tferrari.com,
-      cert-manager.io/cluster-issuer: harbor-production-cluster-issuer
+      external-dns.alpha.kubernetes.io/hostname: harbor.tferrari.com
     }
     
   # ingress:

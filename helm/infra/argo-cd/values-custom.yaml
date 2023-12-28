@@ -30,6 +30,7 @@ server:
     enabled: true
     # -- Additional ingress annotations
     annotations: {    
+      cert-manager.io/cluster-issuer: harbor-staging-cluster-issuer,
       external-dns.alpha.kubernetes.io/hostname: argocd.tferrari.com,
       kubernetes.io/ingress.class: alb,
       alb.ingress.kubernetes.io/scheme: internet-facing,
