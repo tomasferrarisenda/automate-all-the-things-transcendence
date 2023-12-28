@@ -43,8 +43,8 @@ expose:
 
     annotations: {
       external-dns.alpha.kubernetes.io/hostname: harbor.tferrari.com, # This value was modified by the harbor-setup pipeline
-      cert-manager.io/cluster-issuer: harbor-production-cluster-issuer, 
-      # cert-manager.io/cluster-issuer: harbor-staging-cluster-issuer, 
+      # cert-manager.io/cluster-issuer: harbor-production-cluster-issuer, 
+      cert-manager.io/cluster-issuer: harbor-staging-cluster-issuer, 
       ingress.kubernetes.io/force-ssl-redirect: "true",    
       # kubernetes.io/tls-acme: "true",         
       # alb.ingress.kubernetes.io/listen-ports: '[{"HTTPS":443}, {"HTTP":80}]',
