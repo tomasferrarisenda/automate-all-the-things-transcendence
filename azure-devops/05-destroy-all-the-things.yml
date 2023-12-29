@@ -54,17 +54,38 @@ jobs:
       echo -e "[default]\nregion = $(AWS_REGION)"> ~/.aws/config 
     displayName: 'Configure AWS Profile'
 
+  # - script: | 
+  #     # Before deleting all Ingresses we eliminate ArgoCD because if we don't, it will re-deploy the Ingresses, automatically creating untracked AWS Application Load Balancers, which would mess with the terraform destroy  
+  #     kubectl delete -n argocd applications.argoproj.io argocd-apps
+  #     # We need to delete all applications which create Route53 DNS records before External DNS application is deleted. If not, the records will remain and Terraform won't be able to destroy the Hosted Zone.
+  #     kubectl delete -n argocd applications.argoproj.io istio-gateway
+  #     kubectl delete -n argocd applications.argoproj.io harbor
+  #     # We also need to remove the finalizers from the Kiali CR for deletion to be successful, it's a known issue (https://kiali.io/docs/installation/installation-guide/install-with-helm/#known-problem-uninstall-hangs-unable-to-delete-the-kiali-cr)
+  #     kubectl patch kiali kiali -n service-mesh -p '{"metadata":{"finalizers": []}}' --type=merge
+  #     kubectl delete -n argocd applications.argoproj.io --all
+  #     helm uninstall -n argocd argocd
+  #   displayName: 'Delete Applications & ArgoCD'
+
   - script: | 
-      # Before deleting all Ingresses we eliminate ArgoCD because if we don't, it will re-deploy the Ingresses, automatically creating untracked AWS Application Load Balancers, which would mess with the terraform destroy  
+      # Before deleting all applications we eliminate the App of Apps because if we don't, it will try to re-deploy the Ingresses, automatically creating untracked AWS Application Load Balancers, which would mess with the terraform destroy  
       kubectl delete -n argocd applications.argoproj.io argocd-apps
-      # We need to delete all applications which create Route53 DNS records before External DNS application is deleted. If not, the records will remain and Terraform won't be able to destroy the Hosted Zone.
-      kubectl delete -n argocd applications.argoproj.io istio-gateway
-      kubectl delete -n argocd applications.argoproj.io harbor
-      # We also need to remove the finalizers from the Kiali CR for deletion to be successful, it's a known issue (https://kiali.io/docs/installation/installation-guide/install-with-helm/#known-problem-uninstall-hangs-unable-to-delete-the-kiali-cr)
+
+      # We also to remove the finalizers from the Kiali CR for deletion to be successful, it's a known issue (https://kiali.io/docs/installation/installation-guide/install-with-helm/#known-problem-uninstall-hangs-unable-to-delete-the-kiali-cr)
       kubectl patch kiali kiali -n service-mesh -p '{"metadata":{"finalizers": []}}' --type=merge
-      kubectl delete -n argocd applications.argoproj.io --all
+
+      # We delete all apps except external-dns. Why? 
+      # We need external-dns to notice there are no ingresses anymore so it can go and remove the DNS records it created for those ingresses.
+      # If these records don't get removed, the terraform destroy will fail because it won't be able to destroy the Hosted Zone since there are still leftover records in it.
+      kubectl get applications.argoproj.io -n argocd -o name | grep -v "external-dns" | xargs kubectl delete -n argocd
+
+      # We uninstall ArgoCD.
       helm uninstall -n argocd argocd
+      
+      # Finally, we can remove external-dns, but we'll wait a minute so we give it time to notice the abscence of ingress objects and deletes the corrsponding DNS records.
+      sleep 60
+      kubectl delete namespace dns
     displayName: 'Delete Applications & ArgoCD'
+
 
   # Before deleting all infra we make sure there are no existing ingresses so the terraform destroy isn't messed up by the existance of untracked AWS Application Load Balancers
   - script: | 
