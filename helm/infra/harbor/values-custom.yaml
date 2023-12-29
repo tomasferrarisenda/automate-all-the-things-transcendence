@@ -43,13 +43,9 @@ expose:
 
     annotations: {
       external-dns.alpha.kubernetes.io/hostname: harbor.tferrari.com, # This value was modified by the harbor-setup pipeline
-      cert-manager.io/cluster-issuer: harbor-production-cluster-issuer, 
-      # cert-manager.io/cluster-issuer: harbor-staging-cluster-issuer, 
+      # cert-manager.io/cluster-issuer: alb-production-cluster-issuer, 
+      cert-manager.io/cluster-issuer: alb-staging-cluster-issuer, 
       ingress.kubernetes.io/force-ssl-redirect: "true",    
-      # kubernetes.io/tls-acme: "true",         
-      # alb.ingress.kubernetes.io/listen-ports: '[{"HTTPS":443}, {"HTTP":80}]',
-      # alb.ingress.kubernetes.io/ssl-redirect: '443',
-      # alb.ingress.kubernetes.io/certificate-arn: arn:aws:acm:us-east-1:180789647333:certificate/9f042b5d-86fd-4fad-96d0-c81c5abc71e1,         
       kubernetes.io/ingress.class: alb,
       alb.ingress.kubernetes.io/scheme: internet-facing,
       alb.ingress.kubernetes.io/target-type: ip,
@@ -60,9 +56,6 @@ expose:
       alb.ingress.kubernetes.io/success-codes: '200',
       alb.ingress.kubernetes.io/healthy-threshold-count: '2',
       alb.ingress.kubernetes.io/unhealthy-threshold-count: '2',
-      
-      # Delete the "ssl-redirect" annotations in "expose.ingress.annotations" when TLS is disabled and "expose.type" is "ingress"
-      # ingress.kubernetes.io/ssl-redirect: "false"
     } 
 
 

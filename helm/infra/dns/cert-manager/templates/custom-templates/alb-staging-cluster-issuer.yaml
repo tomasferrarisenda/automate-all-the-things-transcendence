@@ -1,7 +1,7 @@
 apiVersion: cert-manager.io/v1
 kind: ClusterIssuer
 metadata:
-  name: harbor-staging-cluster-issuer
+  name: alb-staging-cluster-issuer
 spec:
   acme:
     # Let’s Encrypt has a strict rate limit on certificates issued, so we use the Staging Let’s Encrypt server for testing, and then we switch to the Production Let’s Encrypt server.
@@ -10,7 +10,7 @@ spec:
     email: {{ .Values.email }}
     privateKeySecretRef:
       # Reference to Production secret
-      name: harbor-staging-cluster-issuer
+      name: alb-staging-cluster-issuer
     solvers:
       - selector: {}
         http01:

@@ -3,7 +3,7 @@ apiVersion: cert-manager.io/v1
 # kind: ClusterIssuer
 kind: Issuer
 metadata:
-  name: istio-staging-cluster-issuer
+  name: istio-staging-issuer
   namespace: {{ .Values.istioGatewayNamespace }}
   annotations:
     argocd.argoproj.io/sync-wave: "1"
@@ -15,7 +15,7 @@ spec:
     email: {{ .Values.email }}
     privateKeySecretRef:
       # Reference to Staging secret
-      name: istio-staging-cluster-issuer
+      name: istio-staging-issuer
     solvers:
       # -  http01:
       - selector: {}

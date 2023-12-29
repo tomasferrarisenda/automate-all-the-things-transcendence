@@ -1,12 +1,7 @@
-{{- if eq .Values.environment "prod" }} # Only deploy in prod
 apiVersion: cert-manager.io/v1
-# kind: ClusterIssuer
-kind: Issuer
+kind: ClusterIssuer
 metadata:
-  name: istio-production-cluster-issuer
-  namespace: {{ .Values.istioGatewayNamespace }}
-  annotations:
-    argocd.argoproj.io/sync-wave: "1"
+  name: alb-production-cluster-issuer
 spec:
   acme:
     # Let’s Encrypt has a strict rate limit on certificates issued, so we use the Staging Let’s Encrypt server for testing, and then we switch to the Production Let’s Encrypt server.
@@ -15,12 +10,12 @@ spec:
     email: {{ .Values.email }}
     privateKeySecretRef:
       # Reference to Production secret
-      name: istio-production-cluster-issuer
+      name: alb-production-cluster-issuer
     solvers:
       - selector: {}
         http01:
+          # ingress: {} 
           ingress:
-            class: istio
-{{- end }}
+            class: alb
 
 
