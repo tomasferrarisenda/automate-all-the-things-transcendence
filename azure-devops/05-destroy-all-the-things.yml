@@ -4,7 +4,7 @@ trigger: none
 
 parameters:
   - name: DELETED_KEY_FROM_DOMAIN
-    displayName: ´IMPORTANT!!! Have you deleted the DNSSEC key from the domain registrar? If you haven't the terraform destroy will fail. Type ¨yes¨ to proceed.´
+    displayName: IMPORTANT!!! Have you deleted the DNSSEC key from the domain registrar? If you haven't the terraform destroy will fail. Type ¨yes¨ to proceed.
     type: string
     # default: 'No'
     # values:
