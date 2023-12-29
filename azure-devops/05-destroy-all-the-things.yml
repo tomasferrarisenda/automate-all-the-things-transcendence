@@ -66,22 +66,39 @@ jobs:
   #     helm uninstall -n argocd argocd
   #   displayName: 'Delete Applications & ArgoCD'
 
+  # There's a specific order we need to follow for things to go smoothly, read the "echo's" to understand.
   - script: | 
-      # Before deleting all applications we eliminate the App of Apps because if we don't, it will try to re-deploy the Ingresses, automatically creating untracked AWS Application Load Balancers, which would mess with the terraform destroy  
+      echo "########################################################################"
+      echo "Before deleting all applications we eliminate the App of Apps."
+      echo "If we don't, it will try to re-deploy the other applications along with their ingresses."
+      echo "This would automatically create untracked AWS Application Load Balancers and mess up the terraform destroy."
+      echo "########################################################################"
       kubectl delete -n argocd applications.argoproj.io argocd-apps
 
-      # We also to remove the finalizers from the Kiali CR for deletion to be successful, it's a known issue (https://kiali.io/docs/installation/installation-guide/install-with-helm/#known-problem-uninstall-hangs-unable-to-delete-the-kiali-cr)
+      echo "########################################################################"
+      echo "We also to remove the finalizers from the Kiali CR for deletion to be successful. It's a known issue:"
+      echo "https://kiali.io/docs/installation/installation-guide/install-with-helm/#known-problem-uninstall-hangs-unable-to-delete-the-kiali-cr"
+      echo "########################################################################"
       kubectl patch kiali kiali -n service-mesh -p '{"metadata":{"finalizers": []}}' --type=merge
 
-      # We delete all apps except external-dns. Why? 
-      # We need external-dns to notice there are no ingresses anymore so it can go and remove the DNS records it created for those ingresses.
-      # If these records don't get removed, the terraform destroy will fail because it won't be able to destroy the Hosted Zone since there are still leftover records in it.
+      echo "########################################################################"
+      echo "We delete all apps except External-DNS. Why?"
+      echo "We need External-DNS to notice there are no ingress objects anymore so it can go and remove the DNS records belonging to those deleted ingresses."
+      echo "If these records don't get removed, the terraform destroy will fail."
+      echo "It won't be able to destroy the Hosted Zone since there are still leftover records in it."
+      echo "########################################################################"
       kubectl get applications.argoproj.io -n argocd -o name | grep -v "external-dns" | xargs kubectl delete -n argocd
 
-      # We uninstall ArgoCD.
+      echo "########################################################################"
+      echo "We uninstall ArgoCD. Deleting its application doesn't really remove it."
+      echo "########################################################################"
       helm uninstall -n argocd argocd
       
-      # Finally, we can remove external-dns, but we'll wait a minute so we give it time to notice the abscence of ingress objects and deletes the corrsponding DNS records.
+      echo "########################################################################"
+      echo "Finally, we can remove external-dns."
+      echo "We will give it a minute first so it can notice the abscence of ingress objects and deletes the corrsponding DNS records."
+      echo "Every how long External-DNS checks for changes can be specified in it's values-custom.yaml."
+      echo "########################################################################"
       sleep 60
       kubectl delete namespace dns
     displayName: 'Delete Applications & ArgoCD'
@@ -96,7 +113,7 @@ jobs:
   - script: | 
         kubectl delete persistentvolumeclaims --all --all-namespaces
         kubectl delete persistentvolumes --all --all-namespaces
-    displayName: 'Delete Persisten Volumnes'
+    displayName: 'Delete Persisten Volumes'
 
 
 - job: DeleteAWSInfrastructure
