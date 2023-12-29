@@ -22,7 +22,7 @@ expose:
 
     secret:
       # secretName: harbor-tls-production
-      secretName: harbor-ingress
+      secretName: harbor-ingress-certificate
 
   # loadBalancer:
   #   annotations: {

@@ -31,11 +31,11 @@ server:
 
 # Uncomment to generate TLS certificate for ArgoCD
     # hosts: 
-    #   - argocd.tferrari.com
+    #   - argocd.tferrari.com # This value was modified by the initial-setup python script
     # tls: 
-    #   - secretName: argocd-certificate
+    #   - secretName: argocd-ingress-certificate
     #     hosts: 
-    #       - argocd.tferrari.com
+    #       - argocd.tferrari.com # This value was modified by the initial-setup python script
 
 
     # -- Additional ingress annotations
@@ -43,7 +43,7 @@ server:
       # Uncomment one to generate TLS certificate for ArgoCD
       # cert-manager.io/cluster-issuer: harbor-staging-cluster-issuer,
       # cert-manager.io/cluster-issuer: harbor-production-cluster-issuer,
-      external-dns.alpha.kubernetes.io/hostname: argocd.tferrari.com,
+      external-dns.alpha.kubernetes.io/hostname: argocd.tferrari.com, # This value was modified by the initial-setup python script
       kubernetes.io/ingress.class: alb,
       alb.ingress.kubernetes.io/scheme: internet-facing,
       alb.ingress.kubernetes.io/target-type: ip,

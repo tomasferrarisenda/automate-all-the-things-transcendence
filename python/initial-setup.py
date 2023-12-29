@@ -85,8 +85,11 @@ print_gradually(
     "Got it! In what AWS region will you be deploying your resources? (e.g. 'us-east-2'): ")
 aws_region = input()
 
-print_gradually("Good choice! We're almost done. What's your DockerHub username?: ")
+print_gradually("Good choice! What's your DockerHub username?: ")
 dockerhub_username = input()
+
+print_gradually("We're almost done. What's the domain you own? (e.g. 'example.com'): ")
+domain = input()
 
 print_gradually("Perfect! Last thing... You'll recieve just one pipeline notification through email. Please provide me with the email you used for your Azure DevOps account: ")
 user_email = input()
@@ -95,12 +98,12 @@ print_gradually("Give me a sec... ")
 
 # Create a dictionary with the variable names and their values
 data = {
-    # "AATT_FULL_NAME": full_name,
     "AATT_APP_NAME": app_name,
     "AATT_GITHUB_USERNAME": github_username,
     "AATT_AWS_REGION": aws_region,
     "AATT_DOCKERHUB_USERNAME": dockerhub_username,
     "AATT_USER_EMAIL": user_email,
+    "AATT_DOMAIN": domain,
 }
 
 
@@ -151,6 +154,7 @@ def search_and_replace(directory, replacements):
                              'values-dev.yaml',
                              'values-stage.yaml',
                              'values-prod.yaml',
+                             'values-custom.yaml',
                              'terraform.tfvars',
                              'provider.tf']:
                 replace_keys_in_file(file_path, replacements)
