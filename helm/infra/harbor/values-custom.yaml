@@ -51,8 +51,7 @@ expose:
       # QQUIZAS SOLUCIONA EL PROBLEMA DE Q CUANDO SWITCHEA DE STAGING A PRODUCTION CLUSTER ISSUER ROMPE> HAY Q TESTEARLO
       acme.cert-manager.io/http01-edit-in-place: "true",
 
-      # NECESARIO???? 
-      # ingress.kubernetes.io/force-ssl-redirect: "true",    
+      ingress.kubernetes.io/force-ssl-redirect: "true",    
 
       kubernetes.io/ingress.class: alb,
       alb.ingress.kubernetes.io/scheme: internet-facing,
