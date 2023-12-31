@@ -45,8 +45,8 @@ expose:
       external-dns.alpha.kubernetes.io/hostname: harbor.tferrari.com, # This value was modified by the harbor-setup pipeline
 
       # What ClusterIssuer to use
-      # cert-manager.io/cluster-issuer: alb-staging-cluster-issuer, 
-      cert-manager.io/cluster-issuer: alb-production-cluster-issuer, 
+      cert-manager.io/cluster-issuer: alb-staging-cluster-issuer, 
+      # cert-manager.io/cluster-issuer: alb-production-cluster-issuer, 
 
       # QQUIZAS SOLUCIONA EL PROBLEMA DE Q CUANDO SWITCHEA DE STAGING A PRODUCTION CLUSTER ISSUER ROMPE> HAY Q TESTEARLO
       acme.cert-manager.io/http01-edit-in-place: "true",
