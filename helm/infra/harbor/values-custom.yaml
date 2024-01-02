@@ -15,10 +15,10 @@ expose:
   #   # Refer to https://github.com/goharbor/harbor/issues/5291 for details.
     # enabled: false
 
-    auto:
+    # auto:
       # The common name used to generate the certificate, it's necessary
       # when the type isn't "ingress"
-      commonName: harbor.tferrari.com
+      # commonName: harbor.tferrari.com # This value was modified by the harbor-setup pipeline
 
     secret:
       # secretName: harbor-tls-production
