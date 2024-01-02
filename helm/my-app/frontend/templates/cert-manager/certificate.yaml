@@ -16,9 +16,7 @@ spec:
     - {{ .Values.host }}
   issuerRef:
     # Let’s Encrypt has a strict rate limit on certificates issued, so we use the Staging Let’s Encrypt server for testing, and then we switch to the Production Let’s Encrypt server.
-    name: istio-staging-issuer # Comment when switching to Production
-    # name: istio-production-issuer # Uncomment when switching to Production
-    # kind: ClusterIssuer
+    name: istio-{{ .Values.issuer }}-issuer 
     kind: Issuer
     group: cert-manager.io
 {{- end }}
