@@ -57,7 +57,7 @@ expose:
       cert-manager.io/cluster-issuer: alb-production-cluster-issuer, 
 
       # QUIZAS SOLUCIONA EL PROBLEMA DE Q CUANDO SWITCHEA DE STAGING A PRODUCTION CLUSTER ISSUER ROMPE> HAY Q TESTEARLO
-      acme.cert-manager.io/http01-edit-in-place: "true",
+      # acme.cert-manager.io/http01-edit-in-place: "true",
 
       ingress.kubernetes.io/force-ssl-redirect: "true",    
 
