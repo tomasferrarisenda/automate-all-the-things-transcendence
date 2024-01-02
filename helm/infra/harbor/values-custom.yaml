@@ -75,8 +75,8 @@ expose:
 
 
 
-# externalURL: https://harbor.tferrari.com # This value was modified by the harbor-setup pipeline
-externalURL: https://harbor.tferrari.com:30003 # This value was modified by the harbor-setup pipeline
+externalURL: https://harbor.tferrari.com # This value was modified by the harbor-setup pipeline
+# externalURL: https://harbor.tferrari.com:30003 # This value was modified by the harbor-setup pipeline
 
 # internalTLS:
 #   enabled: true
