@@ -802,3 +802,8 @@ Temporary Secret for CertificateRequest:
 
 Purpose: Temporarily stores the private key used to generate the Certificate Signing Request (CSR) for a particular CertificateRequest.
 Usage: The private key in this secret is used to create the CSR sent to the ACME server for the issuance of a certificate. Post-issuance, this secret's role is typically concluded.
+
+
+Explicar lo de que depsues e el deploy de la ifra hay q ir y a mano agregar la key exportada en el registro
+
+explicar lo de switchear de staging a production issuers
