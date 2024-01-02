@@ -1,10 +1,10 @@
 environment: prod
 
-istioGatewayNamespace: service-mesh
-email: tomas.ferrari@sendati.com
+# istioGatewayNamespace: service-mesh
+# email: tomas.ferrari@sendati.com
 
 # Let’s Encrypt has a strict rate limit on certificates issued, so we use the Staging Let’s Encrypt server for testing, and then we switch to the Production Let’s Encrypt server.
-issuer: production # Options are "staging" and "production"
+# issuer: staging # Options are "staging" and "production"
 
 deployment:
   image:

@@ -1,3 +1,7 @@
+host: tferrari.com # This value was modified by the deploy-argocd pipeline
+email: tomas.ferrari@sendati.com # This value was modified by the deploy-argocd pipeline
+issuer: staging # Options are "staging" and "production"
+
 global:
   istioNamespace: service-mesh
 

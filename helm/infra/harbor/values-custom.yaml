@@ -1,4 +1,4 @@
-email: tomas.ferrari@sendati.com
+# email: tomas.ferrari@sendati.com # This value was modified by the initial-setup python script
 
 # Default user is "admin"
 harborAdminPassword: automate-all-the-things
@@ -23,10 +23,10 @@ expose:
   #   # Refer to https://github.com/goharbor/harbor/issues/5291 for details.
     # enabled: false
 
-    auto:
-      # The common name used to generate the certificate, it's necessary
-      # when the type isn't "ingress"
-      commonName: harbor.tferrari.com # This value was modified by the harbor-setup pipeline
+    # auto:
+    #   # The common name used to generate the certificate, it's necessary
+    #   # when the type isn't "ingress"
+    #   commonName: harbor.tferrari.com # This value was modified by the harbor-setup pipeline
 
     secret:
       # secretName: harbor-tls-production
