@@ -1,6 +1,6 @@
 environment: dev
     
-redis_host: sfasfgdsfhsdfg
+redis_host: 
 
 deployment:
   image:  
