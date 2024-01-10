@@ -77,7 +77,6 @@
     "replicaCount": {
       "type": "integer"
     },
-    
     "host": {
       "type": "string"
     },
