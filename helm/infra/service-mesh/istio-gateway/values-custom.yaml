@@ -1,5 +1,5 @@
-host: tferrari.com # This value was modified by the deploy-argocd pipeline
-email: tomas.ferrari@sendati.com # This value was modified by the deploy-argocd pipeline
+host: tferrari.com # This value was modified by the initial-setup python script
+email: tomas.ferrari@sendati.com # This value was modified by the initial-setup python script
 issuer: staging # Options are "staging" and "production"
 
 global:
@@ -7,8 +7,7 @@ global:
 
 service:
   annotations: {    
-    # external-dns.alpha.kubernetes.io/hostname: tferrari.com
-    external-dns.alpha.kubernetes.io/hostname: "tferrari.com,dev.tferrari.com,stage.tferrari.com"
+    external-dns.alpha.kubernetes.io/hostname: "tferrari.com,dev.tferrari.com,stage.tferrari.com" # This value was modified by the initial-setup python script
   }
 
 # This creates issues with terraform destroy
