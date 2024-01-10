@@ -77,6 +77,15 @@
     "replicaCount": {
       "type": "integer"
     },
+    "host": {
+      "type": "string"
+    },
+    "email": {
+      "type": "string"
+    },
+    "issuer": {
+      "type": "string"
+    },
     "resources": {
       "type": "object",
       "properties": {
