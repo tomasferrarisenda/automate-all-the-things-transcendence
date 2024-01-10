@@ -2,8 +2,7 @@ appName: gonchi # This value was modified by the initial-setup python script
 
 service: backend
 
-# port: 443
-containerPort: 3000
+containerPort: 3000 # Port where the app in the container exposes the service
 
 deployment:
   labels: {    
