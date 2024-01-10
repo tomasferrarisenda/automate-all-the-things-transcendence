@@ -25,7 +25,6 @@ This Transcendence Edition builds upon the [Braindamage Edition](https://github.
 
 ### New features:
 
-- ArgoCD Notifications
 - Horizontal Pod Autoscaler
 - External DNS
 - X.509 certificate management with Cert Manager
