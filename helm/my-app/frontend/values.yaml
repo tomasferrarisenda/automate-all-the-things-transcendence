@@ -4,8 +4,8 @@ service: frontend
 
 host: tferrari.com # This value was modified by the deploy-argocd pipeline
 
-containerPort: 80
 port: 443
+containerPort: 80
 
 deployment:
   labels: {    

@@ -805,3 +805,7 @@ Usage: The private key in this secret is used to create the CSR sent to the ACME
 Explicar lo de que depsues e el deploy de la ifra hay q ir y a mano agregar la key exportada en el registro
 
 explicar lo de switchear de staging a production issuers
+
+ well be using metrics-server but you could set up hpa to get metrics from prometheus instead
+ - README": if you want to test hpa, just change spec.targetCPUUtilizationPercentage valueto 1 (meaning going over just 1% CPU load will deploy a new replica) and hit refresh a lot of times in your browser
+ - EKS doesnt include metrics serer by default, so we added the helm chart

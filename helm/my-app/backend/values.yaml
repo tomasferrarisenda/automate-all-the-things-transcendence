@@ -2,7 +2,8 @@ appName: gonchi # This value was modified by the initial-setup python script
 
 service: backend
 
-port: 3000
+# port: 443
+containerPort: 3000
 
 deployment:
   labels: {    
@@ -10,4 +11,3 @@ deployment:
   }
   image:
     repository: tferrari92/gonchi-backend # This value was modified by the harbor-setup pipeline
-    # TRANSENDANCErepositor: k8s-registry-harborin-3fc40329a9-2086369037.us-east-2.elb.amazonaws.com:80/gonchi/gonchi-backend # This value was modified by the harbor-setup pipeline
