@@ -101,6 +101,7 @@ steps:
     echo $ELASTICACHE_DEV_ENDPOINT
     echo $(ELASTICACHE_DEV_ENDPOINT)
     echo ${ELASTICACHE_DEV_ENDPOINT}
+    
     echo ${ELASTICACHE_STAGE_ENDPOINT}
 
     sed -i "s/redis_host:.*/redis_host: $(echo $ELASTICACHE_DEV_ENDPOINT)/g" helm/my-app/backend/environments/values-dev.yaml
