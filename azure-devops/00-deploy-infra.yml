@@ -90,7 +90,7 @@ steps:
 #   condition: always()
 
 - script: |
-    ELASTICACHE_DEV_ENDPOINT="$(terraform -chdir=terraform/aws output -raw elasticache_dev_primary_endpoint_address) # This value was modified by the deploy-infra pipeline"
+    export ELASTICACHE_DEV_ENDPOINT="$(terraform -chdir=terraform/aws output -raw elasticache_dev_primary_endpoint_address) # This value was modified by the deploy-infra pipeline"
     ELASTICACHE_STAGE_ENDPOINT="$(terraform -chdir=terraform/aws output -raw elasticache_stage_primary_endpoint_address) # This value was modified by the deploy-infra pipeline"
     ELASTICACHE_PROD_ENDPOINT="$(terraform -chdir=terraform/aws output -raw elasticache_prod_primary_endpoint_address) # This value was modified by the deploy-infra pipeline"
     echo $ELASTICACHE_DEV_ENDPOINT
