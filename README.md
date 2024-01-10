@@ -25,7 +25,7 @@ This Transcendence Edition builds upon the [Braindamage Edition](https://github.
 
 ### New features:
 
-- Move the Databases inside Kubernetes
+- ArgoCD Notifications
 - Horizontal Pod Autoscaler
 - External DNS
 - X.509 certificate management with Cert Manager
@@ -38,6 +38,7 @@ This Transcendence Edition builds upon the [Braindamage Edition](https://github.
 3. [Insane Edition](https://github.com/tferrari92/automate-all-the-things-insane)
 4. [Braindamage Edition](https://github.com/tferrari92/automate-all-the-things-braindamage)
 5. [Transcendence Edition](https://github.com/tferrari92/automate-all-the-things-transcendence)
+6. [Nirvana Edition](https://github.com/tferrari92/automate-all-the-things-nirvana)
 
 <br/>
 
@@ -54,7 +55,7 @@ This Transcendence Edition builds upon the [Braindamage Edition](https://github.
   - [Install required plugins](#install-required-plugins)
   - [Get your AWS keys](#get-your-aws-keys)
   - [Create AWS service connection](#create-aws-service-connection)
-  - [Create DockerHub service connection](#create-dockerhub-service-connection)
+  - [Create Harbor service connection](#create-harbor-service-connection)
   - [Create AWS-keys variable group](#create-aws-keys-variable-group)
   - [Create an Azure self-hosted agent](#optional-create-an-azure-self-hosted-agent)
 - [AWS Infrastructure Deployment Pipeline](#aws-infrastructure-deployment-pipeline)
@@ -106,7 +107,7 @@ Here's my attempt at making the world a better place. People in the future will 
 - [Git installed](https://www.python.org/downloads/)
 - [Python3 installed](https://www.python.org/downloads/)
 - [Active GitHub account](https://github.com/)
-- [Active DockerHub account](https://hub.docker.com/)
+<!-- - [Active DockerHub account](https://hub.docker.com/) -->
 - [Active AWS account](https://aws.amazon.com/)
 - [Active Azure DevOps account](https://azure.microsoft.com/en-us/free/)
 
@@ -160,6 +161,8 @@ Our app is a very simple static website, but I'm not spoiling it for you. You'll
 <br/>
 
 ## Disclaimer
+
+For this Transcendence Edition we assume that you own a domain like "example.com" and it's managed in your AWS account.
 
 Some things could have been further automated but I prioritized modularization and separation of concerns.<br>
 
@@ -273,15 +276,16 @@ This service connection is required for our Azure DevOps pipelines to interact w
 
 <br/>
 
-## Create DockerHub service connection
+## Create Harbor service connection
 
-This service connection is required for our Azure DevOps pipelines to be able to push images to your DockerHub registry.
+This service connection is required for our Azure DevOps pipelines to be able to push images to your Harbor registry.
 
 1. While on the "Service connections" screen, click on "New service connection" on the top-right.
 2. Select "Docker Registry", click "Next".
-3. Under "Registry type" select "Docker Hub".
-4. Input your Docker ID and Password.
-5. Under "Service connection name", write "dockerhub".
+3. Under "Registry type" select "Others".
+5. Under "Docker registry", write "https://harbor.<your-domain>".
+4. Input your "admin" for Docker ID and "automate-all-the-things" for Docker Password.
+5. Under "Service connection name", write "harbor".
 6. Select the "Grant access permission to all pipelines" option.
 7. Click on "Verify and save".
 
@@ -431,11 +435,10 @@ Here are the specific numbers:
 
 ## App of Apps
 - -5 Prometheus
-- -4 Istio Base / Jaegger / Loki / Metrics-Server / Harbor / Sealed-Secrets / Cert-Manager / External DNS
-- -3 Istiod / Grafana 
+- -4 Istio Base / Jaegger / Loki / Metrics-Server / Sealed-Secrets / Cert-Manager / External DNS
+- -3 Istiod / Grafana / Harbor
 - -2 Istio Gateway / Flagger
 - -1 Kiali / Flagger Load-Tester
-- 0 Databases
 - 0 Backends
 - 1 Frontends
 
@@ -488,9 +491,7 @@ Finally the pipeline will get the ArgoCD web UI URL and admin account password a
 9. When it's done, the endpoints and ArgoCD access files will be exported as artifacts. You'll find them in the pipeline run screen. Download them to see the ArgoCD URL and credentials, and the frontend endpoints.
 <p title="Guide" align="center"> <img width="700" src="https://i.imgur.com/UtZyCCe.png"> </p>
 
-10. You can now access the ArgoCD UI, if it's not ready just hit refresh every few seconds. Here you should find all the applications. Three will be under the "argocd" project, these are necessary for ArgoCD self-management.<br>
-You will also see a few other applications related to our new service mesh implementation, they will be under the "service-mesh" project. We'll explore these later.<br>
-Another six applications will be under the "my-app" project. These manage our app's backend and frontend in the three environments. These will be in a "Progressing/Degraded" state. This is because we haven't built our app and pushed it to DockerHub yet, we'll take care of that soon. From the other exported artifact, you'll get the URLs for each enviroment's frontend, but don't expect these to work until we have deployed our app.  
+10. You should now be able to access the ArgoCD UI at "http://argocd.<your-domain.com>"  
 
 <br/>
 <br/>
@@ -502,6 +503,8 @@ Another six applications will be under the "my-app" project. These manage our ap
 # SEALED SECRETS PIPELINE
 
 ## Description
+
+<!-- We've improved our Sealed Secrets pipeline. We've made ir more recyclable. Now it will generate any secret of type "generic". You'll just need to pass in the required values and voilá. -->
 
 Up until now, we have been leaving our Kubernetes secrtes exposed in our repo. Anyone with access to the repo could see the what the password for the Redis DBs were. Technically, they were base64 encoded, but anyone could easily decode them.
 
@@ -520,7 +523,7 @@ You could easily encrypt the secrets yourselves using the kubeseal CLI tool, but
 5. Select "Existing Azure Pipelines YAML file".
 6. Under "Branch" select "main" and under "Path" select "/azure-devops/02-sealed-secret-generator.yml". Click "Continue".
 7. If you DON'T have a hosted parallelism, you'll need to do the same thing as in point 10 from the [infrastructure deployment pipeline](#instructions).
-8. Click on "Run".
+8. Click on "Run". It will fail the first time because you haven't passed in the the values, just run it again.
 
 
 <br/>
@@ -584,7 +587,7 @@ The [/my-app/frontend directory](my-app) on the repo is meant to represent the f
 
 Just as in the backend pipeline, there's four stages on this pipeline:
 
-1. We build and push our frontend image to DockerHub.
+1. We build and push our frontend image to Harbor.
 2. We deploy to Dev environment in the same manner we did with the backend (modifying the image.tag value in the [helm/my-app/frontend/environments/values-dev.yaml file](helm/my-app/frontend/environments/values-dev.yaml)).
 3. If deployment to Dev was OK, we deploy to Stage.
 4. If deployment to Stage was OK, we'll get an email requesting authorization for deployment to Prod. Give it the thumbs up and our app will be deployed to Prod.
@@ -737,13 +740,9 @@ Special thanks to all these wonderful YouTube people. This wouldn't have been po
 
 ## On the next edition
 
-[Automate All The Things Transcendence Edition](https://github.com/tferrari92/automate-all-the-things-transcendence):
+[Automate All The Things Nirvana Edition](https://github.com/tferrari92/automate-all-the-things-nirvana):
 
-- We'll move the Databases to inside the cluster.
-- We'll start using Horizontal Pod Autoscalers.
-- We'll automate TLS certificates management with Kubernetes Cert Manager.
-- We'll automate DNS records management with Kubernetes External DNS.
-- We'll ditch DockerHub and start using our self-hosted image registry with Harbor.
+
 
 
 
