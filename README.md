@@ -342,7 +342,7 @@ We'll add these two new tools:
 
 <br/>
 
-## IMPORTANT: 
+### IMPORTANT: 
 In order for the SSL certificate to work, we need to do a manual task right after the deploy-infra pipeline and before running the deploy-argocd pipeline. I've automated as much as I could (you can see the new steps in the deploy-infra pipeline) but this task must be performed manually:
 1. The deploy-infra pipeline will publish an artifact with a file called public-signing-key.txt. Download it.
 2. Open it and copy the contents.
@@ -357,7 +357,7 @@ I will repeat these instructions in the AWS Infrastructure Deployment Pipeline.
 
 <br/>
 
-## ALSO: 
+### ALSO: 
 We need to delete this DNSSEC key we created before running the destroy-all-the-things pipeline, otherwise the "terrafom destroy" command will fail. To do this:
 1. On your browser go to your Route53 on your AWS account .
 2. Go to "Registered domains" and open your domain.
