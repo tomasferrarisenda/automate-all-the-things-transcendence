@@ -57,7 +57,7 @@ This Transcendence Edition builds upon the [Braindamage Edition](https://github.
   - [Create Harbor service connection](#create-harbor-service-connection)
   - [Create AWS-keys variable group](#create-aws-keys-variable-group)
   - [Create an Azure self-hosted agent](#optional-create-an-azure-self-hosted-agent)
-- [About External-DNS & Cert-Manager](#about-external-dns-and-cert-manager)
+- [About External-DNS & Cert-Manager](#about-external-dns--cert-manager)
 - [AWS Infrastructure Deployment Pipeline](#aws-infrastructure-deployment-pipeline)
   - [Description](#description)
   - [Instructions](#instructions)
