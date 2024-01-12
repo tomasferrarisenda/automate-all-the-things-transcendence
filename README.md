@@ -333,8 +333,42 @@ To install a self-hosted agent on your machine, you can follow the official docu
 
 # ABOUT EXTERNAL-DNS AND CERTMANAGER
 
-EXPLICAR LO DE AGREGAR LA DNSSEC KEY AL REGISTRAR DESPUES DE DEPLOY INFRA PPL y ANTES DEL DEPLOY ARGOCD. LA KEY nos la da EL PPL DE DEPLOY INFRA
+For this Transcendence Edition, I'll assume you own a domian like "exmple.com" and have it hosted in AWS. If you don't, go get yourself one before proceeding.
+<br/>
+We'll add these two new tools: 
+- ExternalDNS will automatically provide a DNS entry on AWS Route53 for every ingress we create, like for example "argocd.example.com". 
+- Cert-Manager will take care of automatically requesting a SSL certificate to Let's Encrypt for our production frontend which will be hosted at the root domain "exmple.com".
+<br/>
 
+
+**IMPORTANT**: In order for the SSL certificate to work, we need to do a manual task right after the deploy-infra pipeline and before running the deploy-argocd pipeline. I've automated as much as I could (you can see the new steps in the deploy-infra pipeline) but this task must be performed manually:
+1. The deploy-infra pipeline will publish an artifact with a file called public-signing-key.txt. Download it.
+2. Open it and copy the contents.
+3. On your browser go to your Route53 on your AWS account.
+4. Go to "Registered domains" and open your domain.
+5. Go to the "DNSSEC Keys" tab and click "Add".
+6. Paste the contents of the public-signing-key.txt file. Leave "Key type" as "257 - KSK" and "Algorithm" as "ECDSAP256SHA256".
+7. Save.
+8. Now you can run the deploy-argocd pipeline.
+
+I will repeat these instructions in the AWS Infrastructure Deployment Pipeline.
+<br/>
+
+**ALSO**: We need to delete this DNSSEC key we created before running the destroy-all-the-things pipeline, otherwise the "terrafom destroy" command will fail. To do this:
+1. On your browser go to your Route53 on your AWS account .
+2. Go to "Registered domains" and open your domain.
+3. Go to the "DNSSEC Keys" tab.
+4. Select the key we prevously created. It's the one of type Key type: "257 - KSK" and Algorithm: "ECDSAP256SHA256".
+5. Delete it.
+6. Now you can run the destroy-all-the-things pipeline.
+
+I will repeat these instructions in the Destroy All The Things Pipeline.
+
+<br/>
+<br/>
+<p title="Pleasure" align="center"> <img width="460" src="https://i.imgur.com/n5lNz3z.jpg"> </p>
+<br/>
+<br/>
 
 # AWS INFRASTRUCTURE DEPLOYMENT PIPELINE
 

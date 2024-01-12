@@ -2,13 +2,17 @@ name: deploy-argocd
 
 trigger: none
 
+parameters:
+  - name: DELETED_KEY_FROM_DOMAIN
+    displayName: Have you added the DNSSEC key to the domain registrar? If you haven't SSL certification for yor frontend will fail. Type ¨yes¨ to proceed.
+    type: string
+
 variables:
   - group: aws-keys
   - name: AWS_REGION
     value: us-east-1  # This value was modified by the initial-setup python script
   - name: APP_NAME
     value: gonchi # This value was modified by the initial-setup python script
-    
 
 pool:
   vmImage: 'ubuntu-latest' 
