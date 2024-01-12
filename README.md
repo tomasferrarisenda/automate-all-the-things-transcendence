@@ -340,12 +340,7 @@ We'll add these two new tools:
 - ExternalDNS will automatically provide a DNS entry on AWS Route53 for every ingress we create, like for example "argocd.example.com". 
 - Cert-Manager will take care of automatically requesting a SSL certificate to Let's Encrypt for our production frontend which will be hosted at the root domain "exmple.com".
 
-There is a new [route53.tf file](terraform/aws/route53.tf). In here there's an "aws_kms_key" resource. This resource MUST be created in the us-east-1 AWS region, so I suggest you use this region for everything so you don't run into issues.
-
-# ESTABLISH CHAIN OF TRUST
-https://youtu.be/13ZpNsr4NBk?t=102&si=KrC2PGI0io6QPInb
-https://docs.aws.amazon.com/Route53/latest/DeveloperGuide/domain-configure-dnssec.html#domain-configure-dnssec-adding-keys
-
+There is a new [route53.tf file](terraform/aws/route53.tf). In here there's an "aws_kms_key" resource. This resource **MUST be created in the us-east-1 AWS region**, so I suggest you use this region for everything so you don't run into issues.
 
 <br/>
 
@@ -359,6 +354,8 @@ In order for the SSL certificate to work, we need to do a manual task right afte
 6. Paste the contents of the public-signing-key.txt file. Leave "Key type" as "257 - KSK" and "Algorithm" as "ECDSAP256SHA256".
 7. Save.
 8. Now you can run the deploy-argocd pipeline.
+<!-- https://youtu.be/13ZpNsr4NBk?t=102&si=KrC2PGI0io6QPInb -->
+<!-- https://docs.aws.amazon.com/Route53/latest/DeveloperGuide/domain-configure-dnssec.html#domain-configure-dnssec-adding-keys -->
 
 I will repeat these instructions in the [AWS Infrastructure Deployment Pipeline](#aws-infrastructure-deployment-pipeline).
 
