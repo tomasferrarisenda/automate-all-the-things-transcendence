@@ -332,7 +332,7 @@ To install a self-hosted agent on your machine, you can follow the official docu
 <br/>
 <br/>
 
-# ABOUT EXTERNAL-DNS AND CERT-MANAGER
+# ABOUT EXTERNAL-DNS & CERT-MANAGER
 
 For this Transcendence Edition, I'll assume you own a domian like "exmple.com" and have it hosted in AWS. If you don't, go get yourself one before proceeding.
 <br/>
