@@ -353,7 +353,7 @@ In order for the SSL certificate to work, we need to do a manual task right afte
 7. Save.
 8. Now you can run the deploy-argocd pipeline.
 
-I will repeat these instructions in the AWS Infrastructure Deployment Pipeline.
+I will repeat these instructions in the [AWS Infrastructure Deployment Pipeline](#aws-infrastructure-deployment-pipeline).
 
 <br/>
 
@@ -366,7 +366,7 @@ We need to delete this DNSSEC key we created before running the destroy-all-the-
 5. Delete it.
 6. Now you can run the destroy-all-the-things pipeline.
 
-I will repeat these instructions in the Destroy All The Things Pipeline.
+I will repeat these instructions in the [Destroy All The Things Pipeline](#destroy-all-the-things-pipeline).
 
 <br/>
 <br/>
