@@ -81,7 +81,6 @@ This Transcendence Edition builds upon the [Braindamage Edition](https://github.
 - [Kubernetes Tools Management](#kubernetes-tools-management)
   - [Description](#description-5)
   - [Instructions](#instructions-5)
-- [Traces With OpenTelemetry and Jaeger](#traces-with-opentelemetry-and-jaeger)
 - [Destroy All The Things Pipeline](#destroy-all-the-things-pipeline)
   - [Description](#description-6)
   - [Instructions](#instructions-6)
@@ -341,12 +340,12 @@ We'll add these two new tools:
 - ExternalDNS will automatically provide a DNS entry on AWS Route53 for every ingress we create, like for example "argocd.example.com". 
 - Cert-Manager will take care of automatically requesting a SSL certificate to Let's Encrypt for our production frontend which will be hosted at the root domain "exmple.com".
 
+There is a new [route53.tf file](terraform/aws/route53.tf). In here there's an "aws_kms_key" resource. This resource MUST be created in the us-east-1 AWS region, so I suggest you use this region for everything so you don't run into issues.
+
 # ESTABLISH CHAIN OF TRUST
 https://youtu.be/13ZpNsr4NBk?t=102&si=KrC2PGI0io6QPInb
 https://docs.aws.amazon.com/Route53/latest/DeveloperGuide/domain-configure-dnssec.html#domain-configure-dnssec-adding-keys
 
-# This resource MUST be created in us-east-1 region for it to work!!! 
-resource "aws_kms_key" "domaindnssec" {
 
 <br/>
 
