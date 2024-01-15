@@ -9,6 +9,8 @@ parameters:
 
 variables:
   - group: aws-keys
+  - name: AWS_SERVICE_CONNECTION_NAME
+    value: aws-sendati 
   - name: AWS_REGION
     value: us-east-1 # This value was modified by the initial-setup python script
   - name: APP_NAME
@@ -38,7 +40,7 @@ jobs:
   - task: AWSCLI@1
     displayName: 'Update KubeConfig'
     inputs:
-      awsCredentials: 'aws'
+      awsCredentials: $(AWS_SERVICE_CONNECTION_NAME)
       regionName: '$(AWS_REGION)' 
       awsCommand: 'eks'
       awsSubCommand: 'update-kubeconfig'
@@ -164,8 +166,8 @@ jobs:
       command: init
       workingDirectory: 'terraform/aws'
       backendType: aws
-      backendServiceAws: aws
-      providerServiceAws: 'aws'
+      backendServiceAws: $(AWS_SERVICE_CONNECTION_NAME)
+      providerServiceAws: $(AWS_SERVICE_CONNECTION_NAME)
       providerAwsRegion: $(AWS_REGION)
 
   - task: TerraformCLI@1
@@ -173,6 +175,6 @@ jobs:
     inputs:
       command: destroy
       workingDirectory: 'terraform/aws'
-      providerServiceAws: 'aws'
+      providerServiceAws: $(AWS_SERVICE_CONNECTION_NAME)
       providerAwsRegion: $(AWS_REGION) 
     continueOnError: true

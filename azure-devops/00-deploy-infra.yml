@@ -36,7 +36,6 @@ steps:
     command: init
     workingDirectory: 'terraform/backend'
     providerServiceAws: $(AWS_SERVICE_CONNECTION_NAME)  
-    # providerServiceAws: 'aws' 
     providerAwsRegion: $(AWS_REGION) 
 
 # This step will fail if the infrastructure was successfully deployed in a prevous build
@@ -46,7 +45,6 @@ steps:
     command: apply
     workingDirectory: 'terraform/backend'
     providerServiceAws: $(AWS_SERVICE_CONNECTION_NAME) 
-    # providerServiceAws: 'aws' 
     providerAwsRegion: $(AWS_REGION) 
   # continueOnError: true
 
@@ -63,7 +61,6 @@ steps:
     backendType: aws 
     backendServiceAws: $(AWS_SERVICE_CONNECTION_NAME) 
     providerServiceAws: $(AWS_SERVICE_CONNECTION_NAME) 
-    # providerServiceAws: 'aws' 
     providerAwsRegion: $(AWS_REGION) 
     commandOptions: '-force-copy'
 
@@ -74,7 +71,6 @@ steps:
     command: apply
     workingDirectory: 'terraform/aws'
     providerServiceAws: $(AWS_SERVICE_CONNECTION_NAME) 
-    # providerServiceAws: 'aws' 
     providerAwsRegion: $(AWS_REGION)
 
 # We update the local repo with a pull just in case there have been any recent modifications
