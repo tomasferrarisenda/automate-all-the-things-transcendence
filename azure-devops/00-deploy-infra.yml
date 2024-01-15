@@ -12,6 +12,8 @@ pool:
 variables:
   - group: aws-sendati-keys
   # - group: aws-keys
+  - name: AWS_SERVICE_CONNECTION_NAME
+    value: aws-sendati 
   - name: AWS_REGION
     value: us-east-1  # This value was modified by the initial-setup python script
   - name: DOMAIN
@@ -33,7 +35,7 @@ steps:
   inputs:
     command: init
     workingDirectory: 'terraform/backend'
-    providerServiceAws: 'aws-sendati' 
+    providerServiceAws: $(AWS_SERVICE_CONNECTION_NAME)  
     # providerServiceAws: 'aws' 
     providerAwsRegion: $(AWS_REGION) 
 
@@ -43,7 +45,7 @@ steps:
   inputs:
     command: apply
     workingDirectory: 'terraform/backend'
-    providerServiceAws: 'aws-sendati' 
+    providerServiceAws: $(AWS_SERVICE_CONNECTION_NAME) 
     # providerServiceAws: 'aws' 
     providerAwsRegion: $(AWS_REGION) 
   # continueOnError: true
@@ -59,8 +61,8 @@ steps:
     command: init
     workingDirectory: 'terraform/aws'
     backendType: aws 
-    backendServiceAws: aws-sendati 
-    providerServiceAws: 'aws-sendati' 
+    backendServiceAws: $(AWS_SERVICE_CONNECTION_NAME) 
+    providerServiceAws: $(AWS_SERVICE_CONNECTION_NAME) 
     # providerServiceAws: 'aws' 
     providerAwsRegion: $(AWS_REGION) 
     commandOptions: '-force-copy'
@@ -71,7 +73,7 @@ steps:
   inputs:
     command: apply
     workingDirectory: 'terraform/aws'
-    providerServiceAws: 'aws-sendati' 
+    providerServiceAws: $(AWS_SERVICE_CONNECTION_NAME) 
     # providerServiceAws: 'aws' 
     providerAwsRegion: $(AWS_REGION)
 
