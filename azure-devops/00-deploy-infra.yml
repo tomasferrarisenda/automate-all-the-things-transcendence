@@ -10,7 +10,8 @@ pool:
   #   - agent.name -equals <agent-name> # Insert here the name of the agent you created
 
 variables:
-  - group: aws-keys
+  - group: aws-sendati-keys
+  # - group: aws-keys
   - name: AWS_REGION
     value: us-east-1  # This value was modified by the initial-setup python script
   - name: DOMAIN
@@ -31,7 +32,8 @@ steps:
   inputs:
     command: init
     workingDirectory: 'terraform/backend'
-    providerServiceAws: 'aws' 
+    providerServiceAws: 'aws-sendati' 
+    # providerServiceAws: 'aws' 
     providerAwsRegion: $(AWS_REGION) 
 
 # This step will fail if the infrastructure was successfully deployed in a prevous build
@@ -40,7 +42,8 @@ steps:
   inputs:
     command: apply
     workingDirectory: 'terraform/backend'
-    providerServiceAws: 'aws' 
+    providerServiceAws: 'aws-sendati' 
+    # providerServiceAws: 'aws' 
     providerAwsRegion: $(AWS_REGION) 
   # continueOnError: true
 
@@ -56,7 +59,8 @@ steps:
     workingDirectory: 'terraform/aws'
     backendType: aws 
     backendServiceAws: aws 
-    providerServiceAws: 'aws' 
+    providerServiceAws: 'aws-sendati' 
+    # providerServiceAws: 'aws' 
     providerAwsRegion: $(AWS_REGION) 
     commandOptions: '-force-copy'
 
@@ -66,7 +70,8 @@ steps:
   inputs:
     command: apply
     workingDirectory: 'terraform/aws'
-    providerServiceAws: 'aws' 
+    providerServiceAws: 'aws-sendati' 
+    # providerServiceAws: 'aws' 
     providerAwsRegion: $(AWS_REGION)
 
 # We update the local repo with a pull just in case there have been any recent modifications

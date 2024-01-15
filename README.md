@@ -342,6 +342,38 @@ We'll add these two new tools:
 
 There is a new [route53.tf file](terraform/aws/route53.tf). In here there's an "aws_kms_key" resource. This resource **MUST be created in the us-east-1 AWS region**, so I suggest you use this region for everything so you don't run into issues.
 
+- explicar que etsamos creando la hosted zone con tf, al crear la hz se asignan NS random, estos tienen q ser iguales a los del domain, pero no los Podemos elegir ni modificar, po lo q hay q modificar los del domain, para eso agregamos los siguiente pasos: (es posible q esto haga q los registros no funcionen por hasta 48hs)
+- added external dns policty (externa;-dns.tf )and attached it to eks-group-node-group (eks.tf)
+
+
+http://argocd.tferrari.com/
+http://grafana.tferrari.com/
+http://kiali.tferrari.com/kiali
+http://jaeger.tferrari.com/search
+
+
+Here's a concise comparison of the three different types of secrets used in Cert-Manager with the ACME protocol:
+
+ACME Account Private Key Secret (privateKeySecretRef in ClusterIssuer):
+
+Purpose: Stores the private key for the ACME account used to authenticate with the ACME server (like Let's Encrypt).
+Usage: Used by Cert-Manager to sign requests to the ACME server, ensuring secure and authenticated communication for operations like requesting and renewing certificates.
+
+
+Certificate Secret (secretName in Certificate):
+
+Purpose: Holds the TLS certificate and its corresponding private key issued for a specific domain (e.g., tferrari.com).
+Usage: Used by Kubernetes resources like Ingress controllers to enable TLS/SSL encryption for services. It's the certificate actually used in your environment for securing traffic. This is the one the Gatwway object will use.
+
+
+Temporary Secret for CertificateRequest:
+
+Purpose: Temporarily stores the private key used to generate the Certificate Signing Request (CSR) for a particular CertificateRequest.
+Usage: The private key in this secret is used to create the CSR sent to the ACME server for the issuance of a certificate. Post-issuance, this secret's role is typically concluded.
+
+
+explicar lo de switchear de staging a production issuers
+
 <br/>
 
 ### IMPORTANT: 
@@ -664,7 +696,7 @@ For the infrastructure, same as before. If the infrastrucure team needs to, for 
 
 <br/>
 <br/>
-<p title="Anakin" align="center"> <img width="460" src="https://i.imgur.com/V1qgXKM.jpg"> </p>
+<p title="Kevin James" align="center"> <img width="460" src="https://i.imgur.com/ULcCyVx.jpg"> </p>
 <br/>
 <br/>
 
@@ -783,51 +815,6 @@ Special thanks to all these wonderful YouTube people. This wouldn't have been po
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-- explicar que etsamos creando la hosted zone con tf, al crear la hz se asignan NS random, estos tienen q ser iguales a los del domain, pero no los Podemos elegir ni modificar, po lo q hay q modificar los del domain, para eso agregamos los siguiente pasos: (es posible q esto haga q los registros no funcionen por hasta 48hs)
-- added external dns policty (externa;-dns.tf )and attached it to eks-group-node-group (eks.tf)
-
-
-http://argocd.tferrari.com/
-http://grafana.tferrari.com/
-http://kiali.tferrari.com/kiali
-http://jaeger.tferrari.com/search
-
-
-Here's a concise comparison of the three different types of secrets used in Cert-Manager with the ACME protocol:
-
-ACME Account Private Key Secret (privateKeySecretRef in ClusterIssuer):
-
-Purpose: Stores the private key for the ACME account used to authenticate with the ACME server (like Let's Encrypt).
-Usage: Used by Cert-Manager to sign requests to the ACME server, ensuring secure and authenticated communication for operations like requesting and renewing certificates.
-
-
-Certificate Secret (secretName in Certificate):
-
-Purpose: Holds the TLS certificate and its corresponding private key issued for a specific domain (e.g., tferrari.com).
-Usage: Used by Kubernetes resources like Ingress controllers to enable TLS/SSL encryption for services. It's the certificate actually used in your environment for securing traffic. This is the one the Gatwway object will use.
-
-
-Temporary Secret for CertificateRequest:
-
-Purpose: Temporarily stores the private key used to generate the Certificate Signing Request (CSR) for a particular CertificateRequest.
-Usage: The private key in this secret is used to create the CSR sent to the ACME server for the issuance of a certificate. Post-issuance, this secret's role is typically concluded.
-
-
-Explicar lo de que depsues e el deploy de la ifra hay q ir y a mano agregar la key exportada en el registro
-
-explicar lo de switchear de staging a production issuers
 
  well be using metrics-server but you could set up hpa to get metrics from prometheus instead
  - README": if you want to test hpa, just change spec.targetCPUUtilizationPercentage valueto 1 (meaning going over just 1% CPU load will deploy a new replica) and hit refresh a lot of times in your browser
