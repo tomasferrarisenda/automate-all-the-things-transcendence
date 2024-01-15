@@ -10,10 +10,11 @@ pool:
   #   - agent.name -equals <agent-name> # Insert here the name of the agent you created
 
 variables:
-  - group: aws-sendati-keys
-  # - group: aws-keys
+  - group: aws-keys
+  # - group: aws-sendati-keys
   - name: AWS_SERVICE_CONNECTION_NAME
-    value: aws-sendati 
+    value: aws
+    # value: aws-sendati 
   - name: AWS_REGION
     value: us-east-1  # This value was modified by the initial-setup python script
   - name: DOMAIN
