@@ -27,6 +27,7 @@ steps:
   inputs:
     terraformVersion: '1.4.6'
 
+
 - task: TerraformCLI@1
   displayName: 'Terraform Init Backend'
   inputs:
