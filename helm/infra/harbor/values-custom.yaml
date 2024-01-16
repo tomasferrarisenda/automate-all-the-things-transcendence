@@ -47,7 +47,7 @@ expose:
     # set to `f5-bigip` if using the F5 BIG-IP ingress controller
     controller: alb
 
-    annotations: {
+    annotations: 
       external-dns.alpha.kubernetes.io/hostname: harbor.tferrari.com, # This value was modified by the initial-setup python script
 
       # What ClusterIssuer to use
@@ -57,6 +57,7 @@ expose:
       # QUIZAS SOLUCIONA EL PROBLEMA DE Q CUANDO SWITCHEA DE STAGING A PRODUCTION CLUSTER ISSUER ROMPE> HAY Q TESTEARLO
       # acme.cert-manager.io/http01-edit-in-place: "true",
 
+      ingress.kubernetes.io/ssl-redirect: "false"
       # ingress.kubernetes.io/force-ssl-redirect: "true",    
 
       kubernetes.io/ingress.class: alb,
@@ -69,7 +70,7 @@ expose:
       alb.ingress.kubernetes.io/success-codes: '200',
       alb.ingress.kubernetes.io/healthy-threshold-count: '2',
       alb.ingress.kubernetes.io/unhealthy-threshold-count: '2',
-    } 
+    
 
 
 
