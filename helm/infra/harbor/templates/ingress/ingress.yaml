@@ -130,13 +130,13 @@ spec:
             name: {{ template "harbor.core" . }}
             port:
               number: {{ template "harbor.core.servicePort" . }}
-      - path: {{ .portal_path }}
-        pathType: Prefix
-        backend:
-          service:
-            name: {{ template "harbor.portal" . }}
-            port:
-              number: {{ template "harbor.portal.servicePort" . }}
+      # - path: {{ .portal_path }}
+      #   pathType: Prefix
+      #   backend:
+      #     service:
+      #       name: {{ template "harbor.portal" . }}
+      #       port:
+      #         number: {{ template "harbor.portal.servicePort" . }}
 {{- end }}
     {{- if $ingress.hosts.core }}
     host: {{ $ingress.hosts.core }}
