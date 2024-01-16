@@ -1,6 +1,6 @@
 environment: stage
 
-redis_host: master.gonchi-stage-elascache-rep-group.zrvfdq.use1.cache.amazonaws.com # This value was modified by the deploy-infra pipeline
+redis_host: master.gonchi-stage-elascache-rep-group.5piid5.use1.cache.amazonaws.com # This value was modified by the deploy-infra pipeline
 
 deployment:
   image:
