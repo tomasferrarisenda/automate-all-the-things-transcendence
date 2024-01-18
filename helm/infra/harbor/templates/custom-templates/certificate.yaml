@@ -1,16 +1,16 @@
-apiVersion: cert-manager.io/v1
-kind: Certificate
-metadata:
-  name: harbor-certificate
-  annotations:
-    argocd.argoproj.io/sync-wave: "2"
-spec:
-  secretName: harbor-certificate
-  # commonName: {{ .Values.host }}
-  dnsNames: 
-    - harbor.tferrari.com
-  issuerRef:
-    # Let’s Encrypt has a strict rate limit on certificates issued, so we use the Staging Let’s Encrypt server for testing, and then we switch to the Production Let’s Encrypt server.
-    name: alb-staging-cluster-issuer 
-    kind: ClusterIssuer
-    group: cert-manager.io
+# apiVersion: cert-manager.io/v1
+# kind: Certificate
+# metadata:
+#   name: harbor-certificate
+#   annotations:
+#     argocd.argoproj.io/sync-wave: "2"
+# spec:
+#   secretName: harbor-certificate
+#   # commonName: {{ .Values.host }}
+#   dnsNames: 
+#     - harbor.tferrari.com
+#   issuerRef:
+#     # Let’s Encrypt has a strict rate limit on certificates issued, so we use the Staging Let’s Encrypt server for testing, and then we switch to the Production Let’s Encrypt server.
+#     name: alb-staging-cluster-issuer 
+#     kind: ClusterIssuer
+#     group: cert-manager.io
