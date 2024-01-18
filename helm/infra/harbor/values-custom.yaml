@@ -26,6 +26,7 @@ expose:
     #   # when the type isn't "ingress"
     #   commonName: harbor.tferrari.com # This value was modified by the harbor-setup pipeline
 
+    # DESCOMENTAR PARA CREAR CEERT A TRAVES DE INGRESS
     # secret:
     #   # secretName: harbor-tls-production
     #   secretName: harbor-ingress-certificate
@@ -46,7 +47,6 @@ expose:
     # set to `alb` if using the ALB ingress controller
     # set to `f5-bigip` if using the F5 BIG-IP ingress controller
     controller: alb
-
 
     annotations: 
       # External-DNS related annotations
