@@ -48,8 +48,10 @@ expose:
     controller: alb
 
     annotations: 
+      # External-DNS related annotations
       external-dns.alpha.kubernetes.io/hostname: harbor.tferrari.com # This value was modified by the initial-setup python script
 
+      # Cert-Manager related annotations
       # # What ClusterIssuer to use
       # cert-manager.io/cluster-issuer: alb-staging-cluster-issuer 
       # # cert-manager.io/cluster-issuer: alb-production-cluster-issuer 
@@ -61,6 +63,7 @@ expose:
       # nginx.ingress.kubernetes.io/ssl-redirect: "false"
       # # ingress.kubernetes.io/force-ssl-redirect: "true"    
 
+      # ALB related annotations
       kubernetes.io/ingress.class: alb
       alb.ingress.kubernetes.io/scheme: internet-facing
       alb.ingress.kubernetes.io/target-type: ip
