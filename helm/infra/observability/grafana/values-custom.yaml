@@ -25,6 +25,11 @@ ingress:
   
   hosts:
     - grafana.tferrari.com
+
+  tls: 
+    - secretName: grafana-ingress-certificate
+      hosts:
+        - grafana.tferrari.com
   
 datasources:
   datasources.yaml:
