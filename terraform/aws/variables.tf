@@ -8,6 +8,10 @@ variable "region" {
   type        = string
 }
 
+variable "domain" {
+  type        = string
+}
+
 # variable "aws_access_key" {
 #   description = "AWS access key"
 #   type        = string
