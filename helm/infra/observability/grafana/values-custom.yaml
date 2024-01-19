@@ -23,8 +23,7 @@ ingress:
     alb.ingress.kubernetes.io/healthy-threshold-count: '2'
     alb.ingress.kubernetes.io/unhealthy-threshold-count: '2'
 
-    acme.cert-manager.io/http01-edit-in-place: "true"
-
+    # acme.cert-manager.io/http01-edit-in-place: "true"
     # alb.ingress.kubernetes.io/listen-ports: '[{"HTTP": 80}, {"HTTPS": 443}]'
 
   # EXPLICAR ESTE WORKAROUNB!!!!!!
@@ -35,15 +34,7 @@ ingress:
           port:
             number: 8089
       path: "/.well-known/acme-challenge"
-      pathType: Prefix
-
-
-
-    # Uncomment to generate TLS certificate
-    # alb.ingress.kubernetes.io/listen-ports: '[{"HTTPS":443}]'
-    # ESTOS NO CAMBIAN ABSOLUTAMENTE NADA
-    # ingress.kubernetes.io/ssl-redirect: "true"
-    # ingress.kubernetes.io/force-ssl-redirect: "true"    
+      pathType: Prefix 
 
   
   # Uncomment to generate TLS certificate
