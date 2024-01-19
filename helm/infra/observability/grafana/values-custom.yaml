@@ -27,13 +27,13 @@ ingress:
     alb.ingress.kubernetes.io/listen-ports: '[{"HTTPS":443}]'
 
     extraPaths: 
-    - path: /.well-known/acme-challenge
-      backend:
-        service:
-          name: cm-acme-http-solver-rbhlz
-          port:
-            number: 8089
-      pathType: Prefix
+      - path: /.well-known/acme-challenge
+        backend:
+          service:
+            name: cm-acme-http-solver-rbhlz
+            port:
+              number: 8089
+        pathType: Prefix
 
 
 
