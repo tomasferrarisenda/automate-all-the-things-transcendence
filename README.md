@@ -343,6 +343,8 @@ We'll add these two new tools:
 There is a new [route53.tf file](terraform/aws/route53.tf). In here there's an "aws_kms_key" resource. This resource **MUST be created in the us-east-1 AWS region**, so I suggest you use this region for everything so you don't run into issues.<br>
 I've also added a [policy for External-DNS](terraform/aws/external-dns.tf) and attached it to [eks-group-node-group](terraform/aws/eks.tf).
 
+You can find further information on how Cert-Manager works in my [cert-manager-notes.md](docs/cert-manager-notes.md).
+
 - explicar que etsamos creando la hosted zone con tf, al crear la hz se asignan NS random, estos tienen q ser iguales a los del domain, pero no los Podemos elegir ni modificar, po lo q hay q modificar los del domain, para eso agregamos los siguiente pasos: (es posible q esto haga q los registros no funcionen por hasta 48hs)
 
 
