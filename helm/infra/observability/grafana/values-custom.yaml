@@ -27,7 +27,7 @@ ingress:
   extraPaths: 
     - backend:
         service:
-          name: "cm-acme-http-solver-rbhlz"
+          name: "cm-acme-http-solver-dzx7c"
           port:
             number: 8089
       path: "/.well-known/acme-challenge"
@@ -35,9 +35,9 @@ ingress:
 
 
 
-    # ESTOS NO CAMBIAN ABSOLUTAMENTE NADA
     # Uncomment to generate TLS certificate
     # alb.ingress.kubernetes.io/listen-ports: '[{"HTTPS":443}]'
+    # ESTOS NO CAMBIAN ABSOLUTAMENTE NADA
     # ingress.kubernetes.io/ssl-redirect: "true"
     # ingress.kubernetes.io/force-ssl-redirect: "true"    
 
