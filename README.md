@@ -347,10 +347,11 @@ You can find further information on these tools in my how [external-dns-notes.md
 
 Initially, all Certificates will be created using the Let's Encrypt Staging Issuers. To switch to Production Issuers, you'll need to make the change in the corresponding values file. More info on Issuers in the [cert-manager-notes.md](docs/cert-manager-notes.md).
 
-http://argocd.<your-domain>/
-http://grafana.<your-domain>/
-http://kiali.<your-domain>/kiali
-http://jaeger.<your-domain>/search
+Here are the URLs for our tools:
+- http://argocd.<your-domain>/
+- http://grafana.<your-domain>/
+- http://kiali.<your-domain>/kiali
+- http://jaeger.<your-domain>/search
 
 <br/>
 
@@ -364,7 +365,6 @@ In order for the SSL certificate to work, we need to do a manual task right afte
 6. Paste the contents of the public-signing-key.txt file. Leave "Key type" as "257 - KSK" and "Algorithm" as "ECDSAP256SHA256".
 7. Save.
 8. Now you can run the deploy-argocd pipeline.
-
 
 I will repeat these instructions in the [AWS Infrastructure Deployment Pipeline](#aws-infrastructure-deployment-pipeline).
 
