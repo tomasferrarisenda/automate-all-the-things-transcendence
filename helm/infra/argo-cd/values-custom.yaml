@@ -23,29 +23,24 @@ configs:
       return hs
       
 
-## Server
 server:
   ingress:
-    # -- Enable an ingress resource for the ArgoCD server
     enabled: true
 
     # Uncomment to generate TLS certificate for ArgoCD
-    hosts: 
-      - argocd.tferrari.com # This value was modified by the initial-setup python script
-    tls: 
-      - secretName: argocd-ingress-certificate
-        hosts: 
-          - argocd.tferrari.com # This value was modified by the initial-setup python script
+    # hosts: 
+    #   - argocd.tferrari.com # This value was modified by the initial-setup python script
+    # tls: 
+    #   - secretName: argocd-ingress-certificate
+    #     hosts: 
+    #       - argocd.tferrari.com # This value was modified by the initial-setup python script
 
-
-    # -- Additional ingress annotations
     annotations: 
       # External-DNS related annotations
       external-dns.alpha.kubernetes.io/hostname: argocd.tferrari.com # This value was modified by the initial-setup python script
       
       # Cert-Manager related annotations
-      # What ClusterIssuer to use
-      cert-manager.io/cluster-issuer: alb-staging-cluster-issuer
+      # cert-manager.io/cluster-issuer: alb-staging-cluster-issuer
       # cert-manager.io/cluster-issuer: alb-production-cluster-issuer 
       
       # ALB related annotations

@@ -53,7 +53,6 @@ expose:
       external-dns.alpha.kubernetes.io/hostname: harbor.tferrari.com # This value was modified by the initial-setup python script
 
       # Cert-Manager related annotations
-      # What ClusterIssuer to use
       cert-manager.io/cluster-issuer: alb-staging-cluster-issuer 
       # cert-manager.io/cluster-issuer: alb-production-cluster-issuer 
       # QUIZAS SOLUCIONA EL PROBLEMA DE Q CUANDO SWITCHEA DE STAGING A PRODUCTION CLUSTER ISSUER ROMPE> HAY Q TESTEARLO
