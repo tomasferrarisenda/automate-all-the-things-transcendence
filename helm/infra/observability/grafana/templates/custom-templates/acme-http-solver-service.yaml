@@ -5,7 +5,7 @@ metadata:
    auth.istio.io/8089: NONE
  labels:
    acme.cert-manager.io/http01-solver: 'true'
- name: cm-acme-http-solver-tferrari
+ name: acme-http-solver
 spec:
  externalTrafficPolicy: Cluster
  internalTrafficPolicy: Cluster

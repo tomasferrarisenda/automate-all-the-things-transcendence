@@ -23,11 +23,22 @@ ingress:
     alb.ingress.kubernetes.io/healthy-threshold-count: '2'
     alb.ingress.kubernetes.io/unhealthy-threshold-count: '2'
 
+    
+    # alb.ingress.kubernetes.io/listen-ports: '[{"HTTPS":443}]'
 
+
+  # EXPLICAR ESTE WORKAROUNB!!!!!!
   extraPaths: 
     - backend:
         service:
-          name: cm-acme-http-solver-tferrari
+          name: grafana
+          port:
+            number: 443
+      path: /
+      pathType: Prefix
+    - backend:
+        service:
+          name: acme-http-solver
           port:
             number: 8089
       path: "/.well-known/acme-challenge"
