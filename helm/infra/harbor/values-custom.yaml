@@ -27,8 +27,8 @@ expose:
     #   commonName: harbor.tferrari.com # This value was modified by the harbor-setup pipeline
 
     # DESCOMENTAR PARA CREAR CEERT A TRAVES DE INGRESS
-    # secret:
-    #   secretName: harbor-ingress-certificate
+    secret:
+      secretName: harbor-ingress-certificate
 
   # loadBalancer:
   #   annotations: {
@@ -38,7 +38,7 @@ expose:
   ingress:
     hosts:
       # DESCOMENTAR PARA CREAR CEERT A TRAVES DE INGRESS
-      # core: harbor.tferrari.com # This value was modified by the harbor-setup pipeline
+      core: harbor.tferrari.com # This value was modified by the harbor-setup pipeline
     
     # set to the type of ingress controller if it has specific requirements.
     # leave as `default` for most ingress controllers.
@@ -53,10 +53,10 @@ expose:
       external-dns.alpha.kubernetes.io/hostname: harbor.tferrari.com # This value was modified by the initial-setup python script
 
       # # Cert-Manager related annotations
-      # cert-manager.io/cluster-issuer: alb-staging-cluster-issuer 
+      cert-manager.io/cluster-issuer: alb-staging-cluster-issuer 
       # # cert-manager.io/cluster-issuer: alb-production-cluster-issuer 
       # # QUIZAS SOLUCIONA EL PROBLEMA DE Q CUANDO SWITCHEA DE STAGING A PRODUCTION CLUSTER ISSUER ROMPE> HAY Q TESTEARLO
-      # # acme.cert-manager.io/http01-edit-in-place: "true"
+      acme.cert-manager.io/http01-edit-in-place: "true"
       # ingress.kubernetes.io/ssl-redirect: "false"
       # nginx.ingress.kubernetes.io/ssl-redirect: "false"
       # # ingress.kubernetes.io/force-ssl-redirect: "true"    
