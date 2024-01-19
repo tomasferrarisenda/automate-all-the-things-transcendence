@@ -387,6 +387,9 @@ I will repeat these instructions in the [Destroy All The Things Pipeline](#destr
 <br/>
 <br/>
 
+# OUR NEW REGISTRY: HARBOR
+
+
 # AWS INFRASTRUCTURE DEPLOYMENT PIPELINE
 
 ## Description
