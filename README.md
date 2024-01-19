@@ -282,7 +282,7 @@ This service connection is required for our Azure DevOps pipelines to be able to
 1. While on the "Service connections" screen, click on "New service connection" on the top-right.
 2. Select "Docker Registry", click "Next".
 3. Under "Registry type" select "Others".
-5. Under "Docker registry", write "https://harbor.<your-domain>".
+5. Under "Docker registry", write "https://harbor.<your-domain\>".
 4. Input your "admin" for Docker ID and "automate-all-the-things" for Docker Password.
 5. Under "Service connection name", write "harbor".
 6. Select the "Grant access permission to all pipelines" option.
@@ -349,9 +349,9 @@ Initially, all Certificates will be created using the Let's Encrypt Staging Issu
 
 Here are the URLs for our tools:
 - http://argocd.<your-domain\>/
-- http://grafana.<your-domain>/
-- http://kiali.<your-domain>/kiali
-- http://jaeger.<your-domain>/search
+- http://grafana.<your-domain\>/
+- http://kiali.<your-domain\>/kiali
+- http://jaeger.<your-domain\>/search
 
 <br/>
 
