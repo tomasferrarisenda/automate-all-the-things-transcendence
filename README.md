@@ -348,7 +348,7 @@ You can find further information on these tools in my how [external-dns-notes.md
 Initially, all Certificates will be created using the Let's Encrypt Staging Issuers. To switch to Production Issuers, you'll need to make the change in the corresponding values file. More info on Issuers in the [cert-manager-notes.md](docs/cert-manager-notes.md).
 
 Here are the URLs for our tools:
-- http://argocd.<your-domain>/
+- http://argocd.\<your-domain\>/
 - http://grafana.<your-domain>/
 - http://kiali.<your-domain>/kiali
 - http://jaeger.<your-domain>/search
