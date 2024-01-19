@@ -24,8 +24,7 @@ ingress:
     alb.ingress.kubernetes.io/unhealthy-threshold-count: '2'
 
     
-    # alb.ingress.kubernetes.io/listen-ports: '[{"HTTPS":443}]'
-
+    alb.ingress.kubernetes.io/listen-ports: '[{"HTTP": 80}, {"HTTPS": 443}]'
 
   # EXPLICAR ESTE WORKAROUNB!!!!!!
   extraPaths: 
