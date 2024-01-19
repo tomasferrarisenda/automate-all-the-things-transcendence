@@ -340,36 +340,16 @@ We'll add these two new tools:
 - ExternalDNS will automatically provide a DNS entry on AWS Route53 for every ingress we create, like for example "argocd.example.com". 
 - Cert-Manager will take care of automatically requesting a SSL certificate to Let's Encrypt for our production frontend which will be hosted at the root domain "exmple.com".
 
-There is a new [route53.tf file](terraform/aws/route53.tf). In here there's an "aws_kms_key" resource. This resource **MUST be created in the us-east-1 AWS region**, so I suggest you use this region for everything so you don't run into issues.
+There is a new [route53.tf file](terraform/aws/route53.tf). In here there's an "aws_kms_key" resource. This resource **MUST be created in the us-east-1 AWS region**, so I suggest you use this region for everything so you don't run into issues.<br>
+I've also added a [policy for External-DNS](terraform/aws/external-dns.tf) and attached it to [eks-group-node-group](terraform/aws/eks.tf).
 
 - explicar que etsamos creando la hosted zone con tf, al crear la hz se asignan NS random, estos tienen q ser iguales a los del domain, pero no los Podemos elegir ni modificar, po lo q hay q modificar los del domain, para eso agregamos los siguiente pasos: (es posible q esto haga q los registros no funcionen por hasta 48hs)
-- added external dns policty (externa;-dns.tf )and attached it to eks-group-node-group (eks.tf)
 
 
 http://argocd.tferrari.com/
 http://grafana.tferrari.com/
 http://kiali.tferrari.com/kiali
 http://jaeger.tferrari.com/search
-
-
-Here's a concise comparison of the three different types of secrets used in Cert-Manager with the ACME protocol:
-
-ACME Account Private Key Secret (privateKeySecretRef in ClusterIssuer):
-
-Purpose: Stores the private key for the ACME account used to authenticate with the ACME server (like Let's Encrypt).
-Usage: Used by Cert-Manager to sign requests to the ACME server, ensuring secure and authenticated communication for operations like requesting and renewing certificates.
-
-
-Certificate Secret (secretName in Certificate):
-
-Purpose: Holds the TLS certificate and its corresponding private key issued for a specific domain (e.g., tferrari.com).
-Usage: Used by Kubernetes resources like Ingress controllers to enable TLS/SSL encryption for services. It's the certificate actually used in your environment for securing traffic. This is the one the Gatwway object will use.
-
-
-Temporary Secret for CertificateRequest:
-
-Purpose: Temporarily stores the private key used to generate the Certificate Signing Request (CSR) for a particular CertificateRequest.
-Usage: The private key in this secret is used to create the CSR sent to the ACME server for the issuance of a certificate. Post-issuance, this secret's role is typically concluded.
 
 
 explicar lo de switchear de staging a production issuers
