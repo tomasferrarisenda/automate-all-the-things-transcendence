@@ -27,7 +27,7 @@ ingress:
   extraPaths: 
     - backend:
         service:
-          name: "cm-acme-http-solver-dzx7c"
+          name: "cm-acme-http-solver-4h9kjX"
           port:
             number: 8089
       path: "/.well-known/acme-challenge"
