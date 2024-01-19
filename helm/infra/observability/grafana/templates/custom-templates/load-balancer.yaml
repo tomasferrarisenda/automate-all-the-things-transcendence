@@ -3,7 +3,7 @@ kind: Service
 metadata:
   annotations:
     # external-dns.alpha.kubernetes.io/hostname: grafana
-  name: lb
+  name: manual-lb
 spec:
   ports:
   - name: service
