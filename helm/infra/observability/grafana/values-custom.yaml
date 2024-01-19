@@ -5,7 +5,7 @@ ingress:
   enabled: true
   annotations: 
     # External-DNS related annotations
-    external-dns.alpha.kubernetes.io/hostname: grafana.tferrari.com
+    external-dns.alpha.kubernetes.io/hostname: grafana.tferrari.com # This value was modified by the initial-setup python script
 
     # Cert-Manager related annotations
     cert-manager.io/cluster-issuer: alb-staging-cluster-issuer
@@ -23,13 +23,13 @@ ingress:
     alb.ingress.kubernetes.io/healthy-threshold-count: '2'
     alb.ingress.kubernetes.io/unhealthy-threshold-count: '2'
   
-  hosts:
-    - grafana.tferrari.com
+  # hosts:
+  #   - grafana.tferrari.com # This value was modified by the initial-setup python script
 
   tls: 
     - secretName: grafana-ingress-certificate
       hosts:
-        - grafana.tferrari.com
+        - grafana.tferrari.com # This value was modified by the initial-setup python script
   
 datasources:
   datasources.yaml:
