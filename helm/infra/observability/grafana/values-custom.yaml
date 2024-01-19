@@ -23,21 +23,21 @@ ingress:
     alb.ingress.kubernetes.io/healthy-threshold-count: '2'
     alb.ingress.kubernetes.io/unhealthy-threshold-count: '2'
 
-    # Uncomment to generate TLS certificate
-    alb.ingress.kubernetes.io/listen-ports: '[{"HTTPS":443}]'
 
-    extraPaths: 
-      - path: "/.well-known/acme-challenge"
-        backend:
-          service:
-            name: "cm-acme-http-solver-rbhlz"
-            port:
-              number: 8089
-        pathType: Prefix
+  extraPaths: 
+    - backend:
+        service:
+          name: "cm-acme-http-solver-rbhlz"
+          port:
+            number: 8089
+      path: "/.well-known/acme-challenge"
+      pathType: Prefix
 
 
 
     # ESTOS NO CAMBIAN ABSOLUTAMENTE NADA
+    # Uncomment to generate TLS certificate
+    # alb.ingress.kubernetes.io/listen-ports: '[{"HTTPS":443}]'
     # ingress.kubernetes.io/ssl-redirect: "true"
     # ingress.kubernetes.io/force-ssl-redirect: "true"    
 
