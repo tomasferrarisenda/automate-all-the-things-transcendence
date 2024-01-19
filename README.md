@@ -343,18 +343,14 @@ We'll add these two new tools:
 There is a new [route53.tf file](terraform/aws/route53.tf). In here there's an "aws_kms_key" resource. This resource **MUST be created in the us-east-1 AWS region**, so I suggest you use this region for everything so you don't run into issues.<br>
 I've also added a [policy for External-DNS](terraform/aws/external-dns.tf) and attached it to [eks-group-node-group](terraform/aws/eks.tf).
 
-You can find further information on how Cert-Manager works in my [cert-manager-notes.md](docs/cert-manager-notes.md).
+You can find further information on these tools in my how [external-dns-notes.md](docs/external-dns-notes.md) and [cert-manager-notes.md](docs/cert-manager-notes.md).
 
-- explicar que etsamos creando la hosted zone con tf, al crear la hz se asignan NS random, estos tienen q ser iguales a los del domain, pero no los Podemos elegir ni modificar, po lo q hay q modificar los del domain, para eso agregamos los siguiente pasos: (es posible q esto haga q los registros no funcionen por hasta 48hs)
+Initially, all Certificates will be created using the Let's Encrypt Staging Issuers. To switch to Production Issuers, you'll need to make the change in the corresponding values file. More info on Issuers in the [cert-manager-notes.md](docs/cert-manager-notes.md).
 
-
-http://argocd.tferrari.com/
-http://grafana.tferrari.com/
-http://kiali.tferrari.com/kiali
-http://jaeger.tferrari.com/search
-
-
-explicar lo de switchear de staging a production issuers
+http://argocd.<your-domain>/
+http://grafana.<your-domain>/
+http://kiali.<your-domain>/kiali
+http://jaeger.<your-domain>/search
 
 <br/>
 
@@ -368,8 +364,7 @@ In order for the SSL certificate to work, we need to do a manual task right afte
 6. Paste the contents of the public-signing-key.txt file. Leave "Key type" as "257 - KSK" and "Algorithm" as "ECDSAP256SHA256".
 7. Save.
 8. Now you can run the deploy-argocd pipeline.
-<!-- https://youtu.be/13ZpNsr4NBk?t=102&si=KrC2PGI0io6QPInb -->
-<!-- https://docs.aws.amazon.com/Route53/latest/DeveloperGuide/domain-configure-dnssec.html#domain-configure-dnssec-adding-keys -->
+
 
 I will repeat these instructions in the [AWS Infrastructure Deployment Pipeline](#aws-infrastructure-deployment-pipeline).
 
