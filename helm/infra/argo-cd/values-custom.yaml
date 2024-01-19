@@ -29,21 +29,26 @@ server:
     # -- Enable an ingress resource for the ArgoCD server
     enabled: true
 
-# Uncomment to generate TLS certificate for ArgoCD
-    # hosts: 
-    #   - argocd.tferrari.com # This value was modified by the initial-setup python script
-    # tls: 
-    #   - secretName: argocd-ingress-certificate
-    #     hosts: 
-    #       - argocd.tferrari.com # This value was modified by the initial-setup python script
+    # Uncomment to generate TLS certificate for ArgoCD
+    hosts: 
+      - argocd.tferrari.com # This value was modified by the initial-setup python script
+    tls: 
+      - secretName: argocd-ingress-certificate
+        hosts: 
+          - argocd.tferrari.com # This value was modified by the initial-setup python script
 
 
     # -- Additional ingress annotations
     annotations: 
-      # Uncomment one to generate TLS certificate for ArgoCD
-      # cert-manager.io/cluster-issuer: harbor-staging-cluster-issuer,
-      # cert-manager.io/cluster-issuer: harbor-production-cluster-issuer,
+      # External-DNS related annotations
       external-dns.alpha.kubernetes.io/hostname: argocd.tferrari.com # This value was modified by the initial-setup python script
+      
+      # Cert-Manager related annotations
+      # What ClusterIssuer to use
+      cert-manager.io/cluster-issuer: alb-staging-cluster-issuer
+      # cert-manager.io/cluster-issuer: alb-production-cluster-issuer 
+      
+      # ALB related annotations
       kubernetes.io/ingress.class: alb
       alb.ingress.kubernetes.io/scheme: internet-facing
       alb.ingress.kubernetes.io/target-type: ip
@@ -54,4 +59,4 @@ server:
       alb.ingress.kubernetes.io/success-codes: '200'
       alb.ingress.kubernetes.io/healthy-threshold-count: '2'
       alb.ingress.kubernetes.io/unhealthy-threshold-count: '2'
-    
+  

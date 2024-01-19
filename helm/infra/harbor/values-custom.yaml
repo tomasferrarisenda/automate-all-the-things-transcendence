@@ -28,7 +28,6 @@ expose:
 
     # DESCOMENTAR PARA CREAR CEERT A TRAVES DE INGRESS
     secret:
-      # secretName: harbor-tls-production
       secretName: harbor-ingress-certificate
 
   # loadBalancer:
