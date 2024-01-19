@@ -22,8 +22,12 @@ ingress:
     alb.ingress.kubernetes.io/success-codes: '200'
     alb.ingress.kubernetes.io/healthy-threshold-count: '2'
     alb.ingress.kubernetes.io/unhealthy-threshold-count: '2'
+
+    # Uncomment to generate TLS certificate
     alb.ingress.kubernetes.io/listen-ports: '[{"HTTPS":443}]'
 
+
+    # ESTOS NO CAMBIAN ABSOLUTAMENTE NADA
     # ingress.kubernetes.io/ssl-redirect: "true"
     # ingress.kubernetes.io/force-ssl-redirect: "true"    
 
