@@ -54,20 +54,20 @@ resource "aws_acm_certificate_validation" "argocd" {
 
 resource "aws_acm_certificate_validation" "grafana" {
   certificate_arn         = aws_acm_certificate.grafana.arn
-  validation_record_fqdns = ["argocd.${var.domain}"]
+  validation_record_fqdns = ["grafana.${var.domain}"]
 }
 
 resource "aws_acm_certificate_validation" "harbor" {
   certificate_arn         = aws_acm_certificate.harbor.arn
-  validation_record_fqdns = ["argocd.${var.domain}"]
+  validation_record_fqdns = ["harbor.${var.domain}"]
 }
 
 resource "aws_acm_certificate_validation" "jaeger" {
   certificate_arn         = aws_acm_certificate.jaeger.arn
-  validation_record_fqdns = ["argocd.${var.domain}"]
+  validation_record_fqdns = ["jaeger.${var.domain}"]
 }
 
 resource "aws_acm_certificate_validation" "kiali" {
   certificate_arn         = aws_acm_certificate.kiali.arn
-  validation_record_fqdns = ["argocd.${var.domain}"]
+  validation_record_fqdns = ["kiali.${var.domain}"]
 }
