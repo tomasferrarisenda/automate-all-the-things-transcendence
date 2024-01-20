@@ -65,11 +65,11 @@ resource "aws_kms_alias" "alias" {
 
 
 resource "aws_route53_zone" "main" {
-  name = "tferrari.com"
+  name = var.domain
 }
 
 resource "aws_route53_key_signing_key" "dnssecksk" {
-  name = "tferrari"
+  name = "dnssec-sign-key"
   hosted_zone_id = aws_route53_zone.main.zone_id
   key_management_service_arn = aws_kms_key.domaindnssec.arn
 }
