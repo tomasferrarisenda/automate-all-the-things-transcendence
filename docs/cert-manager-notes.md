@@ -17,6 +17,9 @@ Let's Encrypt offers two types of issuers for their SSL/TLS certificates: stagin
 
 In summary, the staging issuer is for testing and development, with more relaxed rate limits and untrusted certificates, while the production issuer is for live websites, with trusted certificates but stricter rate limits.
 
+## Cert-Manager VS Amazon ALB
+
+
 ## DNSSEC Issue
 <!-- https://youtu.be/13ZpNsr4NBk?t=102&si=KrC2PGI0io6QPInb -->
 <!-- https://docs.aws.amazon.com/Route53/latest/DeveloperGuide/domain-configure-dnssec.html#domain-configure-dnssec-adding-keys -->
