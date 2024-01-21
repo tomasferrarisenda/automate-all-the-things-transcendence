@@ -95,8 +95,13 @@ steps:
   condition: always()
 
 - script: |
-    sed -i "s/alb.ingress.kubernetes.io/certificate-arn:.*/alb.ingress.kubernetes.io/certificate-arn: $(terraform -chdir=terraform/aws output -raw wildcard_certificate_arn) # This value was modified by the deploy-infra pipeline/g" helm/infra/grafana/values-custom.yaml
-    sed -i "s/alb.ingress.kubernetes.io/certificate-arn:.*/alb.ingress.kubernetes.io/certificate-arn: $(terraform -chdir=terraform/aws output -raw wildcard_certificate_arn) # This value was modified by the deploy-infra pipeline/g" helm/infra/harbor/values-custom.yaml
+    echo "$(terraform -chdir=terraform/aws output -raw wildcard_certificate_arn) # This value was modified by the deploy-infra pipeline" > wildcard_certificate_arn.txt
+  displayName: 'Save certificate arn'
+  condition: always()
+
+- script: |
+    sed -i "s/alb.ingress.kubernetes.io/certificate-arn:.*/alb.ingress.kubernetes.io/certificate-arn: $(cat wildcard_certificate_arn.txt | tr -d '\n')/g" helm/infra/observability/grafana/values-custom.yaml
+    sed -i "s/alb.ingress.kubernetes.io/certificate-arn:.*/alb.ingress.kubernetes.io/certificate-arn: $(cat wildcard_certificate_arn.txt | tr -d '\n')/g" helm/infra/harbor/values-custom.yaml
   displayName: 'Add wildcard certificate arn to ingress annotations tools'
   condition: always()
 
