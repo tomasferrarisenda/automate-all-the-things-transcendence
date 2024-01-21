@@ -28,14 +28,14 @@ ingress:
     alb.ingress.kubernetes.io/certificate-arn: arn:aws:acm:us-east-1:373421766055:certificate/a6c8a2a6-4fec-4829-84b8-a3478dceeee8 # This value was modified by the deploy-infra pipeline
 
   # EXPLICAR ESTE WORKAROUNB!!!!!!
-  extraPaths: 
-    - backend:
-        service:
-          name: acme-http-solver
-          port:
-            number: 8089
-      path: "/.well-known/acme-challenge"
-      pathType: Prefix 
+  # extraPaths: 
+  #   - backend:
+  #       service:
+  #         name: acme-http-solver
+  #         port:
+  #           number: 8089
+  #     path: "/.well-known/acme-challenge"
+  #     pathType: Prefix 
 
   
   # Uncomment to generate TLS certificate
