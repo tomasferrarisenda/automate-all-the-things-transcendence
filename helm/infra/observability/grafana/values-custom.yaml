@@ -41,11 +41,11 @@ ingress:
   # Uncomment to generate TLS certificate
   hosts:
     - grafana.tferrari.com # This value was modified by the initial-setup python script
-  tls: 
-    - secretName: grafana-ingress-certificate 
-    # - secretName: placeholder-grafana-ingress-certificate # We don't actually use this secret but we need to specify this so the ingress directs to https
-      hosts:
-        - grafana.tferrari.com # This value was modified by the initial-setup python script
+  # tls: 
+  #   - secretName: grafana-ingress-certificate 
+  #   # - secretName: placeholder-grafana-ingress-certificate # We don't actually use this secret but we need to specify this so the ingress directs to https
+  #     hosts:
+  #       - grafana.tferrari.com # This value was modified by the initial-setup python script
   
 datasources:
   datasources.yaml:
