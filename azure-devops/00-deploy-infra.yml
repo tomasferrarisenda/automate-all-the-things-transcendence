@@ -94,6 +94,14 @@ steps:
   displayName: 'Modify values for each environment'
   condition: always()
 
+- script: |
+    sed -i "s/alb.ingress.kubernetes.io/certificate-arn:.*/alb.ingress.kubernetes.io/certificate-arn: $(terraform -chdir=terraform/aws output -raw wildcard_certificate_arn) # This value was modified by the deploy-infra pipeline/g" helm/infra/grafana/values-custom.yaml
+    sed -i "s/alb.ingress.kubernetes.io/certificate-arn:.*/alb.ingress.kubernetes.io/certificate-arn: $(terraform -chdir=terraform/aws output -raw wildcard_certificate_arn) # This value was modified by the deploy-infra pipeline/g" helm/infra/harbor/values-custom.yaml
+  displayName: 'Add wildcard certificate arn to ingress annotations tools'
+  condition: always()
+
+
+
 # - script: |
 #     export ELASTICACHE_DEV_ENDPOINT="$(terraform -chdir=terraform/aws output -raw elasticache_dev_primary_endpoint_address) # This value was modified by the deploy-infra pipeline"
 #     ELASTICACHE_STAGE_ENDPOINT="$(terraform -chdir=terraform/aws output -raw elasticache_stage_primary_endpoint_address) # This value was modified by the deploy-infra pipeline"

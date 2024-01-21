@@ -1,6 +1,5 @@
-# Certificates
-resource "aws_acm_certificate" "argocd" {
-  domain_name       = "argocd.${var.domain}"
+resource "aws_acm_certificate" "wildcard" {
+  domain_name       = "*.${var.domain}"
   validation_method = "DNS"
 
   lifecycle {
@@ -8,66 +7,62 @@ resource "aws_acm_certificate" "argocd" {
   }
 }
 
-resource "aws_acm_certificate" "grafana" {
-  domain_name       = "grafana.${var.domain}"
-  validation_method = "DNS"
-
-  lifecycle {
-    create_before_destroy = true
-  }
+output wildcard_certificate_arn {
+  value       = aws_acm_certificate.wildcard.arn
 }
 
-resource "aws_acm_certificate" "harbor" {
-  domain_name       = "harbor.${var.domain}"
-  validation_method = "DNS"
+# resource "aws_acm_certificate" "argocd" {
+#   domain_name       = "argocd.${var.domain}"
+#   validation_method = "DNS"
 
-  lifecycle {
-    create_before_destroy = true
-  }
-}
+#   lifecycle {
+#     create_before_destroy = true
+#   }
+# }
 
-resource "aws_acm_certificate" "jaeger" {
-  domain_name       = "jaeger.${var.domain}"
-  validation_method = "DNS"
+# resource "aws_acm_certificate" "grafana" {
+#   domain_name       = "grafana.${var.domain}"
+#   validation_method = "DNS"
 
-  lifecycle {
-    create_before_destroy = true
-  }
-}
+#   lifecycle {
+#     create_before_destroy = true
+#   }
+# }
 
-resource "aws_acm_certificate" "kiali" {
-  domain_name       = "kiali.${var.domain}"
-  validation_method = "DNS"
+# resource "aws_acm_certificate" "harbor" {
+#   domain_name       = "harbor.${var.domain}"
+#   validation_method = "DNS"
 
-  lifecycle {
-    create_before_destroy = true
-  }
-}
+#   lifecycle {
+#     create_before_destroy = true
+#   }
+# }
+
+# resource "aws_acm_certificate" "jaeger" {
+#   domain_name       = "jaeger.${var.domain}"
+#   validation_method = "DNS"
+
+#   lifecycle {
+#     create_before_destroy = true
+#   }
+# }
+
+# resource "aws_acm_certificate" "kiali" {
+#   domain_name       = "kiali.${var.domain}"
+#   validation_method = "DNS"
+
+#   lifecycle {
+#     create_before_destroy = true
+#   }
+# }
 
 
-# Validations
-resource "aws_acm_certificate_validation" "argocd" {
-  certificate_arn         = aws_acm_certificate.argocd.arn
-  validation_record_fqdns = ["argocd.${var.domain}"]
-#   validation_record_fqdns = [for record in aws_route53_record.example : record.fqdn]
-}
-
-resource "aws_acm_certificate_validation" "grafana" {
-  certificate_arn         = aws_acm_certificate.grafana.arn
-  validation_record_fqdns = ["grafana.${var.domain}"]
-}
-
-resource "aws_acm_certificate_validation" "harbor" {
-  certificate_arn         = aws_acm_certificate.harbor.arn
-  validation_record_fqdns = ["harbor.${var.domain}"]
-}
-
-resource "aws_acm_certificate_validation" "jaeger" {
-  certificate_arn         = aws_acm_certificate.jaeger.arn
-  validation_record_fqdns = ["jaeger.${var.domain}"]
-}
-
-resource "aws_acm_certificate_validation" "kiali" {
-  certificate_arn         = aws_acm_certificate.kiali.arn
-  validation_record_fqdns = ["kiali.${var.domain}"]
+# Records
+resource "aws_route53_record" "wildcard" {
+  zone_id = aws_route53_zone.main.zone_id
+  name    = tolist(aws_acm_certificate.wildcard.domain_validation_options)[0].resource_record_name
+  # type    = "CNAME"
+  type    = tolist(aws_acm_certificate.wildcard.domain_validation_options)[0].resource_record_type
+  ttl     = 300
+  records = [tolist(aws_acm_certificate.wildcard.domain_validation_options)[0].resource_record_value]
 }
