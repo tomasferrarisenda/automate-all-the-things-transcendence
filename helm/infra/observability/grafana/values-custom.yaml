@@ -8,7 +8,7 @@ ingress:
     external-dns.alpha.kubernetes.io/hostname: grafana.tferrari.com # This value was modified by the initial-setup python script
 
     # Cert-Manager related annotations
-    # cert-manager.io/cluster-issuer: alb-staging-cluster-issuer
+    cert-manager.io/cluster-issuer: alb-staging-cluster-issuer
     # cert-manager.io/cluster-issuer: alb-production-cluster-issuer 
 
     # ALB related annotations
@@ -28,21 +28,22 @@ ingress:
     alb.ingress.kubernetes.io/certificate-arn: arn:aws:acm:us-east-1:373421766055:certificate/a6c8a2a6-4fec-4829-84b8-a3478dceeee8 # This value was modified by the deploy-infra pipeline
 
   # EXPLICAR ESTE WORKAROUNB!!!!!!
-  # extraPaths: 
-  #   - backend:
-  #       service:
-  #         name: acme-http-solver
-  #         port:
-  #           number: 8089
-  #     path: "/.well-known/acme-challenge"
-  #     pathType: Prefix 
+  extraPaths: 
+    - backend:
+        service:
+          name: acme-http-solver
+          port:
+            number: 8089
+      path: "/.well-known/acme-challenge"
+      pathType: Prefix 
 
   
   # Uncomment to generate TLS certificate
   hosts:
     - grafana.tferrari.com # This value was modified by the initial-setup python script
   tls: 
-    - secretName: placeholder-grafana-ingress-certificate # We don't actually use this secret but we need to specify this so the ingress directs to https
+    - secretName: grafana-ingress-certificate 
+    # - secretName: placeholder-grafana-ingress-certificate # We don't actually use this secret but we need to specify this so the ingress directs to https
       hosts:
         - grafana.tferrari.com # This value was modified by the initial-setup python script
   
