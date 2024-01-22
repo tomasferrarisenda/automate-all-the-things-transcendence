@@ -92,7 +92,7 @@ Cert-Manager does not work with AWSs ALB. ALB only works with certificates issue
 
 Having a valid TLS certificate inside our cluster in the form of a secret (grafana-ingress-certificate) would make no difference. If you would try to reach https://grafana.yourdomain.com from inside the cluster it would work fine because the secret was valid and the ingres would have tls through this secret, but here's the problem:
 
-When you are using ALB, for every ingress object you create in your cluster, a Load Balancer will be automatically created in AWS (assuming you added the required alb annotations to the ingress of course).
+When you are using ALB, for every ingress object you create in your cluster, a Load Balancer will be automatically created in AWS (assuming you added the required alb annotations to the ingress).
 
 By default, these load balancers are created only with an HTTP (port 80) listener. So even if inside the cluster you have an ingress with a valid certificate, it makes no difference, because the AWS load balancer that points to that ingress has no HTTPS listener.
 
@@ -109,7 +109,7 @@ ingress:
     alb.ingress.kubernetes.io/listen-ports: '[{"HTTP": 80}, {"HTTPS": 443}]'
     alb.ingress.kubernetes.io/certificate-arn: arn:aws:acm:us-east-1:373421766055:certificate/a6c8a2a6-4fec-4829-84b8-a3478dceeee8
 ```
-At last, I could go to my browser, hit https://grafana.mydomain.com/ and see the most beautiful login page I'd ever seen (any would have been after so much work).
+At last!!! I could go to my browser, hit https://grafana.mydomain.com/ and see the most beautiful login page I'd ever seen (any would have been after so much work).
 
 But what about all the work we had put into [The Ingress Problem](#the-ingress-problem)? Well, one could say it was all in vain, others might say that it helped us learn and grow as DevOps Engineers. I'll stick to it was all in vain. 
 
