@@ -100,12 +100,16 @@ ingress:
     alb.ingress.kubernetes.io/listen-ports: '[{"HTTP": 80}, {"HTTPS": 443}]'
     alb.ingress.kubernetes.io/certificate-arn: arn:aws:acm:us-east-1:373421766055:certificate/a6c8a2a6-4fec-4829-84b8-a3478dceeee8
 ```
+At last, I could go to my browser, hit https://grafana.mydomain.com/ and see the most beautiful login page I'd ever seen (any would have been after so much work).
 
+But what about all the work we had put into [The Ingress Problem](#the-ingress-problem)? Well, one could say it was all in vain, others might say that it helped us learn and grow as DevOps Engineers. I'll stick to it was all in vain. 
+
+So...
 
 ### The Solution
 Just ditch Cert-Manager for all services exposed through ALB (we still use it for services exposed through Istio Gateway). Instead of havaing Cert-Manger provide the certificates for us, we will create a wildcard certificate for our domain through terraform. 
 
-ACM certificates can only be validated through DNS and not HTTP, so we also need to create a CNAME record in the hosted zone with the required values (this is also done through terraform). Then we'll pass in the arn of the certificate to the "alb.ingress.kubernetes.io/certificate-arn" ingress annotation in the values-custom.yaml of each service. I added this step in the [deploy-infra pipeline](azure-devops/00-deploy-infra.yml).
+ACM certificates can only be validated through DNS and not HTTP, so we also need to create a CNAME record in the hosted zone with the required values (this is also done through terraform). Then we'll pass in the arn of the certificate to the "alb.ingress.kubernetes.io/certificate-arn" ingress annotation in the values-custom.yaml of each service. I added these steps in the [deploy-infra pipeline](azure-devops/00-deploy-infra.yml).
 
 ## DNSSEC Issue
 <!-- https://youtu.be/13ZpNsr4NBk?t=102&si=KrC2PGI0io6QPInb -->
