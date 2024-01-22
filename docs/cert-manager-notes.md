@@ -116,9 +116,11 @@ But what about all the work we had put into [The Ingress Problem](#the-ingress-p
 So...
 
 ### The Solution
-Just ditch Cert-Manager for all services exposed through ALB (we still use it for services exposed through Istio Gateway). Instead of havaing Cert-Manger provide the certificates for us, we will create a wildcard certificate for our domain through terraform. 
+Just ditch Cert-Manager for all services exposed through ALB (we still use it for services exposed through Istio Gateway). Instead of havaing Cert-Manger provide the certificates for us, we will create a wildcard certificate for our domain through [terraform](/terraform/aws/acm.tf).
 
-ACM certificates can only be validated through DNS and not HTTP, so we also need to create a CNAME record in the hosted zone with the required values (this is also done through terraform). Then we'll pass in the arn of the certificate to the "alb.ingress.kubernetes.io/certificate-arn" ingress annotation in the values-custom.yaml of each service. I added these steps in the [deploy-infra pipeline](azure-devops/00-deploy-infra.yml).
+ACM certificates can only be validated through DNS and not HTTP, so we also need to create a CNAME record in the hosted zone with the required values (this is also done through [terraform](/terraform/aws/acm.tf)). 
+
+Then we'll pass in the arn of the certificate to the "alb.ingress.kubernetes.io/certificate-arn" ingress annotation in the values-custom.yaml of each service. I added this step in the [deploy-infra pipeline](azure-devops/00-deploy-infra.yml).
 
 Another option would have been to send traffic through the Istio Gateway since that works for our application. But I wanted to keep Istio Gateway exclusive to the application traffic. I didn't want traffic to our tools (argocd, grafana, harbor, jaeger and kiali) mixed up with application traffic. This way we know that all Istio Gateway metrics are only application-related.
 
