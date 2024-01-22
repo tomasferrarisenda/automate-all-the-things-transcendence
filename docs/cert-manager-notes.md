@@ -59,7 +59,7 @@ ingress:
             number: 8089
       path: /.well-known/acme-challenge
 ```
-This would send traffic meant for /.well-known/acme-challenge to the certificate challenge service right? Wrong. The certificate child resources are created dynamically with dynamic names, so the name of the service would be something like acme-http-solver-XXXX where XXXX are some random digits. So I had to also manually create a service with a fixed name. In Grafana's chart templates/custom-templates directory I created the following acme-http-solver-service.yaml:
+This would send traffic meant for /.well-known/acme-challenge to the certificate challenge service, right? Wrong. The certificate child resources are created dynamically with dynamic names, so the name of the service would be something like acme-http-solver-XXXX where XXXX are some random digits. So I had to also manually create a service with a fixed name. In Grafana's chart templates/custom-templates directory I created the following acme-http-solver-service.yaml:
 ```yaml
 apiVersion: v1
 kind: Service
@@ -83,15 +83,19 @@ spec:
  type: NodePort
 ```
 
-This would effectively solve our issue of not being able to reach the appropiate pod when looking for the validation token on grafana.yourdomain.com/.well-known/acme-challenge. Solver worked fine and the certificate was being generated succesfully.<br>
+This would effectively solve our issue of not being able to reach the appropiate pod when looking for the validation token on grafana.yourdomain.com/.well-known/acme-challenge. Solver worked fine and the certificate was being generated succesfully.
+
 Everything looked good, the future was bright... except...
 
 ### The Cert-Manager & Amazon ALB Problem
 Cert-Manager does not work with AWSs ALB. ALB only works with certificates issued with ACM, that's Amazon Certificate Manager. And to this date, Cert-Manager doesn't have an option to use ACM as an issuer. I honestly don't know who I should be mad at.
 
-Having a valid TLS certificate inside our cluster in the form of a secret (grafana-ingress-certificate) would make no difference. If you would try to reach https://grafana.yourdomain.com from inside the cluster it would work fine because the secret was valid and the ingres would have tls through this secret, but here's the problem:<br>
-When you are using ALB, for every ingress object you create in your cluster, a Load Balancer will be automatically created in AWS (assuming you added the required alb annotations to the ingress of course).<br>
-By default, these load balancers are created only with an HTTP (port 80) listener. So even if inside the cluster you have an ingress with a valid certificate, it makes no difference, because the AWS load balancer that points to that ingress has no HTTPS listener.<br>
+Having a valid TLS certificate inside our cluster in the form of a secret (grafana-ingress-certificate) would make no difference. If you would try to reach https://grafana.yourdomain.com from inside the cluster it would work fine because the secret was valid and the ingres would have tls through this secret, but here's the problem:
+
+When you are using ALB, for every ingress object you create in your cluster, a Load Balancer will be automatically created in AWS (assuming you added the required alb annotations to the ingress of course).
+
+By default, these load balancers are created only with an HTTP (port 80) listener. So even if inside the cluster you have an ingress with a valid certificate, it makes no difference, because the AWS load balancer that points to that ingress has no HTTPS listener.
+
 So you need to add a HTTPS (port 443) listener to the Load Balancer. How do you do this automatically? You add this annotation to the ingress: 
 ```yaml
 ingress:
