@@ -85,7 +85,9 @@ Everything looked good, the future was bright... except...
 Cert-Manager does not work with AWSs ALB. ALB only works with certificates issued with ACM, that's Amazon Certificate Manager. And to this date, Cert-Manager doesn't have an option to use ACM as an issuer. I honestly don't know who I should be mad at.
 
 Having a valid TLS certificate inside our cluster in the form of a secret (grafana-ingress-certificate) would make no difference. If you would try to reach https://grafana.yourdomain.com from inside the cluster it would work fine because the secret was valid and the ingres would have tls through this secret, but here's the problem:<br>
-When you are using ALB, for every ingress object you create in your cluster, a Load Balancer will be automatically created in AWS. These load balancers are created only with an http (port 80) listener. The only way to have them be created also with an https (port 443) listener is by adding the annotation: 
+When you are using ALB, for every ingress object you create in your cluster, a Load Balancer will be automatically created in AWS (assuming you added the required alb annotations to the ingress of course).<br>
+By default, these load balancers are created only with an HTTP (port 80) listener. So even if inside the cluster you have an ingress with a valid certificate, it makes no difference, because the AWS load balancer that points to that ingress has no HTTPS listener.<br>
+So you need to add a HTTPS (port 443) listener to the Load Balancer. How do you do this automatically? You add this annotation to the ingress: 
 ```yaml
 ingress:
   annotations: 
@@ -101,7 +103,9 @@ ingress:
 
 
 ### The Solution
-Just ditch Cert-Manager for all services exposed through ALB (we still use it for services exposed through Istio Gateway). Instead of havaing Cert-Manger provide the certificates for us, we will create a wildcard certificate for our domain through terraform. ACM certificates can only be validated through DNS and not HTTP, so we also need to create a CNAME record in the hosted zone with the required values (this is also done through terraform). Then we'll use the arn of the certificate in the "alb.ingress.kubernetes.io/certificate-arn" annotation on the ingress of each service. The annotation "alb.ingress.kubernetes.io/listen-ports: '[{"HTTP": 80}, {"HTTPS": 443}]'" is also required.
+Just ditch Cert-Manager for all services exposed through ALB (we still use it for services exposed through Istio Gateway). Instead of havaing Cert-Manger provide the certificates for us, we will create a wildcard certificate for our domain through terraform. 
+
+ACM certificates can only be validated through DNS and not HTTP, so we also need to create a CNAME record in the hosted zone with the required values (this is also done through terraform). Then we'll pass in the arn of the certificate to the "alb.ingress.kubernetes.io/certificate-arn" ingress annotation in the values-custom.yaml of each service. I added this step in the [deploy-infra pipeline](azure-devops/00-deploy-infra.yml).
 
 ## DNSSEC Issue
 <!-- https://youtu.be/13ZpNsr4NBk?t=102&si=KrC2PGI0io6QPInb -->
