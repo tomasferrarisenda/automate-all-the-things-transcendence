@@ -9,7 +9,7 @@ Let's Encrypt offers two types of issuers for their SSL/TLS certificates: stagin
 **Trust Level**: Certificates issued by the staging issuer are not trusted by browsers or operating systems, meaning they will generally trigger security warnings if used in a live environment.<br>
 **Use Case**: Ideal for developers to ensure their systems are correctly configured for SSL/TLS without the risk of hitting rate limits or impacting live environments.
 
-##### Production Issuer:
+#### Production Issuer:
 **Purpose**: Used for issuing certificates intended for live, public-facing websites.<br>
 **Rate Limits**: Stricter rate limits compared to the staging environment. This is to prevent abuse and to manage the load on Let's Encrypt servers.<br>
 **Trust Level**: Certificates issued are trusted by most browsers and operating systems, ensuring secure, encrypted connections without warnings.<br>
@@ -18,7 +18,7 @@ Let's Encrypt offers two types of issuers for their SSL/TLS certificates: stagin
 In summary, the staging issuer is for testing and development, with more relaxed rate limits and untrusted certificates, while the production issuer is for live websites, with trusted certificates but stricter rate limits.
 
 ## Problems we found
-If you want to skip right to the solution I chose go to [Solution](#solution). I'm gonna explain everything that went wrong just as a note to myself.
+If you want to skip right to the solution I chose go to [Solution](#the-solution). I'm gonna explain everything that went wrong just as a note to myself.
 
 ### The Ingress Problem
 First I ran into **the Ingress problem**. We'll use Grafana as an example. I was using the following values in the Grafana chart values-custom.yaml:
