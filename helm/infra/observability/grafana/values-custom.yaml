@@ -9,7 +9,7 @@ ingress:
 
     # Cert-Manager related annotations
     # cert-manager.io/cluster-issuer: alb-staging-cluster-issuer
-    cert-manager.io/cluster-issuer: alb-production-cluster-issuer 
+    # cert-manager.io/cluster-issuer: alb-production-cluster-issuer 
 
     # ALB related annotations
     kubernetes.io/ingress.class: alb

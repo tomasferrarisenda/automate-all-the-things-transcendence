@@ -20,11 +20,33 @@ In summary, the staging issuer is for testing and development, with more relaxed
 ## Problems we found
 If you want to skip right to the solution I chose go to [Solution](#solution). I'm gonna explain everything that went wrong just as a note to myself.
 
-First I ran into **the Ingress issue**. When you create a certificate with an http01 solver, the certificate in turn creates child resources, ultimately creating a pod, a service and an ingress. The ingress directs to the service which directs to the pod which exposes the token that Let's Encrypt is expecting for validation.<br>
-All is fine and good with that, the problem is that there is another ingress, the actual ingress of the service, lets use Grafana as an example. For some reason, the ingress of Grafana takes precedence over the ingress of the certificate challenge, so that when any requests come into grafana.yourdomain.com, they get sent to the grafana pod instead of the certificate challenge pod, even when the request specifies the appropiate path (/.well-known/acme-challenge).<br>
-There's an Cert-Manager annotation (acme.cert-manager.io/http01-edit-in-place: "true") which is supposed to fix this by instead of creating a new ingress for the challenge, it would modify the Grafana ingress to direct to the certificate challenge pod, but I could never me it work.<br>
-So, the first fix was to do this manually. I added a new backend to the Grafana ingress like this:
+### The Ingress Problem
+First I ran into **the Ingress problem**. We'll use Grafana as an example. I was using the following values in the Grafana chart values-custom.yaml:
 ```yaml
+ingress:
+  enabled: true
+  annotations: 
+    cert-manager.io/cluster-issuer: alb-staging-cluster-issuer
+    # cert-manager.io/cluster-issuer: alb-production-cluster-issuer 
+
+  hosts:
+    - grafana.yourdomian.com
+
+  tls: 
+    - secretName: grafana-ingress-certificate 
+      hosts:
+        - grafana.yourdomain.com
+```
+
+This would make the ingress automatically generate a certificate.
+
+When you create a certificate with an http01 solver, the certificate in turn creates child resources, ultimately creating a pod, a service and an ingress. The ingress directs to the service which directs to the pod which exposes the token that Let's Encrypt is expecting for validation.<br>
+All is fine and good with that, the problem is that there is another ingress, the actual ingress Grafana. For some reason, the ingress of Grafana takes precedence over the ingress of the certificate challenge, so that when any requests come into grafana.yourdomain.com, they get sent to the grafana pod instead of the certificate challenge pod, even when the request specifies the appropiate path (/.well-known/acme-challenge).<br>
+There's an Cert-Manager annotation (acme.cert-manager.io/http01-edit-in-place: "true") which is supposed to fix this by instead of creating a new ingress for the challenge, it would modify the Grafana ingress to direct /.well-known/acme-challenge traffic to the certificate challenge pod, but I could never make it work.<br>
+So, the first fix was to do this manually. I added a new backend to the Grafana ingress in the values-custom.yaml like this:
+```yaml
+ingress:
+  extraPaths: 
     - backend:
         service:
           name: acme-http-solver
@@ -56,14 +78,29 @@ spec:
  type: NodePort
 ```
 
-This would effectively solve our issue of not being able to reach the appropiate pod when looking for the validation token on grafana.yourdomain.com/.well-known/acme-challenge.<br>
-Everything looked good, the future was bright... except.
+This would effectively solve our issue of not being able to reach the appropiate pod when looking for the validation token on grafana.yourdomain.com/.well-known/acme-challenge. Solver worked fine and the certificate was being generated succesfully.<br>
+Everything looked good, the future was bright... except...
+
+### The Cert-Manager & Amazon ALB Problem
+Cert-Manager does not work with AWSs ALB. ALB only works with certificates issued with ACM, that's Amazon Certificate Manager. And to this date, Cert-Manager doesn't have an option to use ACM as an issuer. I honestly don't know who I should be mad at.
+
+Having a valid TLS certificate inside our cluster in the form of a secret (grafana-ingress-certificate) would make no difference. If you would try to reach https://grafana.yourdomain.com from inside the cluster it would work fine because the secret was valid and the ingres would have tls through this secret, but here's the problem:<br>
+When you are using ALB, for every ingress object you create in your cluster, a Load Balancer will be automatically created in AWS. These load balancers are created only with an http (port 80) listener. The only way to have them be created also with an https (port 443) listener is by adding the annotation: 
+```yaml
+ingress:
+  annotations: 
+    alb.ingress.kubernetes.io/listen-ports: '[{"HTTP": 80}, {"HTTPS": 443}]'
+```
+The thing is, ALB ONLY works with certificates issued by ACM, so even for that annotation to work, you need to pass it in conjunction with another annotation that specifies the arn of the certificate you want to use, like this:
+```yaml
+ingress:
+  annotations: 
+    alb.ingress.kubernetes.io/listen-ports: '[{"HTTP": 80}, {"HTTPS": 443}]'
+    alb.ingress.kubernetes.io/certificate-arn: arn:aws:acm:us-east-1:373421766055:certificate/a6c8a2a6-4fec-4829-84b8-a3478dceeee8
+```
 
 
-Cert-Manager & Amazon ALB Issue
-Cert-Manager does not work with AWSs ALB. ALB only works with certificates issued with ACM, that's Amazon Certificate Manager. To this date, Cert-Manager doesn't have an option to use ACM as an issuer.
-
-### Solution
+### The Solution
 Just ditch Cert-Manager for all services exposed through ALB (we still use it for services exposed through Istio Gateway). Instead of havaing Cert-Manger provide the certificates for us, we will create a wildcard certificate for our domain through terraform. ACM certificates can only be validated through DNS and not HTTP, so we also need to create a CNAME record in the hosted zone with the required values (this is also done through terraform). Then we'll use the arn of the certificate in the "alb.ingress.kubernetes.io/certificate-arn" annotation on the ingress of each service. The annotation "alb.ingress.kubernetes.io/listen-ports: '[{"HTTP": 80}, {"HTTPS": 443}]'" is also required.
 
 ## DNSSEC Issue
