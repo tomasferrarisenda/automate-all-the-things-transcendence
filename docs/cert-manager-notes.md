@@ -111,6 +111,8 @@ Just ditch Cert-Manager for all services exposed through ALB (we still use it fo
 
 ACM certificates can only be validated through DNS and not HTTP, so we also need to create a CNAME record in the hosted zone with the required values (this is also done through terraform). Then we'll pass in the arn of the certificate to the "alb.ingress.kubernetes.io/certificate-arn" ingress annotation in the values-custom.yaml of each service. I added these steps in the [deploy-infra pipeline](azure-devops/00-deploy-infra.yml).
 
+Another option would have been to send traffic through the Istio Gateway since that works for our application. But I wanted to keep Istio Gateway exclusive to the application traffic, I did't want traffic to our tools (argocd, grafana, harbor, jaeger and kiali) mixing up 
+
 ## DNSSEC Issue
 <!-- https://youtu.be/13ZpNsr4NBk?t=102&si=KrC2PGI0io6QPInb -->
 <!-- https://docs.aws.amazon.com/Route53/latest/DeveloperGuide/domain-configure-dnssec.html#domain-configure-dnssec-adding-keys -->
@@ -134,49 +136,5 @@ A thing that confused me a lot were all the secrets created in the Cert-Manager 
 
 
 
-EL CERTI NO FUNCIONABA PORQ EL INGRESS ORIGINAL NO DEJBA QUE SE LLEGUE AL POD CREADO POR EL CERTIFICADO. EL INGRESS CREADO POR EL CERT APUNTABA AL POD CORRECTO PERO AL EXISTIR EL INGRESS ORIGINAL, ESTE HACIA Q LOS REQUEST SEAN INTERCEPTADOS ANTES Y ENVIADOS AL POD DE GRFANA EN ESTE CASO, EN LUGAR DE AL POD DEL HTTP01 SOLVER. EL CHALLENGE NUNCA ERA EXITOSO PORQUE EN VEZ DE RECIBIR EL TOKEN QUE ESTABA EN EL POD DE SOLVER, RECIBIA UN HTML DEL POD DE GRAFANA.
-
-PARA SOLUCIONARLO CREAMOS UN NUEVO BACKEND EN EL INGRESS PATH QUE APUNTA A UN NUEVO SERVICIO CREADO A MANO Y ESTE SERVICIO APUNTA AL POD DE SOLVER UTILIZANDO EL SELECTOR acme.cert-manager.io/http01-solver: 'true'. EL POD DE SOLVER TIENE OTROS SELECTORS PERO ELEGIMOS ESTE PORQUE LOS OTROS SON ANOTACIONES CON VALORES DINAMICOS.
-    - backend:
-        service:
-          name: acme-http-solver
-          port:
-            number: 8089
-      path: /.well-known/acme-challenge
-
-apiVersion: v1
-kind: Service
-metadata:
- annotations:
-   auth.istio.io/8089: NONE
- labels:
-   acme.cert-manager.io/http01-solver: 'true'
- name: acme-http-solver
-spec:
- externalTrafficPolicy: Cluster
- internalTrafficPolicy: Cluster
- ports:
-   - name: http
-     port: 8089
-     protocol: TCP
-     targetPort: 8089
- selector:
-   acme.cert-manager.io/http01-solver: 'true'
- sessionAffinity: None
- type: NodePort
-
-TENGO QUE VERIFICAR QUE COSAS ESTAN DE MAS EN ESTE SERVICE Y SI PUEDO CONVERTIRLO AL TIPO CLUSTERIP EN LUGAR DE NODEPORT
-
- LA ANOTACION acme.cert-manager.io/http01-edit-in-place: "true" SE SUPONE Q LO Q HACE ES CREAR ESE BACKEND EN EL INGRESS ORIGINAL EN LUGAR DE GENERAR UN NUEVO INGREESS PARA EL SOLVER. PERO EN MIS PRUEBAS NUNCA ME FUNCIONO
-
-ESTO SOLUCIONO ESTE PRIMER ISSUE
-
-AHORA TENEMOS OTRO: ALB SOLO ACEPTA CERTIFICADOS DE AWS ACM.
-POR DEFAULT EL LB LEVANTADO POR UN NUEVO INGRESS SOLO ESCUCHA EN 80, PARA Q ESCUCHE EN 443 TENEMOS Q AGREGARLE LA ANOTACION PERO ESA ANOTACION SOLO FUNCIONA SI TAMBIEN LE PASAMOS OTRA ANOTCION CON EL ARN DEL CERTIFICADO CREADO EN ACM
-
-POSIBLE SOLUCION ES CREAR UN CERT EN ACM CON TF, GUARDAR EL ARN Y PASARSELO A LA ANOTACION EN LOS VALUES
-LA VALIDACION DE ESTE CERT ES POR DNS, POR LO Q HAY Q VER COMO AUTOMATIZAR LA CREACION DEL RECORD SOLICITADO EN LA HOSTED ZONE. SE PODRA HACER CON TF? O SINO AWS CLI (SI LO CREAMOS POR CLI TENEMOS TAMBIWEN Q BORRARLO ANTES DEL TF DESTROY PA Q NO FALLE CUANDO QUEIRA DESTRUIR LA HOSTED ZONE)
-
-OTRA SOLUCION ES MANDAR TRAFICO POR ISTIO GW
 
 LA DUDA Q ME QUEDA ES PORQ EL LB QUE CREA EL SERVICIO DE ISTIO GW FUNCIONA CON HTTPS??? LEVANTE A MANO UN LB COPIADO DEL DE ISTIO GW Y FALTO ALGO PORQ NO ANDUVO. ESTA PUEDE SER OTRA POSIBLE SOLUCION
