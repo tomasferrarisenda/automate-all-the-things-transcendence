@@ -42,9 +42,12 @@ ingress:
 
 This would make the ingress automatically generate a certificate.
 
-When you create a certificate with an http01 solver, the certificate in turn creates child resources, ultimately creating a pod, a service and an ingress. The ingress directs to the service which directs to the pod which exposes the token that Let's Encrypt is expecting for validation.<br>
-All is fine and good with that, the problem is that there is another ingress, the actual ingress Grafana. For some reason, the ingress of Grafana takes precedence over the ingress of the certificate challenge, so that when any requests come into grafana.yourdomain.com, they get sent to the grafana pod instead of the certificate challenge pod, even when the request specifies the appropiate path (/.well-known/acme-challenge).<br>
-There's an Cert-Manager annotation (acme.cert-manager.io/http01-edit-in-place: "true") which is supposed to fix this by instead of creating a new ingress for the challenge, it would modify the Grafana ingress to direct /.well-known/acme-challenge traffic to the certificate challenge pod, but I could never make it work.<br>
+When you create a certificate with an http01 solver, the certificate in turn creates child resources, ultimately creating a pod, a service and an ingress. The ingress directs to the service which directs to the pod which exposes the token that Let's Encrypt is expecting for validation.
+
+All is fine and good with that, the problem is that there is another ingress, the actual ingress Grafana. For some reason, the ingress of Grafana takes precedence over the ingress of the certificate challenge, so that when any requests come into grafana.yourdomain.com, they get sent to the grafana pod instead of the certificate challenge pod, even when the request specifies the appropiate path (/.well-known/acme-challenge).
+
+There's an Cert-Manager annotation (acme.cert-manager.io/http01-edit-in-place: "true") which is supposed to fix this by instead of creating a new ingress for the challenge, it would modify the Grafana ingress to direct /.well-known/acme-challenge traffic to the certificate challenge pod, but I could never make it work.
+
 So, the first fix was to do this manually. I added a new backend to the Grafana ingress in the values-custom.yaml like this:
 ```yaml
 ingress:
