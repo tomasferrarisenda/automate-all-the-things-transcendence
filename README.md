@@ -351,6 +351,7 @@ These are the URLs for your app:
 - http://dev.<your-domain\>/
 - http://stage.<your-domain\>/
 - https://<your-domain\>/
+
 These are the URLs for the infra tools:
 - https://argocd.<your-domain\>/
 - https://grafana.<your-domain\>/
