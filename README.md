@@ -347,7 +347,10 @@ You can find further information on these tools in my how [external-dns-notes.md
 
 Initially, the Certificate for Istio Gateway will be created using the Let's Encrypt Staging Issuer. To switch to the Production Issuer, you'll need to modify the "issuer" value in [Istio Gateway's values](/helm/infra/service-mesh/istio-gateway/values-custom.yaml). We'll only use Cert-Manager to secure Istio Gateway. Infra tools frontends will be secured using a different method. More info on [cert-manager-notes.md](docs/cert-manager-notes.md).
 
-Here are the URLs for our tools:
+These are all the URLs:
+- http://dev.<your-domain\>/
+- http://stage.<your-domain\>/
+- https://<your-domain\>/
 - https://argocd.<your-domain\>/
 - https://grafana.<your-domain\>/
 - https://harbor.<your-domain\>/
