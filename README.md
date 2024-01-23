@@ -333,11 +333,11 @@ To install a self-hosted agent on your machine, you can follow the official docu
 
 # ABOUT EXTERNAL-DNS & CERT-MANAGER
 
-For this Transcendence Edition, I'll assume you own a domian like "exmple.com" and have it hosted in AWS. If you don't, go get yourself one before proceeding.
+For this Transcendence Edition, I'll assume you own a domian like "exmple.com" and have it hosted in AWS Route53. If you don't, go get yourself one before proceeding.
 <br/>
 
 We'll add these two new tools: 
-- ExternalDNS will automatically provide a DNS entry on AWS Route53 for every ingress we create, like for example "argocd.example.com". 
+- ExternalDNS will automatically provide a DNS record on AWS Route53 for every ingress we create, like for example "argocd.example.com". 
 - Cert-Manager will take care of automatically requesting a SSL certificate to Let's Encrypt for our production frontend which will be hosted at the root domain "exmple.com".
 
 There is a new [route53.tf file](terraform/aws/route53.tf). In here there's an "aws_kms_key" resource. This resource **MUST be created in the us-east-1 AWS region**, so I suggest you use this region for everything so you don't run into issues.<br>
@@ -345,7 +345,7 @@ I've also added a [policy for External-DNS](terraform/aws/external-dns.tf) and a
 
 You can find further information on these tools in my how [external-dns-notes.md](docs/external-dns-notes.md) and [cert-manager-notes.md](docs/cert-manager-notes.md).
 
-Initially, all Certificates will be created using the Let's Encrypt Staging Issuers. To switch to Production Issuers, you'll need to make the change in the corresponding values file. More info on Issuers in the [cert-manager-notes.md](docs/cert-manager-notes.md).
+Initially, the Certificate for Istio Gateway will be created using the Let's Encrypt Staging Issuer. To switch to the Production Issuer, you'll need to modify the "issuer" value in [Istio Gateway's values](/helm/infra/service-mesh/istio-gateway/values-custom.yaml). We'll only use Cert-Manager to secure Istio Gateway. Infra tools frontends will be secured using a different method. More info on [cert-manager-notes.md](docs/cert-manager-notes.md).
 
 Here are the URLs for our tools:
 - https://argocd.<your-domain\>/
