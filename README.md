@@ -567,7 +567,7 @@ Finally the pipeline will get the ArgoCD web UI URL and admin account password a
 
 ## Description
 
-We nee to make sure Sealed Secret has been successfully deployed before running this pipeline. Verify this on the ArgoCD web UI.
+We need to make sure Sealed Secret has been successfully deployed before running this pipeline. Verify this on the ArgoCD web UI.
 
 <!-- We've improved our Sealed Secrets pipeline. We've made ir more recyclable. Now it will generate any secret of type "generic". You'll just need to pass in the required values and voilá. -->
 
@@ -599,7 +599,7 @@ You could easily encrypt the secrets yourselves using the kubeseal CLI tool, but
 
 # HARBOR SETUP PIPELINE
 
-We nee to make sure Harbor has been successfully deployed before running this pipeline. Verify this on the ArgoCD web UI.
+We need to make sure Harbor has been successfully deployed before running this pipeline. Verify this on the ArgoCD web UI.
 
 
 # BACKEND SERVICE BUILD & DEPLOY PIPELINE
