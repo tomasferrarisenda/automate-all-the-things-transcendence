@@ -140,9 +140,9 @@ steps:
 #     cat harbor-secret.json | jq -r '.spec.encryptedData.REDIS_PASS' > dev-encrypted-pass.txt
 #   displayName: 'Get the value of REDIS_PASS'
 
-# - script: |
-#     sed -i "s|redis_pass:.*|redis_pass: $(cat dev-encrypted-pass.txt | tr -d '\n') # This value was modified by the sealed-secrets pipeline|g" helm/my-app/backend/environments/values-custom.yaml
-#   displayName: 'Set the encrypted value in the values of each environment'
+- script: |
+    sed -i "s|namespace:.*|namespace: {{ .Values.appName }}-{{ .Values.environment }}|g" helm/my-app/backend/templates/harbor-credentials-sealed-secret.yaml 
+  displayName: 'Modify sealed secret for Helm'
 
 - script: |
     git pull origin main
