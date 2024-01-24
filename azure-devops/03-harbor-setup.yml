@@ -20,10 +20,6 @@ variables:
     value: gonchi # This value was modified by the initial-setup python script
   - name: DOMAIN
     value: tferrari.com # This value was modified by the initial-setup python script
-  # - name: HARBOR_USER
-  #   value: admin 
-  # - name: HARBOR_PASSWORD
-  #   value: automate-all-the-things 
 
 pool:
   vmImage: 'ubuntu-latest' 
@@ -78,26 +74,6 @@ steps:
     awsSubCommand: 'update-kubeconfig'
     awsArguments: '--name $(APP_NAME)-cluster --region $(AWS_REGION)' 
 
-# - script: | 
-#     # echo "apiVersion: v1
-#     # kind: Secret
-#     # metadata:
-#     #   name: redis-secret
-#     #   namespace: $(APP_NAME)-dev
-#     # type: Opaque
-#     # data:
-#     #   REDIS_PASS: $(echo -n ${{ parameters.DEV_REDIS_SECRET }} | base64)" > dev-secret.yaml
-
-#     # echo "apiVersion: v1
-#     # kind: Secret
-#     # metadata:
-#     #   name: harbor-registry
-#     #   namespace: default
-#     # type: kubernetes.io/dockerconfigjson
-#     # data:
-#     #   .dockerconfigjson: <base64-encoded-docker-config> > harbor-secret.yaml
-#   displayName: 'Create secret manifests to be sealed'
-
 - script: | 
     ENCODED_CREDENTIALS=$(echo -n '${{ parameters.HARBOR_USER }}:${{ parameters.HARBOR_PASSWORD }}' | base64)
 
@@ -123,12 +99,7 @@ steps:
         --from-file=.dockerconfigjson=config.json \
         --type=kubernetes.io/dockerconfigjson \
         --dry-run=client -o yaml > harbor-credentials-secret-prod.yaml
-
   displayName: 'Create secret manifests to be sealed'
-
-# - script: | 
-#     kubeseal --controller-namespace sealed-secrets --controller-name sealed-secrets < harbor-secret.yaml > harbor-secret.json 
-#   displayName: 'Encrypt the json secrets with Kubeseal'
 
 - script: | 
     # We create the sealed secrets only in for the backend. Since front and back share the namespace, if we create the sealed secret for both, it will create the same object twice in the namespace.
@@ -141,14 +112,6 @@ steps:
     # kubeseal --controller-namespace sealed-secrets --controller-name sealed-secrets -o yaml < harbor-credentials-secret-stage.yaml | tee -a helm/my-app/backend/templates/harbor-credentials-sealed-secret-stage.yaml > helm/my-app/frontend/templates/harbor-credentials-sealed-secret-stage.yaml
     # kubeseal --controller-namespace sealed-secrets --controller-name sealed-secrets -o yaml < harbor-credentials-secret-prod.yaml | tee -a helm/my-app/backend/templates/harbor-credentials-sealed-secret-prod.yaml > helm/my-app/frontend/templates/harbor-credentials-sealed-secret-prod.yaml
   displayName: 'Create the Sealed Secrets with Kubeseal'
-
-# - script: | 
-#     cat harbor-secret.json | jq -r '.spec.encryptedData.REDIS_PASS' > dev-encrypted-pass.txt
-#   displayName: 'Get the value of REDIS_PASS'
-
-# - script: |
-#     sed -i "s|namespace:.*|namespace: {{ .Values.appName }}-{{ .Values.environment }}|g" helm/my-app/backend/templates/harbor-credentials-sealed-secret.yaml 
-#   displayName: 'Modify sealed secret for Helm'
 
 - script: |
     git pull origin main
