@@ -117,17 +117,17 @@ steps:
         }
     }' > config.json
 
-    kubectl create secret generic harbor-credentials -n $(APP_NAME)-dev \
+    kubectl create secret generic harbor-credentials-dev -n $(APP_NAME)-dev \
         --from-file=.dockerconfigjson=config.json \
         --type=kubernetes.io/dockerconfigjson \
         --dry-run=client -o yaml > harbor-credentials-secret-dev.yaml
 
-    kubectl create secret generic harbor-credentials -n $(APP_NAME)-stage \
+    kubectl create secret generic harbor-credentials-stage -n $(APP_NAME)-stage \
         --from-file=.dockerconfigjson=config.json \
         --type=kubernetes.io/dockerconfigjson \
         --dry-run=client -o yaml > harbor-credentials-secret-stage.yaml
 
-    kubectl create secret generic harbor-credentials -n $(APP_NAME)-prod \
+    kubectl create secret generic harbor-credentials-prod -n $(APP_NAME)-prod \
         --from-file=.dockerconfigjson=config.json \
         --type=kubernetes.io/dockerconfigjson \
         --dry-run=client -o yaml > harbor-credentials-secret-prod.yaml
