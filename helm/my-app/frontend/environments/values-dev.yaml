@@ -3,10 +3,10 @@ environment: dev
 deployment:
   image:
 # BORRARRRRR
-    tag: 1455
+    tag: 1464
     # repository: harbor.tferrari.com/gonchi/gonchi-frontend # This value was modified by the harbor-setup pipeline
     # repository: harbor.registry.svc.cluster.local/gonchi/gonchi-frontend # This value was modified by the harbor-setup pipeline
-    # tag: 1455
+    # tag: 1464
   replicas: 1
 
 
