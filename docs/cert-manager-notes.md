@@ -120,7 +120,7 @@ Just ditch Cert-Manager for all services exposed through ALB (we still use it fo
 
 ACM certificates can only be validated through DNS and not HTTP, so we also need to create a CNAME record in the hosted zone with the required values (this is also done through [terraform](/terraform/aws/acm.tf)). 
 
-Then we'll pass in the arn of the certificate to the "alb.ingress.kubernetes.io/certificate-arn" ingress annotation in the values-custom.yaml of each service. I added this step in the [deploy-infra pipeline](/azure-devops/00-deploy-infra.yml).
+Then we'll pass in the arn of the certificate to the "alb.ingress.kubernetes.io/certificate-arn" ingress annotation in the values-custom.yaml of each service. I automated this task in the [deploy-infra pipeline](/azure-devops/00-deploy-infra.yml).
 
 Another option would have been to send traffic through the Istio Gateway since that works for our application. But I wanted to keep Istio Gateway exclusive to the application traffic. I didn't want traffic to our tools (argocd, grafana, harbor, jaeger and kiali) mixed up with application traffic. This way we know that all Istio Gateway metrics are only application-related.
 
