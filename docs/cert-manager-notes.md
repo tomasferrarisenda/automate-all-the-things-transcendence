@@ -20,7 +20,7 @@ In summary, the staging issuer is for testing and development, with more relaxed
 <br/>
 
 ## Problems we found
-If you want you can skip right to [The Solution](#the-solution). I'm gonna explain everything that went wrong just as a note to myself.
+You can skip right to [The Solution](#the-solution) if you want. I'm gonna explain everything that went wrong just as a note to myself.
 
 ### The Ingress Problem
 First I ran into **the Ingress problem**. We'll use Grafana as an example. I was using the following values in the Grafana chart values-custom.yaml:
