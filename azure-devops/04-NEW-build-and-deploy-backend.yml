@@ -56,6 +56,10 @@ stages:
         repository: 'core.harbor.$(DOMAIN)/$(APP_NAME)/backend'
         command: 'buildAndPush'
         Dockerfile: 'my-app/backend/Dockerfile'
+
+    - script: |
+        docker push core.harbor.$(DOMAIN)/$(APP_NAME)/backend:$(Build.BuildId)
+      displayName: Update repo
         
 
 
