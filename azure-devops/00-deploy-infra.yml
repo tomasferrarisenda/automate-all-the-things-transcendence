@@ -177,21 +177,23 @@ steps:
     aws route53domains update-domain-nameservers --region us-east-1 --domain-name $(DOMAIN) --nameservers $(echo $SINGLE_LINE_NS_VALUES)
 
     # Enabling DNSSEC signing will fail if we've just updated our domain's name servers, so we'll keep trying every one minute.
-    while true; do
-      set +e
-      aws route53 enable-hosted-zone-dnssec --region us-east-1 --hosted-zone-id $ZONE_ID
-      result=$?
-      set -e
-      if [ $result -ne 0 ]; then
-        echo "Attempt failed. Waiting for 1 minute before retrying..."
-        sleep 60
-      else
-        echo "DNSSEC signing enabled successfully."
-        break
-      fi
-    done
+    # while true; do
+    #   set +e
+    #   aws route53 enable-hosted-zone-dnssec --region us-east-1 --hosted-zone-id $ZONE_ID
+    #   result=$?
+    #   set -e
+    #   if [ $result -ne 0 ]; then
+    #     echo "Attempt failed. Waiting for 1 minute before retrying..."
+    #     sleep 60
+    #   else
+    #     echo "DNSSEC signing enabled successfully."
+    #     break
+    #   fi
+    # done
 
     aws --region us-east-1 route53 get-dnssec --hosted-zone-id $ZONE_ID | jq -r '.KeySigningKeys[0].PublicKey' > public-signing-key.txt
+    echo "$(terraform -chdir=terraform/aws output -raw aws_route53_key_signing_key)" >> public-signing-key.txt
+    
   displayName: 'Configure domain registrar name servers and enable DNSSEC signing on hosted zone'
   condition: always()
 

@@ -74,12 +74,14 @@ resource "aws_route53_key_signing_key" "dnssecksk" {
   key_management_service_arn = aws_kms_key.domaindnssec.arn
 }
 
-# resource "aws_route53_hosted_zone_dnssec" "dnssec" {
-#   depends_on = [
-#     aws_route53_key_signing_key.dnssecksk
-#   ]
-#   hosted_zone_id = aws_route53_key_signing_key.dnssecksk.hosted_zone_id
-# }
+resource "aws_route53_hosted_zone_dnssec" "dnssec" {
+  depends_on = [
+    aws_route53_key_signing_key.dnssecksk
+  ]
+  hosted_zone_id = aws_route53_key_signing_key.dnssecksk.hosted_zone_id
+}
+
+
 
 output "aws_route53_zone_id" {
   value = aws_route53_zone.main.zone_id
@@ -87,4 +89,8 @@ output "aws_route53_zone_id" {
 
 output "aws_route53_zone_name_servers" {
   value = aws_route53_zone.main.name_servers
+}
+
+output "aws_route53_key_signing_key" {
+  value = aws_route53_key_signing_key.dnssecksk.public_key
 }

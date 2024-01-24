@@ -15,7 +15,6 @@ variables:
     value: tomas.ferrari@sendati.com # This value was modified by the initial-setup python script
   - name: DOMAIN
     value: tferrari.com # This value was modified by the initial-setup python script
-
     
 pool:
   vmImage: 'ubuntu-latest' 
