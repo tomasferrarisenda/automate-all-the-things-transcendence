@@ -11,7 +11,7 @@ deployment:
     istio: monitor
   }
   image:
-    repository: harbor.tferrari.com/gonchi/frontend # This value was modified by the harbor-setup pipeline
+    repository: harbor.tferrari.com/gonchi/frontend # This value was modified by the initial-setup python script
     # repository: tferrari92/gonchi-frontend # This value was modified by the harbor-setup pipeline
 
 
