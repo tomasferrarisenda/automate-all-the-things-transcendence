@@ -4,7 +4,7 @@ redis_host:  # This value was modified by the deploy-infra pipeline
 
 deployment:
   image:
-    tag: 1454
+    tag: 1463
   replicas: 1
     
 secret:
