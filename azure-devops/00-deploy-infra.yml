@@ -191,9 +191,7 @@ steps:
       fi
     done
 
-
-    aws --region us-east-1 route53 get-dnssec --hosted-zone-id $ZONE_ID | jq -r '.KeySigningKeys[0].PublicKey' > public-signing-key.txt
-    echo "$(terraform -chdir=terraform/aws output -raw aws_route53_key_signing_key)" >> public-signing-key.txt
+    echo "$(terraform -chdir=terraform/aws output -raw aws_route53_key_signing_key)" > public-signing-key.txt
   displayName: 'Configure domain registrar name servers and enable DNSSEC signing on hosted zone'
   condition: always()
 
