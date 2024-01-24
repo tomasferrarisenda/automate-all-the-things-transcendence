@@ -52,7 +52,7 @@ stages:
         # repository: '$(APP_NAME)/backend'
                   # $(HARBOR_REGISTRY)/$(APP_NAME)/$(APP_NAME)-backend:$(Build.BuildId) 
         # repository: 'core.harbor.$(DOMAIN)/$(APP_NAME)/backend'
-        repository: 'harbor.$(DOMAIN)/$(APP_NAME)/backend'
+        repository: '$(APP_NAME)/backend'
         command: 'buildAndPush'
         Dockerfile: 'my-app/backend/Dockerfile'
 
