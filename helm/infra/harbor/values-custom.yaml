@@ -1,67 +1,19 @@
 # Default user is "admin"
 harborAdminPassword: automate-all-the-things
 
-# secretKey: "use-a-secret-key"
-# externalURL: https://harbor.eksa.demo:30003
-# expose:
-#     tls:
-#       certSource: auto
-#       auto:
-#           commonName: "harbor.eksa.demo"  
-
 expose:
-  # Set how to expose the service. Set the type as "ingress", "clusterIP", "nodePort" or "loadBalancer"
-  # and fill the information in the corresponding section
-  # type: loadBalancer
   tls:
-  #   # Enable TLS or not.
-  #   # Delete the "ssl-redirect" annotations in "expose.ingress.annotations" when TLS is disabled and "expose.type" is "ingress"
-  #   # Note: if the "expose.type" is "ingress" and TLS is disabled,
-  #   # the port must be included in the command when pulling/pushing images.
-  #   # Refer to https://github.com/goharbor/harbor/issues/5291 for details.
     enabled: false
-
-
-
-    # auto:
-    #   # The common name used to generate the certificate, it's necessary
-    #   # when the type isn't "ingress"
-    #   commonName: harbor.tferrari.com # This value was modified by the harbor-setup pipeline
-
-    # DESCOMENTAR PARA CREAR CEERT A TRAVES DE INGRESS
-    # secret:
-    #   secretName: harbor-ingress-certificate
-
-  # loadBalancer:
-  #   annotations: {
-  #     external-dns.alpha.kubernetes.io/hostname: harbor.tferrari.com
-  #   }
     
   ingress:
     hosts:
-      # DESCOMENTAR PARA CREAR CEERT A TRAVES DE INGRESS
       core: harbor.tferrari.com # This value was modified by the harbor-setup pipeline
     
-    # set to the type of ingress controller if it has specific requirements.
-    # leave as `default` for most ingress controllers.
-    # set to `gce` if using the GCE ingress controller
-    # set to `ncp` if using the NCP (NSX-T Container Plugin) ingress controller
-    # set to `alb` if using the ALB ingress controller
-    # set to `f5-bigip` if using the F5 BIG-IP ingress controller
     controller: alb
 
     annotations: 
       # External-DNS related annotations
-      external-dns.alpha.kubernetes.io/hostname: harbor.tferrari.com # This value was modified by the initial-setup python script
-
-      # # Cert-Manager related annotations
-      # cert-manager.io/cluster-issuer: alb-staging-cluster-issuer 
-      # cert-manager.io/cluster-issuer: alb-production-cluster-issuer 
-      # # QUIZAS SOLUCIONA EL PROBLEMA DE Q CUANDO SWITCHEA DE STAGING A PRODUCTION CLUSTER ISSUER ROMPE> HAY Q TESTEARLO
-      # acme.cert-manager.io/http01-edit-in-place: "true"
-      # ingress.kubernetes.io/ssl-redirect: "false"
-      # nginx.ingress.kubernetes.io/ssl-redirect: "false"
-      # # ingress.kubernetes.io/force-ssl-redirect: "true"    
+      external-dns.alpha.kubernetes.io/hostname: harbor.tferrari.com # This value was modified by the initial-setup python script 
 
       # ALB related annotations
       kubernetes.io/ingress.class: alb
@@ -79,18 +31,3 @@ expose:
       alb.ingress.kubernetes.io/listen-ports: '[{"HTTP": 80}, {"HTTPS": 443}]'
       alb.ingress.kubernetes.io/certificate-arn: arn:aws:acm:us-east-1:373421766055:certificate/086f3e8d-cb98-48d2-9552-c345af0dc259 # This value was modified by the deploy-infra pipeline
     
-
-
-
-# externalURL: https://harbor.tferrari.com # This value was modified by the initial-setup python script
-# externalURL: https://harbor.tferrari.com:30003 # This value was modified by the initial-setup python script
-
-# internalTLS:
-#   enabled: true
-#   registry:
-#     # secret name for registry's tls certs
-#     secretName: harbor-ingress
-
-#   portal:
-#     # secret name for portal's tls certs
-#     secretName: harbor-ingress
