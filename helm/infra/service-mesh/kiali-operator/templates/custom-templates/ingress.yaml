@@ -8,7 +8,7 @@ metadata:
     {{- end }}
 spec:
   rules:
-    - host: {{ .Values.ingress.hosts | quote }}
+    - host: {{ .Values.ingress.host }}
       http:
         paths:
           - path: /kiali

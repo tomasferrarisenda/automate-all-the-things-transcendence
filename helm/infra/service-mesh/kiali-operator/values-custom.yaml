@@ -29,8 +29,7 @@ cr:
   #       }
 
 ingress:
-  hosts:
-    - kiali.tferrari.com # This value was modified by the initial-setup python script
+  host: kiali.tferrari.com # This value was modified by the initial-setup python script
 
   annotations: 
     # External-DNS related annotations
