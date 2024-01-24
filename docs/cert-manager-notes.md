@@ -64,14 +64,8 @@ This would send traffic meant for /.well-known/acme-challenge to the certificate
 apiVersion: v1
 kind: Service
 metadata:
- annotations:
-   auth.istio.io/8089: NONE
- labels:
-   acme.cert-manager.io/http01-solver: 'true'
  name: acme-http-solver
 spec:
- externalTrafficPolicy: Cluster
- internalTrafficPolicy: Cluster
  ports:
    - name: http
      port: 8089
@@ -79,8 +73,7 @@ spec:
      targetPort: 8089
  selector:
    acme.cert-manager.io/http01-solver: 'true'
- sessionAffinity: None
- type: NodePort
+ type: ClusterIP
 ```
 
 This would effectively solve our issue of not being able to reach the appropiate pod when looking for the validation token on grafana.yourdomain.com/.well-known/acme-challenge. Solver worked fine and the certificate was being generated succesfully.
