@@ -137,3 +137,16 @@ A thing that confused me a lot were all the secrets created in the Cert-Manager 
 
 
 LA DUDA Q ME QUEDA ES PORQ EL LB QUE CREA EL SERVICIO DE ISTIO GW FUNCIONA CON HTTPS??? LEVANTE A MANO UN LB COPIADO DEL DE ISTIO GW Y FALTO ALGO PORQ NO ANDUVO. ESTA PUEDE SER OTRA POSIBLE SOLUCION
+
+PODRIAMOS HABER ENABLED EL DNSSEC SINGNING EN EL HOSTED ZONE CON ESTE BLOCQUE:
+resource "aws_route53_hosted_zone_dnssec" "dnssec" {
+  depends_on = [
+    aws_route53_key_signing_key.dnssecksk
+  ]
+  hosted_zone_id = aws_route53_key_signing_key.dnssecksk.hosted_zone_id
+}
+
+PERO PARA QUE FUNCIONE PRIERON TIENEN QUE COPIADOS LOS NAME SERVERS DEL HOSTED ZONE AL DOMAIN REGISTRAR. SI ESTO NO ESTA RECIBIREMOS EL ERROR:
+Error: enabling Route 53 Hosted Zone DNSSEC (Z0381810UAZXEYO6ZOOB): enabling: HostedZonePartiallyDelegated: Due to DNS lookup failure, we cannot determine if hosted zone with ID 'Z0381810UAZXEYO6ZOOB' has NS records partially connected with its parent zone. Please retry later.
+
+POR ESO ELEGIMOS NO ENABLEAR EL DNSSEC SIGNING EN EL HOSTED A TRAVES DE TERRAFORM. EN SU LUGAR LO HACEMOS CON AWS CLI EN EL DEPLOY INFRA PPL. PRIMERO POR AWS CLI HACEMOS LA COPIA DE LOS NS DEL HZ AL DOMAIN, Y UNA VEZ HECHO ESTO< TAMBIEN CON AWS CLI PODEMOS ENABLEAR EL DNSSEC SIGNING EN EL HOSTED ZONE
