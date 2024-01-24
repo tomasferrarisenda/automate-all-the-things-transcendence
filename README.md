@@ -394,8 +394,6 @@ I will repeat these instructions in the [Destroy All The Things Pipeline](#destr
 <br/>
 <br/>
 
-# OUR NEW REGISTRY: HARBOR
-
 
 # AWS INFRASTRUCTURE DEPLOYMENT PIPELINE
 
@@ -569,6 +567,8 @@ Finally the pipeline will get the ArgoCD web UI URL and admin account password a
 
 ## Description
 
+We nee to make sure Sealed Secret has been successfully deployed before running this pipeline. Verify this on the ArgoCD web UI.
+
 <!-- We've improved our Sealed Secrets pipeline. We've made ir more recyclable. Now it will generate any secret of type "generic". You'll just need to pass in the required values and voilá. -->
 
 Up until now, we have been leaving our Kubernetes secrtes exposed in our repo. Anyone with access to the repo could see the what the password for the Redis DBs were. Technically, they were base64 encoded, but anyone could easily decode them.
@@ -596,6 +596,10 @@ You could easily encrypt the secrets yourselves using the kubeseal CLI tool, but
 <p title="Keep your secrets" align="center"> <img width="460" src="https://i.imgur.com/rmhp3EJ.jpg"> </p>
 <br/>
 <br/>
+
+# HARBOR SETUP PIPELINE
+
+We nee to make sure Harbor has been successfully deployed before running this pipeline. Verify this on the ArgoCD web UI.
 
 
 # BACKEND SERVICE BUILD & DEPLOY PIPELINE
