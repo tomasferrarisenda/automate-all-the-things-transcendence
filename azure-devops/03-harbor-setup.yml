@@ -109,10 +109,10 @@ steps:
         }
     }" > config.json
 
-    kubectl create secret generic harbor-registry \
+    kubectl create secret generic harbor-credentials \
         --from-file=.dockerconfigjson=config.json \
         --type=kubernetes.io/dockerconfigjson \
-        --dry-run=client -o yaml > harbor-registry-secret.yaml
+        --dry-run=client -o yaml > harbor-credentials-secret.yaml
   displayName: 'Create secret manifests to be sealed'
 
 # - script: | 
@@ -120,10 +120,10 @@ steps:
 #   displayName: 'Encrypt the json secrets with Kubeseal'
 
 - script: | 
-    # kubeseal --controller-namespace sealed-secrets --controller-name sealed-secrets < harbor-registry-secret.yaml > helm/my-app/backend/templates/harbor-registry-sealed-secret.yaml 
-
-    kubeseal --controller-namespace sealed-secrets --controller-name sealed-secrets < harbor-registry-secret.yaml | tee -a helm/my-app/backend/templates/harbor-registry-sealed-secret.yaml > helm/my-app/frontend/templates/harbor-registry-sealed-secret.yaml
-  displayName: 'Encrypt the json secrets with Kubeseal'
+    # kubeseal --controller-namespace sealed-secrets --controller-name sealed-secrets -o yaml < harbor-credentials-secret.yaml > helm/my-app/backend/templates/harbor-credentials-sealed-secret.yaml 
+    
+    kubeseal --controller-namespace sealed-secrets --controller-name sealed-secrets -o yaml < harbor-credentials-secret.yaml | tee -a helm/my-app/backend/templates/harbor-credentials-sealed-secret.yaml > helm/my-app/frontend/templates/harbor-credentials-sealed-secret.yaml
+  displayName: 'Create the Sealed Secrets with Kubeseal'
 
 # - script: | 
 #     cat harbor-secret.json | jq -r '.spec.encryptedData.REDIS_PASS' > dev-encrypted-pass.txt
@@ -138,8 +138,8 @@ steps:
     git config --global user.email "AzureDevOps@HarborSetupPipeline.com"
     git config --global user.name "Azure DevOps - Harbor Setup Pipeline"
     git checkout -b main
-    git add helm/my-app/backend/templates/harbor-registry-sealed-secret.yaml  
-    git add helm/my-app/frontend/templates/harbor-registry-sealed-secret.yaml  
+    git add helm/my-app/backend/templates/harbor-credentials-sealed-secret.yaml  
+    git add helm/my-app/frontend/templates/harbor-credentials-sealed-secret.yaml  
     git commit -m "Sealed secrets created by Azure DevOps"
     git push --set-upstream origin main
   displayName: 'Push changes to GitHub'
