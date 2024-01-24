@@ -9,7 +9,7 @@ metadata:
     argocd.argoproj.io/sync-wave: "2"
 spec:
   destination:
-    namespace: registry
+    namespace: backstage
     server: https://kubernetes.default.svc  
   project: registry
   source:
