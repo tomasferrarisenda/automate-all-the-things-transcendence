@@ -100,8 +100,11 @@ steps:
 #   condition: always()
 
 - script: |
+    sed -i "s|alb.ingress.kubernetes.io/certificate-arn:.*|alb.ingress.kubernetes.io/certificate-arn: $(terraform -chdir=terraform/aws output -raw wildcard_certificate_arn) # This value was modified by the deploy-infra pipeline|g" helm/infra/argo-cd/values-custom.yaml
     sed -i "s|alb.ingress.kubernetes.io/certificate-arn:.*|alb.ingress.kubernetes.io/certificate-arn: $(terraform -chdir=terraform/aws output -raw wildcard_certificate_arn) # This value was modified by the deploy-infra pipeline|g" helm/infra/observability/grafana/values-custom.yaml
     sed -i "s|alb.ingress.kubernetes.io/certificate-arn:.*|alb.ingress.kubernetes.io/certificate-arn: $(terraform -chdir=terraform/aws output -raw wildcard_certificate_arn) # This value was modified by the deploy-infra pipeline|g" helm/infra/harbor/values-custom.yaml
+    sed -i "s|alb.ingress.kubernetes.io/certificate-arn:.*|alb.ingress.kubernetes.io/certificate-arn: $(terraform -chdir=terraform/aws output -raw wildcard_certificate_arn) # This value was modified by the deploy-infra pipeline|g" helm/infra/observability/jaeger/values-custom.yaml
+    sed -i "s|alb.ingress.kubernetes.io/certificate-arn:.*|alb.ingress.kubernetes.io/certificate-arn: $(terraform -chdir=terraform/aws output -raw wildcard_certificate_arn) # This value was modified by the deploy-infra pipeline|g" helm/infra/service-mesh/kiali-operator/values-custom.yaml
   displayName: 'Add wildcard certificate arn to ingress annotations tools'
   condition: always()
 
@@ -133,8 +136,11 @@ steps:
     git config --global user.name "Azure DevOps - Build & Deploy App Pipeline"
     git checkout -b main
     git add helm/my-app/backend/environments/
+    git add helm/infra/argo-cd/values-custom.yaml
     git add helm/infra/observability/grafana/values-custom.yaml
     git add helm/infra/harbor/values-custom.yaml
+    git add helm/infra/observability/jaeger/values-custom.yaml
+    git add helm/infra/service-mesh/kiali-operator/values-custom.yaml
     git commit -m "Updated ElastiCache endpoints and certificate arn by Azure DevOps"
     git push --set-upstream origin main
   displayName: 'Push changes to GitHub'
