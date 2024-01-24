@@ -120,7 +120,17 @@ steps:
     kubectl create secret generic harbor-credentials -n $(APP_NAME)-dev \
         --from-file=.dockerconfigjson=config.json \
         --type=kubernetes.io/dockerconfigjson \
-        --dry-run=client -o yaml > harbor-credentials-secret.yaml
+        --dry-run=client -o yaml > dev-harbor-credentials-secret.yaml
+
+    kubectl create secret generic harbor-credentials -n $(APP_NAME)-stage \
+        --from-file=.dockerconfigjson=config.json \
+        --type=kubernetes.io/dockerconfigjson \
+        --dry-run=client -o yaml > stage-harbor-credentials-secret.yaml
+
+    kubectl create secret generic harbor-credentials -n $(APP_NAME)-prod \
+        --from-file=.dockerconfigjson=config.json \
+        --type=kubernetes.io/dockerconfigjson \
+        --dry-run=client -o yaml > prod-harbor-credentials-secret.yaml
 
   displayName: 'Create secret manifests to be sealed'
 
@@ -130,7 +140,9 @@ steps:
 
 - script: | 
     # We create the sealed secret only in for the backend. Since they share the namespace, if we create the sealed secret for both, it will create the same object twice in the namespace.
-    kubeseal --controller-namespace sealed-secrets --controller-name sealed-secrets -o yaml < harbor-credentials-secret.yaml > helm/my-app/backend/templates/harbor-credentials-sealed-secret.yaml 
+    kubeseal --controller-namespace sealed-secrets --controller-name sealed-secrets -o yaml < dev-harbor-credentials-secret.yaml > helm/my-app/backend/templates/dev-harbor-credentials-sealed-secret.yaml 
+    kubeseal --controller-namespace sealed-secrets --controller-name sealed-secrets -o yaml < stage-harbor-credentials-secret.yaml > helm/my-app/backend/templates/stage-harbor-credentials-sealed-secret.yaml 
+    kubeseal --controller-namespace sealed-secrets --controller-name sealed-secrets -o yaml < prod-harbor-credentials-secret.yaml > helm/my-app/backend/templates/prod-harbor-credentials-sealed-secret.yaml 
     
     # We would create them in both if backend and frontend were in different namespaces
     # kubeseal --controller-namespace sealed-secrets --controller-name sealed-secrets -o yaml < harbor-credentials-secret.yaml | tee -a helm/my-app/backend/templates/harbor-credentials-sealed-secret.yaml > helm/my-app/frontend/templates/harbor-credentials-sealed-secret.yaml
@@ -140,16 +152,18 @@ steps:
 #     cat harbor-secret.json | jq -r '.spec.encryptedData.REDIS_PASS' > dev-encrypted-pass.txt
 #   displayName: 'Get the value of REDIS_PASS'
 
-- script: |
-    sed -i "s|namespace:.*|namespace: {{ .Values.appName }}-{{ .Values.environment }}|g" helm/my-app/backend/templates/harbor-credentials-sealed-secret.yaml 
-  displayName: 'Modify sealed secret for Helm'
+# - script: |
+#     sed -i "s|namespace:.*|namespace: {{ .Values.appName }}-{{ .Values.environment }}|g" helm/my-app/backend/templates/harbor-credentials-sealed-secret.yaml 
+#   displayName: 'Modify sealed secret for Helm'
 
 - script: |
     git pull origin main
     git config --global user.email "AzureDevOps@HarborSetupPipeline.com"
     git config --global user.name "Azure DevOps - Harbor Setup Pipeline"
     git checkout -b main
-    git add helm/my-app/backend/templates/harbor-credentials-sealed-secret.yaml  
+    git add helm/my-app/backend/templates/dev-harbor-credentials-sealed-secret.yaml  
+    git add helm/my-app/backend/templates/stage-harbor-credentials-sealed-secret.yaml  
+    git add helm/my-app/backend/templates/prod-harbor-credentials-sealed-secret.yaml  
     # git add helm/my-app/frontend/templates/harbor-credentials-sealed-secret.yaml  
     git commit -m "Sealed secrets created by Azure DevOps"
     git push --set-upstream origin main
