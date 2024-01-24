@@ -77,7 +77,7 @@ expose:
 
       # TLS related annotations
       alb.ingress.kubernetes.io/listen-ports: '[{"HTTP": 80}, {"HTTPS": 443}]'
-      alb.ingress.kubernetes.io/certificate-arn: arn:aws:acm:us-east-1:373421766055:certificate/a6c8a2a6-4fec-4829-84b8-a3478dceeee8 # This value was modified by the deploy-infra pipeline
+      alb.ingress.kubernetes.io/certificate-arn: arn:aws:acm:us-east-1:373421766055:certificate/086f3e8d-cb98-48d2-9552-c345af0dc259 # This value was modified by the deploy-infra pipeline
     
 
 
