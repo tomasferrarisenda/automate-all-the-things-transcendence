@@ -48,7 +48,9 @@ stages:
       displayName: Build And Push Image
       inputs:
         containerRegistry: 'harbor'
-        repository: '$(APP_NAME)/backend'
+        # repository: '$(DOCKERHUB_USERNAME)/$(APP_NAME)-backend'
+        # repository: '$(APP_NAME)/backend'
+        repository: 'harbor.$(DOMAIN)/$(APP_NAME)/backend'
         command: 'buildAndPush'
         Dockerfile: 'my-app/backend/Dockerfile'
         
