@@ -51,15 +51,14 @@ stages:
         # repository: '$(DOCKERHUB_USERNAME)/$(APP_NAME)-backend'
         # repository: '$(APP_NAME)/backend'
                   # $(HARBOR_REGISTRY)/$(APP_NAME)/$(APP_NAME)-backend:$(Build.BuildId) 
-        # repository: 'harbor.$(DOMAIN)/$(APP_NAME)/backend'
-        # core.harbor.domain/gonchi/REPOSITORY[:TAG]
-        repository: 'core.harbor.$(DOMAIN)/$(APP_NAME)/backend'
+        # repository: 'core.harbor.$(DOMAIN)/$(APP_NAME)/backend'
+        repository: 'harbor.$(DOMAIN)/$(APP_NAME)/backend'
         command: 'buildAndPush'
         Dockerfile: 'my-app/backend/Dockerfile'
 
-    - script: |
-        docker push core.harbor.$(DOMAIN)/$(APP_NAME)/backend:$(Build.BuildId)
-      displayName: Update repo
+    # - script: |
+    #     docker push core.harbor.$(DOMAIN)/$(APP_NAME)/backend:$(Build.BuildId)
+    #   displayName: Update repo
         
 
 
