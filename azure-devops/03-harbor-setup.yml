@@ -12,7 +12,6 @@ variables:
   - name: HARBOR_PASSWORD
     value: automate-all-the-things 
 
-    
 
 pool:
   vmImage: 'ubuntu-latest' 
