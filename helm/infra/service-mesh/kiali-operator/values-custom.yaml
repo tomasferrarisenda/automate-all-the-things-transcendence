@@ -29,6 +29,9 @@ cr:
   #       }
 
 ingress:
+  hosts:
+    - kiali.tferrari.com # This value was modified by the initial-setup python script
+
   annotations: 
     # External-DNS related annotations
     external-dns.alpha.kubernetes.io/hostname: kiali.tferrari.com

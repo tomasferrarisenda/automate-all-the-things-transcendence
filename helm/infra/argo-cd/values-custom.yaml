@@ -27,9 +27,10 @@ server:
   ingress:
     enabled: true
 
-    # Uncomment to generate TLS certificate for ArgoCD
-    # hosts: 
-    #   - argocd.tferrari.com # This value was modified by the initial-setup python script
+    hosts: 
+      - argocd.tferrari.com # This value was modified by the initial-setup python script
+
+#### BORRAR
     # tls: 
     #   - secretName: argocd-ingress-certificate
     #     hosts: 
