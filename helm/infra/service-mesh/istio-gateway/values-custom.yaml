@@ -10,9 +10,3 @@ service:
   annotations: {    
     external-dns.alpha.kubernetes.io/hostname: "tferrari.com,dev.tferrari.com,stage.tferrari.com" # This value was modified by the initial-setup python script
   }
-
-# This creates issues with terraform destroy
-# service:
-#   annotations: {    
-#     service.beta.kubernetes.io/aws-load-balancer-type: nlb # This is to use a Network Load Balancer (NLB) instead of the default Classic/Elastic Load Balancer (ELB). 
-#   }

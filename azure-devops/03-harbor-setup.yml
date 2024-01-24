@@ -2,18 +2,7 @@ name: harbor-setup
 
 trigger: none
 
-# parameters:
-#   - name: HARBOR_USER
-#     displayName: 'Introduce the user for Harbor'
-#     type: string
-#   - name: HARBOR_PASSWORD
-#     displayName: 'Introduce the password for Harbor'
-#     type: string
-
 variables:
-  # - group: aws-keys
-  # - name: AWS_REGION
-  #   value: us-east-2  # This value was modified by the initial-setup python script
   - name: APP_NAME
     value: gonchi # This value was modified by the initial-setup python script
   - name: DOMAIN
@@ -34,47 +23,6 @@ pool:
 
 
 steps:
-# - task: DockerInstaller@0
-#   displayName: Install Docker
-#   inputs:
-#     dockerVersion: '17.09.0-ce'
-
-# - script: | 
-#     cat /etc/docker/daemon.json
-#   displayName: 'probando'
-
-# - script: | 
-#     sudo echo '{ "exec-opts": ["native.cgroupdriver=cgroupfs"], "cgroup-parent": "/actions_job", "insecure-registries" : ["k8s-registry-harborin-3fc40329a9-502641590.us-east-2.elb.amazonaws.com:80"] }' > /etc/docker/daemon.json
-#   displayName: 'probando2'
-
-# - task: Docker@2
-#   displayName: Build And Push Image
-#   inputs:
-#     containerRegistry: 'dockerhub'
-#     repository: 'k8s-registry-harborin-3fc40329a9-502641590.us-east-2.elb.amazonaws.com:80/my-app/backend:1'
-#     command: 'buildAndPush'
-#     Dockerfile: 'my-app/backend/Dockerfile'
-
-# - script: | 
-#     curl -X 'POST' -u admin:automate-all-the-things \
-#       "http://$(cat harbor-endpoint.txt | tr -d '\n')/api/v2.0/projects" \
-#       -H 'accept: application/json' \
-#       -H 'X-Resource-Name-In-Location: false' \
-#       -H 'Content-Type: application/json' \
-#       -d '{
-#       "project_name": "$(APP_NAME)",
-#       "metadata": {
-#         "public": "false",
-#         "enable_content_trust": "false",
-#         "enable_content_trust_cosign": "true",
-#         "prevent_vul": "true",
-#         "severity": "low",
-#         "auto_scan": "true"
-#       }
-#     }'
-#   displayName: 'Create Harbor project for $(APP_NAME)'
-
-
 - script: | 
     curl -X 'POST' -u $(HARBOR_USER):$(HARBOR_PASSWORD) \
       "https://harbor.$(DOMAIN)/api/v2.0/projects" \
@@ -92,27 +40,3 @@ steps:
       }
     }'
   displayName: 'Create Harbor project for $(APP_NAME)'
-
-# # We use podman because it allows us to push to instecure (http) registries with the flag "--tls-verify=false"
-# - script: | 
-#     apt-get -y install podman
-#   displayName: 'Install podman'
-
-# - script: | 
-#     podman login --username admin --password automate-all-the-things k8s-registry-harborin-3fc40329a9-502641590.us-east-2.elb.amazonaws.com:80 --tls-verify=false
-#   displayName: 'Login to registry'
-
-# - script: | 
-#     podman image build --tag k8s-registry-harborin-3fc40329a9-502641590.us-east-2.elb.amazonaws.com:80/my-app/backend:1 my-app/backend
-#   displayName: 'Build image'
-
-# - script: | 
-#     podman image push k8s-registry-harborin-3fc40329a9-502641590.us-east-2.elb.amazonaws.com:80/my-app/backend:1 --tls-verify=false
-#   displayName: 'Push image'
-
-# - script: | 
-#     docker login --username admin --password automate-all-the-things k8s-registry-harborin-3fc40329a9-502641590.us-east-2.elb.amazonaws.com:80
-#   displayName: 'Login to registry'
-# - script: | 
-#     docker image build --tag k8s-registry-harborin-3fc40329a9-502641590.us-east-2.elb.amazonaws.com:80/my-app/backend:1 my-app/backend
-#   displayName: 'Build image'
