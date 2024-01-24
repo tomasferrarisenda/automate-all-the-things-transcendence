@@ -9,8 +9,8 @@ ingress:
 
   #### BORRAR
     # Cert-Manager related annotations
-    cert-manager.io/cluster-issuer: alb-staging-cluster-issuer
-    # cert-manager.io/cluster-issuer: alb-production-cluster-issuer 
+    # cert-manager.io/cluster-issuer: alb-staging-cluster-issuer
+    cert-manager.io/cluster-issuer: alb-production-cluster-issuer 
   #### BORRAR
 
 
