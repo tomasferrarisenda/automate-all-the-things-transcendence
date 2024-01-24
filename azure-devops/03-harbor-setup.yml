@@ -156,6 +156,7 @@ steps:
 #     sed -i "s|namespace:.*|namespace: {{ .Values.appName }}-{{ .Values.environment }}|g" helm/my-app/backend/templates/harbor-credentials-sealed-secret.yaml 
 #   displayName: 'Modify sealed secret for Helm'
 
+
 - script: |
     git pull origin main
     git config --global user.email "AzureDevOps@HarborSetupPipeline.com"
