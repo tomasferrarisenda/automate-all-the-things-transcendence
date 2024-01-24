@@ -1,5 +1,6 @@
 ingress:
   enabled: true
+  host: backstage.tferrari.com # This value was modified by the initial-setup python script
   annotations: 
     # External-DNS related annotations
     external-dns.alpha.kubernetes.io/hostname: backstage.tferrari.com # This value was modified by the initial-setup python script
