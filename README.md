@@ -345,7 +345,7 @@ I've also added a [policy for External-DNS](terraform/aws/external-dns.tf) and a
 
 You can find further information on these tools in my how [external-dns-notes.md](docs/external-dns-notes.md) and [cert-manager-notes.md](docs/cert-manager-notes.md).
 
-Initially, the Certificate for Istio Gateway will be created using the Let's Encrypt Staging Issuer. To switch to the Production Issuer, you'll need to modify the "issuer" value in [Istio Gateway's values](/helm/infra/service-mesh/istio-gateway/values-custom.yaml). We'll only use Cert-Manager to secure Istio Gateway. Infra tools frontends will be secured using a different method. More info on [cert-manager-notes.md](docs/cert-manager-notes.md).
+Initially, the Certificate for Istio Gateway will be created using the Let's Encrypt Staging Issuer. To switch to the Production Issuer, you'll need to modify the "issuer" value in [Istio Gateway's values](/helm/infra/service-mesh/istio-gateway/values-custom.yaml). We'll only use Cert-Manager to secure Istio Gateway. Infra tools frontends will be secured using a different method. More info in [cert-manager-notes.md](docs/cert-manager-notes.md).
 
 These are the URLs for your app:
 - http://dev.<your-domain\>/
@@ -362,7 +362,8 @@ These are the URLs for the infra tools:
 <br/>
 
 ### IMPORTANT: 
-In order for the SSL certificate to work, we need to do a manual task right after the deploy-infra pipeline and before running the deploy-argocd pipeline. I've automated as much as I could (you can see the new steps in the deploy-infra pipeline) but this task must be performed manually:
+In order for the Cert-Manager certificate to work, we must [activate DNSSEC in our domain](https://docs.aws.amazon.com/Route53/latest/DeveloperGuide/domain-configure-dnssec.html#domain-configure-dnssec-adding-keys). I've automated as much as of this process as I could (you can see the new steps in the [deploy-infra pipeline](azure-devops/00-deploy-infra.yml)) but there is a task that can only be done through the AWS web console.
+After running the deploy-infra pipeline do this:
 1. The deploy-infra pipeline will publish an artifact with a file called public-signing-key.txt. Download it.
 2. Open it and copy the contents.
 3. On your browser go to your Route53 on your AWS account.
@@ -372,7 +373,7 @@ In order for the SSL certificate to work, we need to do a manual task right afte
 7. Save.
 8. Now you can run the deploy-argocd pipeline.
 
-I will repeat these instructions in the [AWS Infrastructure Deployment Pipeline](#aws-infrastructure-deployment-pipeline).
+I will repeat these instructions in the [AWS Infrastructure Deployment Pipeline](#aws-infrastructure-deployment-pipeline) instructions.
 
 <br/>
 
@@ -385,7 +386,7 @@ We need to delete this DNSSEC key we created before running the destroy-all-the-
 5. Delete it.
 6. Now you can run the destroy-all-the-things pipeline.
 
-I will repeat these instructions in the [Destroy All The Things Pipeline](#destroy-all-the-things-pipeline).
+I will repeat these instructions in the [Destroy All The Things Pipeline](#destroy-all-the-things-pipeline) instructions.
 
 <br/>
 <br/>

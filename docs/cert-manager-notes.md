@@ -126,11 +126,6 @@ Another option would have been to send traffic through the Istio Gateway since t
 
 <br/>
 
-## DNSSEC Issue
-<!-- https://youtu.be/13ZpNsr4NBk?t=102&si=KrC2PGI0io6QPInb -->
-<!-- https://docs.aws.amazon.com/Route53/latest/DeveloperGuide/domain-configure-dnssec.html#domain-configure-dnssec-adding-keys -->
-
-
 ## Secrets
 A thing that confused me a lot were all the secrets created in the Cert-Manager process. the Here's a concise explanation of the three different types of secrets used in Cert-Manager with the ACME protocol:
 
