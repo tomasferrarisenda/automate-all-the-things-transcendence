@@ -1,4 +1,4 @@
-name: build-and-deploy-backend
+name: build-and-deploy-frontend
 
 trigger:
   branches:
@@ -6,25 +6,19 @@ trigger:
       - main  
   paths:
     include:
-      - my-app/backend/*
+      - my-app/frontend/*
 
 variables:
-  # - group: aws-keys
-  # # - group: aws-sendati-keys
-  # - name: AWS_REGION
-  #   value: us-east-1  # This value was modified by the initial-setup python script
+  - group: aws-keys
+  # - group: aws-sendati-keys
+  - name: AWS_REGION
+    value: us-east-1 # This value was modified by the initial-setup python script
   - name: APP_NAME
     value: gonchi # This value was modified by the initial-setup python script
-  # - name: DOCKERHUB_USERNAME
-  #   value: tferrari92 # This value was modified by the initial-setup python script
+  - name: DOCKERHUB_USERNAME
+    value: tferrari92 # This value was modified by the initial-setup python script
   - name: USER_EMAIL
     value: tomas.ferrari@sendati.com # This value was modified by the initial-setup python script
-  - name: DOMAIN
-    value: tferrari.com # This value was modified by the initial-setup python script
-  # - name: HARBOR_USER
-  #   value: admin 
-  # - name: HARBOR_PASSWORD
-  #   value: automate-all-the-things 
     
 pool:
   vmImage: 'ubuntu-latest' 
@@ -47,19 +41,11 @@ stages:
     - task: Docker@2
       displayName: Build And Push Image
       inputs:
-        containerRegistry: 'harbor'
-        # repository: '$(DOCKERHUB_USERNAME)/$(APP_NAME)-backend'
-        # repository: '$(APP_NAME)/backend'
-                  # $(HARBOR_REGISTRY)/$(APP_NAME)/$(APP_NAME)-backend:$(Build.BuildId) 
-        # repository: 'core.harbor.$(DOMAIN)/$(APP_NAME)/backend'
-        repository: '$(APP_NAME)/backend'
+        containerRegistry: 'dockerhub'
+        repository: '$(DOCKERHUB_USERNAME)/$(APP_NAME)-frontend'
         command: 'buildAndPush'
-        Dockerfile: 'my-app/backend/Dockerfile'
+        Dockerfile: 'my-app/frontend/Dockerfile'
 
-    # - script: |
-    #     docker push core.harbor.$(DOMAIN)/$(APP_NAME)/backend:$(Build.BuildId)
-    #   displayName: Update repo
-        
 
 
 - stage: DeployDev
@@ -78,15 +64,15 @@ stages:
       displayName: Update repo
 
     - script: |
-        sed 's/tag:.*/tag: $(Build.BuildId)/g' helm/my-app/backend/environments/values-dev.yaml > helm/my-app/backend/environments/values-dev.temp
-        mv helm/my-app/backend/environments/values-dev.temp helm/my-app/backend/environments/values-dev.yaml
+        sed 's/tag:.*/tag: $(Build.BuildId)/g' helm/my-app/frontend/environments/values-dev.yaml > helm/my-app/frontend/environments/values-dev.temp
+        mv helm/my-app/frontend/environments/values-dev.temp helm/my-app/frontend/environments/values-dev.yaml
       displayName: Update Tag In values-dev.yaml
 
     - script: |
         git config --global user.email "AzureDevOps@Build&DeployAppPipeline.com"
         git config --global user.name "Azure DevOps - Build & Deploy App Pipeline"
         git checkout -b main
-        git add helm/my-app/backend/environments/values-dev.yaml 
+        git add helm/my-app/frontend/environments/values-dev.yaml 
         git commit -m "App version tag updated to $(Build.BuildId) by Azure DevOps"
         git push --set-upstream origin main
       displayName: 'Push changes to GitHub'
@@ -112,19 +98,18 @@ stages:
       displayName: Update repo
       
     - script: |
-        sed 's/tag:.*/tag: $(Build.BuildId)/g' helm/my-app/backend/environments/values-stage.yaml > helm/my-app/backend/environments/values-stage.temp
-        mv helm/my-app/backend/environments/values-stage.temp helm/my-app/backend/environments/values-stage.yaml
+        sed 's/tag:.*/tag: $(Build.BuildId)/g' helm/my-app/frontend/environments/values-stage.yaml > helm/my-app/frontend/environments/values-stage.temp
+        mv helm/my-app/frontend/environments/values-stage.temp helm/my-app/frontend/environments/values-stage.yaml
       displayName: Update Tag In values-stage.yaml
 
     - script: |
         git config --global user.email "AzureDevOps@Build&DeployAppPipeline.com"
         git config --global user.name "Azure DevOps - Build & Deploy App Pipeline"
         git checkout -b main
-        git add helm/my-app/backend/environments/values-stage.yaml 
+        git add helm/my-app/frontend/environments/values-stage.yaml 
         git commit -m "App version tag updated to $(Build.BuildId) by Azure DevOps"
         git push --set-upstream origin main
       displayName: 'Push changes to GitHub'
- 
         
 
 
@@ -158,15 +143,15 @@ stages:
       displayName: Update repo
 
     - script: |
-        sed 's/tag:.*/tag: $(Build.BuildId)/g' helm/my-app/backend/environments/values-prod.yaml > helm/my-app/backend/environments/values-prod.temp
-        mv helm/my-app/backend/environments/values-prod.temp helm/my-app/backend/environments/values-prod.yaml
+        sed 's/tag:.*/tag: $(Build.BuildId)/g' helm/my-app/frontend/environments/values-prod.yaml > helm/my-app/frontend/environments/values-prod.temp
+        mv helm/my-app/frontend/environments/values-prod.temp helm/my-app/frontend/environments/values-prod.yaml
       displayName: Update Tag In values-prod.yaml
 
     - script: |
         git config --global user.email "AzureDevOps@Build&DeployAppPipeline.com"
         git config --global user.name "Azure DevOps - Build & Deploy App Pipeline"
         git checkout -b main
-        git add helm/my-app/backend/environments/values-prod.yaml 
+        git add helm/my-app/frontend/environments/values-prod.yaml 
         git commit -m "App version tag updated to $(Build.BuildId) by Azure DevOps"
         git push --set-upstream origin main
       displayName: 'Push changes to GitHub'

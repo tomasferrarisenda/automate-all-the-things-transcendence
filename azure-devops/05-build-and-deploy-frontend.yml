@@ -9,16 +9,13 @@ trigger:
       - my-app/frontend/*
 
 variables:
-  - group: aws-keys
-  # - group: aws-sendati-keys
-  - name: AWS_REGION
-    value: us-east-1 # This value was modified by the initial-setup python script
   - name: APP_NAME
     value: gonchi # This value was modified by the initial-setup python script
-  - name: DOCKERHUB_USERNAME
-    value: tferrari92 # This value was modified by the initial-setup python script
   - name: USER_EMAIL
     value: tomas.ferrari@sendati.com # This value was modified by the initial-setup python script
+  - name: DOMAIN
+    value: tferrari.com # This value was modified by the initial-setup python script
+
     
 pool:
   vmImage: 'ubuntu-latest' 
@@ -41,8 +38,8 @@ stages:
     - task: Docker@2
       displayName: Build And Push Image
       inputs:
-        containerRegistry: 'dockerhub'
-        repository: '$(DOCKERHUB_USERNAME)/$(APP_NAME)-frontend'
+        containerRegistry: 'harbor'
+        repository: '$(APP_NAME)/frontend'
         command: 'buildAndPush'
         Dockerfile: 'my-app/frontend/Dockerfile'
 
@@ -110,6 +107,7 @@ stages:
         git commit -m "App version tag updated to $(Build.BuildId) by Azure DevOps"
         git push --set-upstream origin main
       displayName: 'Push changes to GitHub'
+ 
         
 
 
