@@ -101,13 +101,21 @@ steps:
 - script: | 
     ENCODED_CREDENTIALS=$(echo -n '${{ parameters.HARBOR_USER }}:${{ parameters.HARBOR_PASSWORD }}' | base64)
 
-    echo "{
-        'auths': {
-            'https://harbor.$(DOMAIN)': {
-                'auth': '$ENCODED_CREDENTIALS'
+    # echo "{
+    #     'auths': {
+    #         'https://harbor.$(DOMAIN)': {
+    #             'auth': '$ENCODED_CREDENTIALS'
+    #         }
+    #     }
+    # }" > config.json
+
+    echo '{
+        "auths": {
+            "https://harbor.$(DOMAIN)": {
+                "auth": "$ENCODED_CREDENTIALS"
             }
         }
-    }" > config.json
+    }' > config.json
 
     kubectl create secret generic harbor-credentials -n $(APP_NAME)-dev \
         --from-file=.dockerconfigjson=config.json \
