@@ -10,7 +10,7 @@ ingress:
   #### BORRAR
     # Cert-Manager related annotations
     # cert-manager.io/cluster-issuer: alb-staging-cluster-issuer
-    cert-manager.io/cluster-issuer: alb-production-cluster-issuer 
+    # cert-manager.io/cluster-issuer: alb-production-cluster-issuer 
   #### BORRAR
 
 
@@ -31,14 +31,14 @@ ingress:
     alb.ingress.kubernetes.io/certificate-arn: arn:aws:acm:us-east-1:373421766055:certificate/086f3e8d-cb98-48d2-9552-c345af0dc259 # This value was modified by the deploy-infra pipeline
 
   #### BORRAR
-  extraPaths: 
-    - backend:
-        service:
-          name: acme-http-solver
-          port:
-            number: 8089
-      path: "/.well-known/acme-challenge"
-      pathType: Prefix 
+  # extraPaths: 
+  #   - backend:
+  #       service:
+  #         name: acme-http-solver
+  #         port:
+  #           number: 8089
+  #     path: "/.well-known/acme-challenge"
+  #     pathType: Prefix 
   #### BORRAR
 
   
@@ -47,11 +47,11 @@ ingress:
 
 
   #### BORRAR
-  tls: 
-    - secretName: grafana-ingress-certificate 
-    # - secretName: placeholder-grafana-ingress-certificate # We don't actually use this secret but we need to specify this so the ingress directs to https
-      hosts:
-        - grafana.tferrari.com # This value was modified by the initial-setup python script
+  # tls: 
+  #   - secretName: grafana-ingress-certificate 
+  #   # - secretName: placeholder-grafana-ingress-certificate # We don't actually use this secret but we need to specify this so the ingress directs to https
+  #     hosts:
+  #       - grafana.tferrari.com # This value was modified by the initial-setup python script
   #### BORRAR
   
 datasources:
