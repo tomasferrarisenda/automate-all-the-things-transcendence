@@ -106,7 +106,6 @@ Here's my attempt at making the world a better place. People in the future will 
 - [Git installed](https://www.python.org/downloads/)
 - [Python3 installed](https://www.python.org/downloads/)
 - [Active GitHub account](https://github.com/)
-<!-- - [Active DockerHub account](https://hub.docker.com/) -->
 - [Active AWS account](https://aws.amazon.com/)
 - [Active Azure DevOps account](https://azure.microsoft.com/en-us/free/)
 
@@ -184,17 +183,17 @@ Let's begin...
 
 In order to turn this whole deployment into your own thing, we need to do some initial setup:
 
-1. Fork this repo. Keep the repository name "automate-all-the-things-braindamage".
+1. Fork this repo. Keep the repository name "automate-all-the-things-transcendence".
 1. Clone the repo from your fork:
 
 ```bash
-git clone https://github.com/<your-github-username>/automate-all-the-things-braindamage.git
+git clone https://github.com/<your-github-username>/automate-all-the-things-transcendence.git
 ```
 
 2. Move into the directory:
 
 ```bash
-cd automate-all-the-things-braindamage
+cd automate-all-the-things-transcendence
 ```
 
 2. Run the initial setup script. Come back when you are done:
@@ -443,7 +442,7 @@ Oh and lastly... it will export an artifact with the instructions on how to conn
 3. Click on "Create Pipeline".
 4. Select "Github".
 5. You might get a screen to authorize Azure Pipelines to access your GitHub account, if so, go ahead and click the green button.
-6. Select the repo, it should be "your-github-username/automate-all-the-things-braindamage"
+6. Select the repo, it should be "your-github-username/automate-all-the-things-transcendence"
 7. You might also get a screen to install the Azure Pipelines App on your GitHub account, if so, go ahead and click the green button and follow the instructions.
 8. Select "Existing Azure Pipelines YAML file".
 9. Under "Branch" select "main" and under "Path" select "/azure-devops/00-deploy-infra.yml". Click "Continue".
@@ -546,7 +545,7 @@ Finally the pipeline will get the ArgoCD web UI URL and admin account password a
 1. Go to "Pipelines" under "Pipelines" on the left side menu.
 2. Click on "New pipeline".
 3. Select "GitHub".
-4. Select the repo, it should be "your-github-username/automate-all-the-things-braindamage"
+4. Select the repo, it should be "your-github-username/automate-all-the-things-transcendence"
 5. Select "Existing Azure Pipelines YAML file".
 6. Under "Branch" select "main" and under "Path" select "/azure-devops/01-deploy-argocd.yml". Click "Continue".
 7. If you DON'T have a hosted parallelism, you'll need to do the same thing as in point 10 from the [infrastructure deployment pipeline](#instructions).
@@ -567,7 +566,7 @@ Finally the pipeline will get the ArgoCD web UI URL and admin account password a
 
 ## Description
 
-We need to make sure Sealed Secret has been successfully deployed before running this pipeline. Verify this on the ArgoCD web UI.
+**IMPORTANT**: We need to make sure Sealed Secret has been successfully deployed before running this pipeline. Verify this on the ArgoCD web UI.
 
 <!-- We've improved our Sealed Secrets pipeline. We've made ir more recyclable. Now it will generate any secret of type "generic". You'll just need to pass in the required values and voilá. -->
 
@@ -584,7 +583,7 @@ You could easily encrypt the secrets yourselves using the kubeseal CLI tool, but
 1. Go to "Pipelines" under "Pipelines" on the left side menu.
 2. Click on "New pipeline".
 3. Select "GitHub".
-4. Select the repo, it should be "your-github-username/automate-all-the-things-braindamage"
+4. Select the repo, it should be "your-github-username/automate-all-the-things-transcendence"
 5. Select "Existing Azure Pipelines YAML file".
 6. Under "Branch" select "main" and under "Path" select "/azure-devops/02-sealed-secret-generator.yml". Click "Continue".
 7. If you DON'T have a hosted parallelism, you'll need to do the same thing as in point 10 from the [infrastructure deployment pipeline](#instructions).
@@ -599,7 +598,36 @@ You could easily encrypt the secrets yourselves using the kubeseal CLI tool, but
 
 # HARBOR SETUP PIPELINE
 
-We need to make sure Harbor has been successfully deployed before running this pipeline. Verify this on the ArgoCD web UI.
+## Description
+
+**IMPORTANT**: We need to make sure Harbor has been successfully deployed before running this pipeline. Verify this on the ArgoCD web UI.
+
+This pipeline will do two things:
+1. Create a project in harbor with the name we gave to our app.
+2. Generate the Sealed Secrets which in turn will generate the necessary Secrets (of type kubernetes.io/dockerconfigjson)	in order to be able to pull from our new private registry.
+
+You can find more info on Harbor on [this DevOps Toolkit video](https://youtu.be/f931M4-my1k?si=qRfWQGQ0eg-8Hkck)
+
+<br/>
+
+## Instructions
+
+1. Go to "Pipelines" under "Pipelines" on the left side menu.
+2. Click on "New pipeline".
+3. Select "GitHub".
+4. Select the repo, it should be "your-github-username/automate-all-the-things-transcendence"
+5. Select "Existing Azure Pipelines YAML file".
+6. Under "Branch" select "main" and under "Path" select "/azure-devops/03-harbor-setup.yml". Click "Continue".
+7. If you DON'T have a hosted parallelism, you'll need to do the same thing as in point 10 from the [infrastructure deployment pipeline](#instructions).
+8. Complete the required fields. User is "admin" and password is "automate-all-the-things".
+8. Click on "Run".
+
+
+<br/>
+<br/>
+<p title="Keep your secrets" align="center"> <img width="460" src="https://i.imgur.com/rmhp3EJ.jpg"> </p>
+<br/>
+<br/>
 
 
 # BACKEND SERVICE BUILD & DEPLOY PIPELINE
@@ -636,7 +664,7 @@ Now, if the infrastrucure team needs to make changes to the cluster resources, t
 1. Go to "Pipelines" under "Pipelines" on the left side menu.
 2. Click on "New pipeline".
 3. Select "GitHub".
-4. Select the repo, it should be "your-github-username/automate-all-the-things-braindamage"
+4. Select the repo, it should be "your-github-username/automate-all-the-things-transcendence"
 5. Select "Existing Azure Pipelines YAML file".
 6. Under "Branch" select "main" and under "Path" select "/azure-devops/03-build-and-deploy-backend.yml". Click "Continue".
 7. If you DON'T have a hosted parallelism, you'll need to do the same thing as in point 10 from the [infrastructure deployment pipeline](#instructions).
@@ -674,7 +702,7 @@ For the infrastructure, same as before. If the infrastrucure team needs to, for 
 1. Go to "Pipelines" under "Pipelines" on the left side menu.
 2. Click on "New pipeline".
 3. Select "GitHub".
-4. Select the repo, it should be "your-github-username/automate-all-the-things-braindamage"
+4. Select the repo, it should be "your-github-username/automate-all-the-things-transcendence"
 5. Select "Existing Azure Pipelines YAML file".
 6. Under "Branch" select "main" and under "Path" select "/azure-devops/04-build-and-deploy-frontend.yml". Click "Continue".
 7. If you DON'T have a hosted parallelism, you'll need to do the same thing as in point 10 from the [infrastructure deployment pipeline](#instructions).
@@ -748,7 +776,7 @@ The pipeline will finish with a warning, worry not, this is because the "terrafo
 1. Go to "Pipelines" under "Pipelines" on the left side menu.
 2. Click on "New pipeline".
 3. Select "GitHub".
-4. Select the repo, it should be "your-github-username/automate-all-the-things-braindamage"
+4. Select the repo, it should be "your-github-username/automate-all-the-things-transcendence"
 5. Select "Existing Azure Pipelines YAML file".
 6. Under "Branch" select "main" and under "Path" select "/azure-devops/05-destroy-all-the-things.yml". Click "Continue".
 7. If you DON'T have a hosted parallelism, you'll need to do the same thing as in point 10 from the [infrastructure deployment pipeline](#instructions).
