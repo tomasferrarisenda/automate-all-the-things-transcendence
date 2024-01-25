@@ -629,7 +629,7 @@ You can find more info on Harbor on [this DevOps Toolkit video](https://youtu.be
 
 <br/>
 <br/>
-<p title="Keep your secrets" align="center"> <img width="460" src="https://i.imgur.com/rmhp3EJ.jpg"> </p>
+<p title="Hard right" align="center"> <img width="460" src="https://i.imgur.com/Stl0y81.jpg"> </p>
 <br/>
 <br/>
 
