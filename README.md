@@ -467,7 +467,7 @@ pool:
 
 <br/>
 <br/>
-<p title="Pleasure" align="center"> <img width="460" src="https://i.imgur.com/n5lNz3z.jpg"> </p>
+<p title="Kevin James" align="center"> <img width="460" src="https://i.imgur.com/ULcCyVx.jpg"> </p>
 <br/>
 <br/>
 
@@ -719,7 +719,7 @@ For the infrastructure, same as before. If the infrastrucure team needs to, for 
 
 <br/>
 <br/>
-<p title="Kevin James" align="center"> <img width="460" src="https://i.imgur.com/ULcCyVx.jpg"> </p>
+<p title="Pleasure" align="center"> <img width="460" src="https://i.imgur.com/n5lNz3z.jpg"> </p>
 <br/>
 <br/>
 
