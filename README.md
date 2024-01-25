@@ -603,13 +603,13 @@ You could easily encrypt the secrets yourselves using the kubeseal CLI tool, but
 
 ## Description
 
-**IMPORTANT**: We need to make sure Harbor has been successfully deployed before running this pipeline. Verify this on the ArgoCD web UI.
+**IMPORTANT**: We need to make sure Harbor has been successfully deployed before running this pipeline. Verify this by going to https://harbor.<your-domain\>/ on your browser.
 
 This pipeline will do two things:
 1. Create a project in harbor with the name we gave to our app.
 2. Generate the Sealed Secrets which in turn will generate the necessary Secrets (of type kubernetes.io/dockerconfigjson)	in order to be able to pull from our new private registry.
 
-You can find more info on Harbor on [this DevOps Toolkit video](https://youtu.be/f931M4-my1k?si=qRfWQGQ0eg-8Hkck)
+You can find more info on Harbor on [this DevOps Toolkit video](https://youtu.be/f931M4-my1k?si=qRfWQGQ0eg-8Hkck).
 
 <br/>
 
