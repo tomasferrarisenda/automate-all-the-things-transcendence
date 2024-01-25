@@ -113,6 +113,19 @@ steps:
     # kubeseal --controller-namespace sealed-secrets --controller-name sealed-secrets -o yaml < harbor-credentials-secret-prod.yaml | tee -a helm/my-app/backend/templates/harbor-credentials-sealed-secret-prod.yaml > helm/my-app/frontend/templates/harbor-credentials-sealed-secret-prod.yaml
   displayName: 'Create the Sealed Secrets with Kubeseal'
 
+- script: | 
+    echo "{{- if eq .Values.environment \"dev\" }} # Deploy only in dev environment" | cat - harbor-credentials-sealed-secret-dev.yaml > temp && mv temp harbor-credentials-sealed-secret-dev.yaml
+    echo "{{- end }}" >> harbor-credentials-sealed-secret-dev.yaml
+
+    echo "{{- if eq .Values.environment \"stage\" }} # Deploy only in stage environment" | cat - harbor-credentials-sealed-secret-stage.yaml > temp && mv temp harbor-credentials-sealed-secret-stage.yaml
+    echo "{{- end }}" >> harbor-credentials-sealed-secret-stage.yaml
+
+    echo "{{- if eq .Values.environment \"prod\" }} # Deploy only in prod environment" | cat - harbor-credentials-sealed-secret-prod.yaml > temp && mv temp harbor-credentials-sealed-secret-prod.yaml
+    echo "{{- end }}" >> harbor-credentials-sealed-secret-prod.yaml
+  displayName: 'Modify form helm environments'
+
+
+
 - script: |
     git pull origin main
     git config --global user.email "AzureDevOps@HarborSetupPipeline.com"
