@@ -364,7 +364,8 @@ These are the URLs for the infra tools:
 <br/>
 
 ### IMPORTANT: 
-In order for the Cert-Manager certificate to work, we must [activate DNSSEC in our domain](https://docs.aws.amazon.com/Route53/latest/DeveloperGuide/domain-configure-dnssec.html#domain-configure-dnssec-adding-keys). I've automated as much as of this process as I could (you can see the new steps in the [deploy-infra pipeline](azure-devops/00-deploy-infra.yml)) but there is a task that can only be done through the AWS web console.
+In order for the Cert-Manager certificate to work, we must [activate DNSSEC in our domain](https://docs.aws.amazon.com/Route53/latest/DeveloperGuide/domain-configure-dnssec.html#domain-configure-dnssec-adding-keys). I've automated as much as of this process as I could (you can see the new steps in the [deploy-infra pipeline](azure-devops/00-deploy-infra.yml)) but there is a task that can only be done through the AWS web console. More info in [cert-manager-notes.md](docs/cert-manager-notes.md#dnssec-issue).
+
 After running the deploy-infra pipeline do this:
 1. The deploy-infra pipeline will publish an artifact with a file called public-signing-key.txt. Download it.
 2. Open it and copy the contents.
@@ -669,7 +670,7 @@ Now, if the infrastrucure team needs to make changes to the cluster resources, t
 3. Select "GitHub".
 4. Select the repo, it should be "your-github-username/automate-all-the-things-transcendence"
 5. Select "Existing Azure Pipelines YAML file".
-6. Under "Branch" select "main" and under "Path" select "/azure-devops/03-build-and-deploy-backend.yml". Click "Continue".
+6. Under "Branch" select "main" and under "Path" select "/azure-devops/04-build-and-deploy-backend.yml". Click "Continue".
 7. If you DON'T have a hosted parallelism, you'll need to do the same thing as in point 10 from the [infrastructure deployment pipeline](#instructions).
 8. Click on "Run".
 
@@ -707,7 +708,7 @@ For the infrastructure, same as before. If the infrastrucure team needs to, for 
 3. Select "GitHub".
 4. Select the repo, it should be "your-github-username/automate-all-the-things-transcendence"
 5. Select "Existing Azure Pipelines YAML file".
-6. Under "Branch" select "main" and under "Path" select "/azure-devops/04-build-and-deploy-frontend.yml". Click "Continue".
+6. Under "Branch" select "main" and under "Path" select "/azure-devops/05-build-and-deploy-frontend.yml". Click "Continue".
 7. If you DON'T have a hosted parallelism, you'll need to do the same thing as in point 10 from the [infrastructure deployment pipeline](#instructions).
 8. Click on "Run".
 
@@ -781,7 +782,7 @@ The pipeline will finish with a warning, worry not, this is because the "terrafo
 3. Select "GitHub".
 4. Select the repo, it should be "your-github-username/automate-all-the-things-transcendence"
 5. Select "Existing Azure Pipelines YAML file".
-6. Under "Branch" select "main" and under "Path" select "/azure-devops/05-destroy-all-the-things.yml". Click "Continue".
+6. Under "Branch" select "main" and under "Path" select "/azure-devops/06-destroy-all-the-things.yml". Click "Continue".
 7. If you DON'T have a hosted parallelism, you'll need to do the same thing as in point 10 from the [infrastructure deployment pipeline](#instructions).
 8. Click on "Run".
 9. There's two AWS resources that for some reason don't get destroyed: a DHCP Option Set and an Auto Scaling Managed Rule. I'm pretty sure these don't generate any expenses but you can go and delete them manually just in case. I'm really sorry about this... I have brought [shame](https://i.imgur.com/PIm1apF.gifv) upon my family...
