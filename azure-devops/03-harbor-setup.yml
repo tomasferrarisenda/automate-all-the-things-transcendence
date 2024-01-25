@@ -125,7 +125,6 @@ steps:
   displayName: 'Modify form helm environments'
 
 
-
 - script: |
     git pull origin main
     git config --global user.email "AzureDevOps@HarborSetupPipeline.com"
