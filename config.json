@@ -1,7 +1,0 @@
-{
-    "auths": {
-        "https://harbor.tferrari.com": {
-            "auth": "YWRtaW46YXV0b21hdGUtYWxsLXRoZS10aGluZ3M="
-        }
-    }
-}

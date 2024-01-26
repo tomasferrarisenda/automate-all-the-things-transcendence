@@ -120,18 +120,20 @@ Another option would have been to send traffic through the Istio Gateway since t
 <br/>
 
 ## DNSSEC Issue
-PODRIAMOS HABER ENABLED EL DNSSEC SINGNING EN EL HOSTED ZONE CON ESTE BLOCQUE:
+We could have enabled the DNSSEC signing in the hosted zone with this block:
+```
 resource "aws_route53_hosted_zone_dnssec" "dnssec" {
   depends_on = [
     aws_route53_key_signing_key.dnssecksk
   ]
   hosted_zone_id = aws_route53_key_signing_key.dnssecksk.hosted_zone_id
 }
-
-PERO PARA QUE FUNCIONE PRIERON TIENEN QUE COPIADOS LOS NAME SERVERS DEL HOSTED ZONE AL DOMAIN REGISTRAR. SI ESTO NO ESTA RECIBIREMOS EL ERROR:
+```
+But for it to work, first the name servers of the hosted zone must be copied to the domain registrar. If this is not done beforhand, we will receive the error:
+```
 Error: enabling Route 53 Hosted Zone DNSSEC (Z0381810UAZXEYO6ZOOB): enabling: HostedZonePartiallyDelegated: Due to DNS lookup failure, we cannot determine if hosted zone with ID 'Z0381810UAZXEYO6ZOOB' has NS records partially connected with its parent zone. Please retry later.
-
-POR ESO ELEGIMOS NO ENABLEAR EL DNSSEC SIGNING EN EL HOSTED A TRAVES DE TERRAFORM. EN SU LUGAR LO HACEMOS CON AWS CLI EN EL DEPLOY INFRA PPL. PRIMERO POR AWS CLI HACEMOS LA COPIA DE LOS NS DEL HZ AL DOMAIN, Y UNA VEZ HECHO ESTO< TAMBIEN CON AWS CLI PODEMOS ENABLEAR EL DNSSEC SIGNING EN EL HOSTED ZONE
+```
+Therefore, we chose not to enable DNSSEC signing in the hosted zone through Terraform. Instead, we do it with AWS CLI in the deploy-infra pipeline. First, we use AWS CLI to copy the NS from the hosted zone to the domain. Once this is done, we can enable DNSSEC signing in the hosted zone also through AWS CLI."
 
 <br/>
 
