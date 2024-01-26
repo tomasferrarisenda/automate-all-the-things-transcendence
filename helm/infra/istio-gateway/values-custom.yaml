@@ -7,6 +7,6 @@ global:
   istioNamespace: service-mesh
 
 service:
-  annotations: {    
+  annotations: 
     external-dns.alpha.kubernetes.io/hostname: "tferrari.com,dev.tferrari.com,stage.tferrari.com" # This value was modified by the initial-setup python script
-  }
+  

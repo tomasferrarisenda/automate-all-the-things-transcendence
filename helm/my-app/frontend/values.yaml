@@ -2,7 +2,7 @@ appName: gonchi # This value was modified by the initial-setup python script
 
 service: frontend
 
-host: tferrari.com # This value was modified by the deploy-argocd pipeline
+host: tferrari.com # This value was modified by the initial-setup python script
 
 containerPort: 80 # Port where the app in the container exposes the service
 
@@ -12,7 +12,6 @@ deployment:
   }
   image:
     repository: harbor.tferrari.com/gonchi/frontend # This value was modified by the initial-setup python script
-    # repository: tferrari92/gonchi-frontend # This value was modified by the harbor-setup pipeline
 
 
 configmap:
