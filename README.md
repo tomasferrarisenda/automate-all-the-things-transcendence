@@ -381,7 +381,7 @@ I will repeat these instructions in the [AWS Infrastructure Deployment Pipeline]
 <br/>
 
 ### ALSO: 
-We need to delete this DNSSEC key we created before running the destroy-all-the-things pipeline, otherwise the "terrafom destroy" command will fail. To do this:
+We need to [delete this DNSSEC key](https://docs.aws.amazon.com/Route53/latest/DeveloperGuide/domain-configure-dnssec.html#domain-configure-dnssec-deleting-keys) we created before running the destroy-all-the-things pipeline, otherwise the "terrafom destroy" command will fail. To do this:
 1. On your browser go to your Route53 on your AWS account .
 2. Go to "Registered domains" and open your domain.
 3. Go to the "DNSSEC Keys" tab.
@@ -423,7 +423,7 @@ In this Insane Edition, apart from the AWS Load Balancer, we'll also be using an
 
 If you want to know exactly what is being deployed, you can check out the [terraform files](/terraform/aws). Here you can modify the resources to be deployed to AWS. Let's say you want to add a second EC2 Instance, you can add the following block in the ec2.tf file:
 
-```terraform
+```
 resource "aws_instance" "ec2_instance" {
     ami = "ami-01107263728f3bef4"
     subnet_id = aws_subnet.public-subnet-a.id
@@ -563,6 +563,7 @@ Finally the pipeline will get the ArgoCD web UI URL and admin account password a
 5. Select "Existing Azure Pipelines YAML file".
 6. Under "Branch" select "main" and under "Path" select "/azure-devops/01-deploy-argocd.yml". Click "Continue".
 7. If you DON'T have a hosted parallelism, you'll need to do the same thing as in point 10 from the [infrastructure deployment pipeline](#instructions).
+8. Make sure you've done [this](#important). Write "yes" on the field.
 8. Click on "Run".
 9. When it's done, the endpoints and ArgoCD access files will be exported as artifacts. You'll find them in the pipeline run screen. Download them to see the ArgoCD URL and credentials, and the frontend endpoints.
 <p title="Guide" align="center"> <img width="700" src="https://i.imgur.com/UtZyCCe.png"> </p>
@@ -786,16 +787,22 @@ After this, the pipeline will be able to run "terraform destroy" with no issues.
 The pipeline will finish with a warning, worry not, this is because the "terraform destroy" command will have also deleted our terraform backend (the Bucket and DyamoDB Table), so Terraform won't be able to push the updated state back there. We can ignore this warning. I wish there was a more elegant way of finishing the project but I couldn't find any so deal with it.
 
 ## Instructions
-
-1. Go to "Pipelines" under "Pipelines" on the left side menu.
-2. Click on "New pipeline".
-3. Select "GitHub".
-4. Select the repo, it should be "your-github-username/automate-all-the-things-transcendence"
-5. Select "Existing Azure Pipelines YAML file".
-6. Under "Branch" select "main" and under "Path" select "/azure-devops/06-destroy-all-the-things.yml". Click "Continue".
-7. If you DON'T have a hosted parallelism, you'll need to do the same thing as in point 10 from the [infrastructure deployment pipeline](#instructions).
-8. Click on "Run".
-9. There's two AWS resources that for some reason don't get destroyed: a DHCP Option Set and an Auto Scaling Managed Rule. I'm pretty sure these don't generate any expenses but you can go and delete them manually just in case. I'm really sorry about this... I have brought [shame](https://i.imgur.com/PIm1apF.gifv) upon my family...
+1. [Delete the DNSSEC key](https://docs.aws.amazon.com/Route53/latest/DeveloperGuide/domain-configure-dnssec.html#domain-configure-dnssec-deleting-keys) we created before running this pipeline, otherwise the "terrafom destroy" command will fail. To do this:
+  * On your browser go to your Route53 on your AWS account .
+  * Go to "Registered domains" and open your domain.
+  * Go to the "DNSSEC Keys" tab.
+  * Select the key we prevously created. It's the one of type Key type: "257 - KSK" and Algorithm: "ECDSAP256SHA256".
+  * Delete it.
+2. Go to "Pipelines" under "Pipelines" on the left side menu.
+3. Click on "New pipeline".
+4. Select "GitHub".
+5. Select the repo, it should be "your-github-username/automate-all-the-things-transcendence"
+6. Select "Existing Azure Pipelines YAML file".
+7. Under "Branch" select "main" and under "Path" select "/azure-devops/06-destroy-all-the-things.yml". Click "Continue".
+8. If you DON'T have a hosted parallelism, you'll need to do the same thing as in point 10 from the [infrastructure deployment pipeline](#instructions).
+9. Make sure you've done [this](#also). Write "yes" on the field.
+10. Click on "Run".
+11. There's two AWS resources that for some reason don't get destroyed: a DHCP Option Set and an Auto Scaling Managed Rule. I'm pretty sure these don't generate any expenses but you can go and delete them manually just in case. I'm really sorry about this... I have brought [shame](https://i.imgur.com/PIm1apF.gifv) upon my family...
 
 <br/>
 <br/>
