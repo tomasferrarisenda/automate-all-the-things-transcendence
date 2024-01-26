@@ -121,7 +121,7 @@ Another option would have been to send traffic through the Istio Gateway since t
 
 ## DNSSEC Issue
 We could have enabled the DNSSEC signing in the hosted zone with this block:
-```
+```terraform
 resource "aws_route53_hosted_zone_dnssec" "dnssec" {
   depends_on = [
     aws_route53_key_signing_key.dnssecksk
@@ -130,7 +130,7 @@ resource "aws_route53_hosted_zone_dnssec" "dnssec" {
 }
 ```
 But for it to work, first the name servers of the hosted zone must be copied to the domain registrar. If this is not done beforhand, we will receive the error:
-```
+```bash
 Error: enabling Route 53 Hosted Zone DNSSEC (Z0381810UAZXEYO6ZOOB): enabling: HostedZonePartiallyDelegated: Due to DNS lookup failure, we cannot determine if hosted zone with ID 'Z0381810UAZXEYO6ZOOB' has NS records partially connected with its parent zone. Please retry later.
 ```
 Therefore, we chose not to enable DNSSEC signing in the hosted zone through Terraform. Instead, we do it with AWS CLI in the deploy-infra pipeline. First, we use AWS CLI to copy the NS from the hosted zone to the domain. Once this is done, we can enable DNSSEC signing in the hosted zone also through AWS CLI."
