@@ -564,11 +564,11 @@ Finally the pipeline will get the ArgoCD web UI URL and admin account password a
 6. Under "Branch" select "main" and under "Path" select "/azure-devops/01-deploy-argocd.yml". Click "Continue".
 7. If you DON'T have a hosted parallelism, you'll need to do the same thing as in point 10 from the [infrastructure deployment pipeline](#instructions).
 8. Make sure you've done [this](#important). Write "yes" on the field.
-8. Click on "Run".
-9. When it's done, the endpoints and ArgoCD access files will be exported as artifacts. You'll find them in the pipeline run screen. Download them to see the ArgoCD URL and credentials, and the frontend endpoints.
+9. Click on "Run".
+10. When it's done, the endpoints and ArgoCD access files will be exported as artifacts. You'll find them in the pipeline run screen. Download them to see the ArgoCD URL and credentials, and the frontend endpoints.
 <p title="Guide" align="center"> <img width="700" src="https://i.imgur.com/UtZyCCe.png"> </p>
 
-10. You should now be able to access the ArgoCD UI at "http://argocd.<your-domain.com>"  
+11. You should now be able to access the ArgoCD UI at "http://argocd.<your-domain.com>"  
 
 <br/>
 <br/>
