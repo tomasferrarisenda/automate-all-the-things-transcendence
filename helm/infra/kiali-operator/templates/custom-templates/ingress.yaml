@@ -8,9 +8,8 @@
 #     {{- end }}
 # spec:
 #   rules:
-#     # - host: {{ .Values.ingress.host }}
-#     #   http:
-#     - http:
+#     - host: {{ .Values.ingress.host }}
+#       http:
 #         paths:
 #           - path: /kiali
 #             pathType: Prefix
@@ -19,3 +18,23 @@
 #                 name: kiali
 #                 port:
 #                   number: 20001  
+
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: {{ include "kiali-operator.fullname" . }}-ingress
+  annotations:
+    {{- range $key, $value := .Values.ingress.annotations }}
+    {{ $key }}: {{ $value | quote }}
+    {{- end }}
+spec:
+  rules:
+    - http:
+        paths:
+          - path: /kiali
+            pathType: Prefix
+            backend:
+              service:
+                name: kiali
+                port:
+                  number: 20001  
