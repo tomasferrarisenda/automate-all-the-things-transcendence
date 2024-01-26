@@ -793,7 +793,6 @@ The pipeline will finish with a warning, worry not, this is because the "terrafo
     * Go to the "DNSSEC Keys" tab.
     * Select the key we prevously created. It's the one of type Key type: "257 - KSK" and Algorithm: "ECDSAP256SHA256".
     * Delete it.
-
 2. Go to "Pipelines" under "Pipelines" on the left side menu.
 3. Click on "New pipeline".
 4. Select "GitHub".
