@@ -465,7 +465,7 @@ pool:
 12. When it's done, the EC2 instance public IP address will be exported as an artifact. You'll find it in the pipeline run screen. Download it to see the instructions to access the instance.
 <p title="Guide" align="center"> <img width="700" src="https://i.imgur.com/UtZyCCe.png"> </p>
 
-13. [Activate DNSSEC in our domain](https://docs.aws.amazon.com/Route53/latest/DeveloperGuide/domain-configure-dnssec.html#domain-configure-dnssec-adding-keys):
+13. [Activate DNSSEC in your domain](https://docs.aws.amazon.com/Route53/latest/DeveloperGuide/domain-configure-dnssec.html#domain-configure-dnssec-adding-keys):
   * a. The deploy-infra pipeline will publish an artifact with a file called public-signing-key.txt. Download it.
   * b. Open it and copy the contents.
   * c. On your browser go to your Route53 on your AWS account.
