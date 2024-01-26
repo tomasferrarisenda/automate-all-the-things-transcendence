@@ -119,7 +119,7 @@ steps:
     echo "{{- if eq .Values.environment \"dev\" }} # Deploy only in dev environment" | cat - harbor-credentials-sealed-secret-dev.yaml > temp && mv temp harbor-credentials-sealed-secret-dev.yaml
     echo "{{- end }}" >> harbor-credentials-sealed-secret-dev.yaml
 
-    harbor-credentials-sealed-secret-dev.yaml
+    cat harbor-credentials-sealed-secret-dev.yaml
 
     echo "{{- if eq .Values.environment \"stage\" }} # Deploy only in stage environment" | cat - harbor-credentials-sealed-secret-stage.yaml > temp && mv temp harbor-credentials-sealed-secret-stage.yaml
     echo "{{- end }}" >> harbor-credentials-sealed-secret-stage.yaml
