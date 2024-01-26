@@ -1,21 +1,21 @@
-apiVersion: networking.k8s.io/v1
-kind: Ingress
-metadata:
-  name: {{ include "kiali-operator.fullname" . }}-ingress
-  annotations:
-    {{- range $key, $value := .Values.ingress.annotations }}
-    {{ $key }}: {{ $value | quote }}
-    {{- end }}
-spec:
-  rules:
-    # - host: {{ .Values.ingress.host }}
-    #   http:
-    - http:
-        paths:
-          - path: /kiali
-            pathType: Prefix
-            backend:
-              service:
-                name: kiali
-                port:
-                  number: 20001  
+# apiVersion: networking.k8s.io/v1
+# kind: Ingress
+# metadata:
+#   name: {{ include "kiali-operator.fullname" . }}-ingress
+#   annotations:
+#     {{- range $key, $value := .Values.ingress.annotations }}
+#     {{ $key }}: {{ $value | quote }}
+#     {{- end }}
+# spec:
+#   rules:
+#     # - host: {{ .Values.ingress.host }}
+#     #   http:
+#     - http:
+#         paths:
+#           - path: /kiali
+#             pathType: Prefix
+#             backend:
+#               service:
+#                 name: kiali
+#                 port:
+#                   number: 20001  
