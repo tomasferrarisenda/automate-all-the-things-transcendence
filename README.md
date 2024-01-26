@@ -423,7 +423,7 @@ In this Insane Edition, apart from the AWS Load Balancer, we'll also be using an
 
 If you want to know exactly what is being deployed, you can check out the [terraform files](/terraform/aws). Here you can modify the resources to be deployed to AWS. Let's say you want to add a second EC2 Instance, you can add the following block in the ec2.tf file:
 
-```
+```hcl
 resource "aws_instance" "ec2_instance" {
     ami = "ami-01107263728f3bef4"
     subnet_id = aws_subnet.public-subnet-a.id
