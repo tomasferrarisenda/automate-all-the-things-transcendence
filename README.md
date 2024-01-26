@@ -788,12 +788,12 @@ The pipeline will finish with a warning, worry not, this is because the "terrafo
 
 ## Instructions
 1. [Delete the DNSSEC key](https://docs.aws.amazon.com/Route53/latest/DeveloperGuide/domain-configure-dnssec.html#domain-configure-dnssec-deleting-keys) we created before running this pipeline, otherwise the "terrafom destroy" command will fail. To do this:
-  * On your browser go to your Route53 on your AWS account .
-  * Go to "Registered domains" and open your domain.
-  * Go to the "DNSSEC Keys" tab.
-  * Select the key we prevously created. It's the one of type Key type: "257 - KSK" and Algorithm: "ECDSAP256SHA256".
-  * Delete it.
-  
+    * On your browser go to your Route53 on your AWS account .
+    * Go to "Registered domains" and open your domain.
+    * Go to the "DNSSEC Keys" tab.
+    * Select the key we prevously created. It's the one of type Key type: "257 - KSK" and Algorithm: "ECDSAP256SHA256".
+    * Delete it.
+
 2. Go to "Pipelines" under "Pipelines" on the left side menu.
 3. Click on "New pipeline".
 4. Select "GitHub".
