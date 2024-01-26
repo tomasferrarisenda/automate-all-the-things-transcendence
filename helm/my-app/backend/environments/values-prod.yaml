@@ -4,7 +4,7 @@ redis_host: df # This value was modified by the deploy-infra pipeline
 
 deployment:
   image:
-    tag: 1463
+    tag: 1481
   replicas: 1
     
 secret:
