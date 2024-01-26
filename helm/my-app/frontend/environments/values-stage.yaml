@@ -2,7 +2,7 @@ environment: stage
 
 deployment:
   image:
-    tag: 1464
+    tag: 1487
   replicas: 1
 
 
