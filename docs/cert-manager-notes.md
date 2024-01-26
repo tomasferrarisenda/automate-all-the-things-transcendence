@@ -152,7 +152,3 @@ A thing that confused me a lot were all the secrets created in the Cert-Manager 
 **Purpose**: Temporarily stores the private key used to generate the Certificate Signing Request (CSR) for a particular CertificateRequest.<br>
 **Usage**: The private key in this secret is used to create the CSR sent to the ACME server for the issuance of a certificate. Post-issuance, this secret's role is typically concluded.
 
-
-
-LA DUDA Q ME QUEDA ES PORQ EL LB QUE CREA EL SERVICIO DE ISTIO GW FUNCIONA CON HTTPS??? LEVANTE A MANO UN LB COPIADO DEL DE ISTIO GW Y FALTO ALGO PORQ NO ANDUVO. ESTA PUEDE SER OTRA POSIBLE SOLUCION
-
