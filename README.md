@@ -285,7 +285,7 @@ This service connection is required for our Azure DevOps pipelines to be able to
 2. Select "Docker Registry", click "Next".
 3. Under "Registry type" select "Others".
 5. Under "Docker registry", write "https://harbor.<your-domain\>".
-4. Input your "admin" for Docker ID and "automate-all-the-things" for Docker Password.
+4. Complete with "admin" for Docker ID and "automate-all-the-things" for Docker Password.
 5. Under "Service connection name", write "harbor".
 6. Select the "Grant access permission to all pipelines" option.
 7. Click on "Verify and save".
