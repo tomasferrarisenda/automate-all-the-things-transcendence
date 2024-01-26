@@ -466,14 +466,14 @@ pool:
 <p title="Guide" align="center"> <img width="700" src="https://i.imgur.com/UtZyCCe.png"> </p>
 
 13. [Activate DNSSEC in our domain](https://docs.aws.amazon.com/Route53/latest/DeveloperGuide/domain-configure-dnssec.html#domain-configure-dnssec-adding-keys):
-  1. The deploy-infra pipeline will publish an artifact with a file called public-signing-key.txt. Download it.
-  2. Open it and copy the contents.
-  3. On your browser go to your Route53 on your AWS account.
-  4. Go to "Registered domains" and open your domain.
-  5. Go to the "DNSSEC Keys" tab and click "Add".
-  6. Paste the contents of the public-signing-key.txt file. Leave "Key type" as "257 - KSK" and "Algorithm" as "ECDSAP256SHA256".
-  7. Save.
-  8. Now you can run the deploy-argocd pipeline. 
+  a. The deploy-infra pipeline will publish an artifact with a file called public-signing-key.txt. Download it.
+  b. Open it and copy the contents.
+  c. On your browser go to your Route53 on your AWS account.
+  d. Go to "Registered domains" and open your domain.
+  e. Go to the "DNSSEC Keys" tab and click "Add".
+  f. Paste the contents of the public-signing-key.txt file. Leave "Key type" as "257 - KSK" and "Algorithm" as "ECDSAP256SHA256".
+  g. Save.
+  h. Now you can run the deploy-argocd pipeline. 
 
 <br/>
 <br/>
