@@ -13,7 +13,7 @@ spec:
     server: https://kubernetes.default.svc  
   project: dns
   source:
-    path: helm/infra/dns/cert-manager
+    path: helm/infra/cert-manager
     helm:
       valueFiles:
         - values-custom.yaml

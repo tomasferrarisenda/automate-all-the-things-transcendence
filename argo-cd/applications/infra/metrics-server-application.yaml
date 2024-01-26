@@ -13,7 +13,7 @@ spec:
     server: https://kubernetes.default.svc  
   project: observability
   source:
-    path: helm/infra/observability/metrics-server
+    path: helm/infra/metrics-server
     helm:
       valueFiles:
         - values-custom.yaml

@@ -13,7 +13,7 @@ spec:
     server: https://kubernetes.default.svc  
   project: dns
   source:
-    path: helm/infra/dns/external-dns
+    path: helm/infra/external-dns
     helm:
       valueFiles:
         - values-custom.yaml

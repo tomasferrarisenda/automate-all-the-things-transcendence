@@ -347,7 +347,7 @@ I've also added a [policy for External-DNS](terraform/aws/external-dns.tf) and a
 
 You can find further information on these tools in my how [external-dns-notes.md](docs/external-dns-notes.md) and [cert-manager-notes.md](docs/cert-manager-notes.md).
 
-Initially, the Certificate for Istio Gateway will be created using the Let's Encrypt Staging Issuer. To switch to the Production Issuer, you'll need to modify the "issuer" value in [Istio Gateway's values](/helm/infra/service-mesh/istio-gateway/values-custom.yaml). We'll only use Cert-Manager to secure Istio Gateway. Infra tools frontends will be secured using a different method. More info in [cert-manager-notes.md](docs/cert-manager-notes.md).
+Initially, the Certificate for Istio Gateway will be created using the Let's Encrypt Staging Issuer. To switch to the Production Issuer, you'll need to modify the "issuer" value in [Istio Gateway's values](/helm/infra/istio-gateway/values-custom.yaml). We'll only use Cert-Manager to secure Istio Gateway. Infra tools frontends will be secured using a different method. More info in [cert-manager-notes.md](docs/cert-manager-notes.md).
 
 These are the URLs for your app:
 - http://dev.<your-domain\>/
