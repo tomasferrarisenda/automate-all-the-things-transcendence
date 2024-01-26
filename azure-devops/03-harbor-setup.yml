@@ -106,26 +106,22 @@ steps:
     kubeseal --controller-namespace sealed-secrets --controller-name sealed-secrets -o yaml < harbor-credentials-secret-dev.yaml > helm/my-app/backend/templates/harbor-credentials-sealed-secret-dev.yaml 
     kubeseal --controller-namespace sealed-secrets --controller-name sealed-secrets -o yaml < harbor-credentials-secret-stage.yaml > helm/my-app/backend/templates/harbor-credentials-sealed-secret-stage.yaml 
     kubeseal --controller-namespace sealed-secrets --controller-name sealed-secrets -o yaml < harbor-credentials-secret-prod.yaml > helm/my-app/backend/templates/harbor-credentials-sealed-secret-prod.yaml 
-
-    cat harbor-credentials-sealed-secret-dev.yaml
     
     # We would create them in both if backend and frontend were in different namespaces
-    # kubeseal --controller-namespace sealed-secrets --controller-name sealed-secrets -o yaml < harbor-credentials-secret-dev.yaml | tee -a helm/my-app/backend/templates/harbor-credentials-sealed-secret-dev.yaml > helm/my-app/frontend/templates/harbor-credentials-sealed-secret-dev.yaml
-    # kubeseal --controller-namespace sealed-secrets --controller-name sealed-secrets -o yaml < harbor-credentials-secret-stage.yaml | tee -a helm/my-app/backend/templates/harbor-credentials-sealed-secret-stage.yaml > helm/my-app/frontend/templates/harbor-credentials-sealed-secret-stage.yaml
-    # kubeseal --controller-namespace sealed-secrets --controller-name sealed-secrets -o yaml < harbor-credentials-secret-prod.yaml | tee -a helm/my-app/backend/templates/harbor-credentials-sealed-secret-prod.yaml > helm/my-app/frontend/templates/harbor-credentials-sealed-secret-prod.yaml
+    # kubeseal --controller-namespace sealed-secrets --controller-name sealed-secrets -o yaml < harbor-credentials-secret-dev.yaml | tee -a helm/my-app/backend/templates/harbor-credentials-sealed-secret-dev.yaml > helm/my-app/backend/templates/harbor-credentials-sealed-secret-dev.yaml
+    # kubeseal --controller-namespace sealed-secrets --controller-name sealed-secrets -o yaml < harbor-credentials-secret-stage.yaml | tee -a helm/my-app/backend/templates/harbor-credentials-sealed-secret-stage.yaml > helm/my-app/backend/templates/harbor-credentials-sealed-secret-stage.yaml
+    # kubeseal --controller-namespace sealed-secrets --controller-name sealed-secrets -o yaml < harbor-credentials-secret-prod.yaml | tee -a helm/my-app/backend/templates/harbor-credentials-sealed-secret-prod.yaml > helm/my-app/backend/templates/harbor-credentials-sealed-secret-prod.yaml
   displayName: 'Create the Sealed Secrets with Kubeseal'
 
 - script: | 
-    echo "{{- if eq .Values.environment \"dev\" }} # Deploy only in dev environment" | cat - harbor-credentials-sealed-secret-dev.yaml > temp && mv temp harbor-credentials-sealed-secret-dev.yaml
-    echo "{{- end }}" >> harbor-credentials-sealed-secret-dev.yaml
+    echo "{{- if eq .Values.environment \"dev\" }} # Deploy only in dev environment" | cat - harbor-credentials-sealed-secret-dev.yaml > temp && mv temp helm/my-app/backend/templates/harbor-credentials-sealed-secret-dev.yaml
+    echo "{{- end }}" >> helm/my-app/backend/templates/harbor-credentials-sealed-secret-dev.yaml
 
-    cat harbor-credentials-sealed-secret-dev.yaml
+    echo "{{- if eq .Values.environment \"stage\" }} # Deploy only in stage environment" | cat - harbor-credentials-sealed-secret-stage.yaml > temp && mv temp helm/my-app/backend/templates/harbor-credentials-sealed-secret-stage.yaml
+    echo "{{- end }}" >> helm/my-app/backend/templates/harbor-credentials-sealed-secret-stage.yaml
 
-    echo "{{- if eq .Values.environment \"stage\" }} # Deploy only in stage environment" | cat - harbor-credentials-sealed-secret-stage.yaml > temp && mv temp harbor-credentials-sealed-secret-stage.yaml
-    echo "{{- end }}" >> harbor-credentials-sealed-secret-stage.yaml
-
-    echo "{{- if eq .Values.environment \"prod\" }} # Deploy only in prod environment" | cat - harbor-credentials-sealed-secret-prod.yaml > temp && mv temp harbor-credentials-sealed-secret-prod.yaml
-    echo "{{- end }}" >> harbor-credentials-sealed-secret-prod.yaml
+    echo "{{- if eq .Values.environment \"prod\" }} # Deploy only in prod environment" | cat - harbor-credentials-sealed-secret-prod.yaml > temp && mv temp helm/my-app/backend/templates/harbor-credentials-sealed-secret-prod.yaml
+    echo "{{- end }}" >> helm/my-app/backend/templates/harbor-credentials-sealed-secret-prod.yaml
   displayName: 'Modify form helm environments'
 
 
