@@ -11,7 +11,8 @@ spec:
     - host: {{ .Values.ingress.host }}
       http:
         paths:
-          - path: /kiali
+          # - path: /kiali
+          - path: /
             pathType: Prefix
             backend:
               service:
