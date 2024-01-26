@@ -8,7 +8,7 @@ issuer: staging # Options are "staging" and "production"
 
 deployment:
   image:
-    tag: 1464
+    tag: 1487
   replicas: 1
 
 
