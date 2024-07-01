@@ -2,7 +2,7 @@ system: meme-web
 
 service: frontend
 
-host:  # This value was modified by the deploy-argocd pipeline
+host: ae439f9b34885411097d1d5e2893cf44-1519424136.us-east-1.elb.amazonaws.com # This value was modified by the deploy-argocd pipeline
 
 port: 80
 
